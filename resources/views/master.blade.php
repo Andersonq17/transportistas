@@ -77,7 +77,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                with font-awesome or any other icon font library -->
                <li class="nav-item">
                 <router-link to="/Escritorio" class="nav-link">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <i class="nav-icon fas fa-tachometer-alt text-blue"></i>
                   <p>
                     Escritorio
                   </p>
@@ -129,12 +129,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           <li class="nav-item">
-                <a href="#" class="nav-link">
+          <!--para cerrar sesion -->
+                <a class="nav-link" href="{{ route('logout') }}" 
+                  onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
                 <i class="fas fa-power-off"></i>
                   <p>
-                   Cerrar Sesion
+                  {{ __(' Cerrar Sesion') }}
                   </p>
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf </form>
               </li>
      
         </ul>
