@@ -15,7 +15,8 @@ Vue.use(VueRouter)
 
 let routes = [
     { path: '/escritorio', component: require('./components/Escritorio.vue')},
-    { path: '/perfil', component: require('./components/Perfil.vue')}
+    { path: '/perfil', component: require('./components/Perfil.vue')},
+    { path: '/usuarios', component: require('./components/Usuarios.vue')}
   ]
 
   const router = new VueRouter({

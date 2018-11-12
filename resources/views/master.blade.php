@@ -128,6 +128,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+
+              <li class="nav-item">
+              <router-link to="/usuarios" class="nav-link">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>
+                    Usuarios
+                  </p>
+                </router-link>
+              </li>
+
           <li class="nav-item">
           <!--para cerrar sesion -->
                 <a class="nav-link" href="{{ route('logout') }}" 
@@ -143,6 +153,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
      
         </ul>
+       
       </nav>
       <!-- /.sidebar-menu -->
     </div>
