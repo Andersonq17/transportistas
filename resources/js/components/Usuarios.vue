@@ -64,21 +64,32 @@
         </button>
       </div>
       <div class="modal-body">
-          <form>
+          <form @submit.prevent="crearUsuario">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Nombre de Usuario</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre de usuario">
-                    
+                    <input v-model="form.name" type="text" name="name" placeholder="Nombre de usuario"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                    <has-error :form="form" field="name"></has-error>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Contraseña</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                 <div class="form-group">
+                    <input v-model="form.password" type="password" name="password" placeholder="Contraseña"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
+                    <has-error :form="form" field="password"></has-error>
                 </div>
 
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Correo electronico</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Correo electronico">
-                    
+                 <div class="form-group">
+                    <input v-model="form.email" type="text" name="email" placeholder="Correo electronico"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
+                    <has-error :form="form" field="email"></has-error>
+                </div>
+
+                 <div class="form-group">
+                    <select v-model="form.type" type="text" name="type"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                        <option value="0">Seleccione rol de usuario</option>
+                        <option value="admin">Administrador</option>
+                        <option value="usuario">Usuario Estandar</option>
+                    </select>
+                    <has-error :form="form" field="type"></has-error>
                 </div>
 
                 <div class="form-group">
@@ -99,6 +110,27 @@
 
 <script>
     export default {
+
+        data(){
+            return{
+                form : new Form({
+                    name: '',
+                    email:'',
+                    password: '',
+                    type:0,
+                    
+                })
+            }
+
+        },
+
+        methods:{
+               
+             crearUsuario(){
+                 this.form.post('api/user');
+             }  
+        },
+
         mounted() {
             console.log('Component mounted.')
         }
