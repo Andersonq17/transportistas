@@ -96,12 +96,13 @@
                     <label for="exampleFormControlFile1">Subir foto de perfil</label>
                     <input type="file" class="form-control-file" id="exampleFormControlFile1">
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
 </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
-      </div>
+      
     </div>
   </div>
 </div>

@@ -50491,6 +50491,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -50742,12 +50743,12 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm._m(3)
                   ]
                 )
-              ]),
-              _vm._v(" "),
-              _vm._m(3)
+              ])
             ])
           ]
         )
@@ -50883,7 +50884,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Guardar")]
       )
     ])
