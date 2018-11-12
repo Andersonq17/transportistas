@@ -20,24 +20,29 @@
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover">
-                  <tbody><tr>
+                  <tbody>
+                    <tr>
                     <th>ID</th>
                     <th>Usuario</th>
                     <th>Email</th>
                     <th>Tipo</th>
+                    <th>Fecha de registro</th>
                     <th>Opciones</th>
                   </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><span class="tag tag-success"></span></td>
-                    <td>
+
+                  
+                  <tr v-for="user in users" :key="user.id">
+                    <td>{{user.id}}</td>
+                    <td>{{user.name | upText}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.type | upText}}</td>
+                    <td>{{user.created_at | fechas}}</td>
+                     <td>
 
                         <a href="#">
                             <i class="fa fa-edit"></i>
                         </a>
-                            /
+                            \
                          <a href="#">
                             <i class="fa fa-trash"></i>
                         </a>
@@ -114,6 +119,7 @@
 
         data(){
             return{
+                users:{}, //objeto js de axios
                 form : new Form({
                     name: '',
                     email:'',
@@ -127,13 +133,30 @@
 
         methods:{
                
+             listarUsuarios(){
+                 axios.get("api/user").then(({ data })=>(this.users = data.data)); //(api/user) por defecto agara al index de primero
+             },
+
              crearUsuario(){
+                 this.$Progress.start();
                  this.form.post('api/user');
-             }  
+
+                    toast({
+                    type: 'success',
+                    title: 'Usuario creado con exito!'
+                    })
+
+                    $('#nuevoUsuario').modal('hide')
+
+                 this.$Progress.finish();
+                 this.listarUsuarios();
+             }
+             
+            
         },
 
-        mounted() {
-            console.log('Component mounted.')
+        created() {
+            this.listarUsuarios();
         }
     }
 </script>

@@ -8,7 +8,26 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import { Form, HasError, AlertError } from 'vform'
+import moment from 'moment'; //para el formato de las fechas
+import VueProgressBar from 'vue-progressbar' //barra de progreso
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '3px'
+})
+
+import { Form, HasError, AlertError } from 'vform'//manejo de errores en formularios
+import swal from 'sweetalert2'//sweetalert
+window.swal=swal;
+
+const toast = swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
+
+window.toast= toast;
 
 
 window.Form = Form;
@@ -29,6 +48,14 @@ let routes = [
   const router = new VueRouter({
       mode: 'history',
     routes // short for `routes: routes`
+  })
+
+  Vue.filter('upText',function(text){
+    return text.charAt(0).toUpperCase() + text.slice(1)
+  })
+
+  Vue.filter('fechas',function(created){
+    return moment(created).format('MMMM Do YYYY, h:mm:ss a');             
   })
 /**
  * Next, we will create a fresh Vue application instance and attach it to
