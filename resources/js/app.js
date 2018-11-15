@@ -42,7 +42,8 @@ Vue.use(VueRouter)
 let routes = [
     { path: '/escritorio', component: require('./components/Escritorio.vue')},
     { path: '/perfil', component: require('./components/Perfil.vue')},
-    { path: '/usuarios', component: require('./components/Usuarios.vue')}
+    { path: '/usuarios', component: require('./components/Usuarios.vue')},
+    { path: '/dev', component: require('./components/Desarrollador.vue')}
   ]
 
   const router = new VueRouter({
@@ -64,6 +65,20 @@ let routes = [
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component(
+  'passport-clients',
+  require('./components/passport/Clients.vue')
+);
+
+Vue.component(
+  'passport-authorized-clients',
+  require('./components/passport/AuthorizedClients.vue')
+);
+
+Vue.component(
+  'passport-personal-access-tokens',
+  require('./components/passport/PersonalAccessTokens.vue')
+);
 
 const app = new Vue({
     el: '#app',

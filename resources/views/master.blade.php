@@ -138,6 +138,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
 
+              <li class="nav-item">
+              <router-link to="/dev" class="nav-link">
+                  <i class="nav-icon fas fa-cogs"></i>
+                  <p>
+                    Desarrollador
+                  </p>
+                </router-link>
+              </li>
+
           <li class="nav-item">
           <!--para cerrar sesion -->
                 <a class="nav-link" href="{{ route('logout') }}" 
