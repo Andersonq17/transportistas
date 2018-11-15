@@ -70766,6 +70766,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -70790,13 +70861,135 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "col-md-12 mt-3" }, [
           _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [_vm._v("Perfil")]),
+            _c("div", { staticClass: "card card-widget widget-user" }, [
+              _c("div", { staticClass: "widget-user-header bg-info-active" }, [
+                _c("h3", { staticClass: "widget-user-username" }, [
+                  _vm._v("Alexander Pierce")
+                ]),
+                _vm._v(" "),
+                _c("h5", { staticClass: "widget-user-desc" }, [
+                  _vm._v("Founder & CEO")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "widget-user-image" }, [
+                _c("img", {
+                  staticClass: "img-circle elevation-2",
+                  attrs: { src: "", alt: "User Avatar" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-sm-4 border-right" }, [
+                    _c("div", { staticClass: "description-block" }, [
+                      _c("h5", { staticClass: "description-header" }, [
+                        _vm._v("3,200")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "description-text" }, [
+                        _vm._v("SALES")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-4 border-right" }, [
+                    _c("div", { staticClass: "description-block" }, [
+                      _c("h5", { staticClass: "description-header" }, [
+                        _vm._v("13,000")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "description-text" }, [
+                        _vm._v("FOLLOWERS")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-4" }, [
+                    _c("div", { staticClass: "description-block" }, [
+                      _c("h5", { staticClass: "description-header" }, [
+                        _vm._v("35")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "description-text" }, [
+                        _vm._v("PRODUCTS")
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("form", { staticClass: "form-horizontal" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "label",
+              {
+                staticClass: "col-sm-2 control-label",
+                attrs: { for: "inputName" }
+              },
+              [_vm._v("Nombre")]
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    Este es el perfil\n                "
+            _c("div", { staticClass: "col-sm-10" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "email", id: "inputName", placeholder: "Nombre" }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "label",
+              {
+                staticClass: "col-sm-2 control-label",
+                attrs: { for: "inputEmail" }
+              },
+              [_vm._v("Email")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-10" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "email", id: "inputEmail", placeholder: "Email" }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "label",
+              {
+                staticClass: "col-sm-2 control-label",
+                attrs: { for: "inputExperience" }
+              },
+              [_vm._v("Cargo")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-10" }, [
+              _c("textarea", {
+                staticClass: "form-control",
+                attrs: {
+                  id: "inputExperience",
+                  placeholder: "Descripcion del cargo"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-success", attrs: { type: "submit" } },
+                [_vm._v("Actualizar")]
               )
             ])
           ])
@@ -72959,7 +73152,7 @@ var render = function() {
                 _c(
                   "tbody",
                   _vm._l(_vm.tokens, function(token) {
-                    return _c("tr", [
+                    return _c("tr", { key: token.id }, [
                       _c(
                         "td",
                         { staticStyle: { "vertical-align": "middle" } },
