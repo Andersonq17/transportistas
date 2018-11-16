@@ -13,6 +13,7 @@ class userController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
+        
     }
     /**
      * Display a listing of the resource.
@@ -44,6 +45,7 @@ class userController extends Controller
             'email' =>$request['email'],
             'type' =>$request['type'],
             'foto'=>$request['foto'],
+            'cargo'=>$request['cargo'],
             'password' => Hash::make($request['password']),
         ]);
     }
@@ -57,6 +59,20 @@ class userController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function perfil()
+    {
+        return auth('api')->user(); //para mostrar info de usuario en el perfil
+    }
+
+    public function actPerfil(Request $request)
+    {
+        $user= auth('api')->user(); //para mostrar info de usuario en el perfil
+
+        return $request->foto;
+
+        //return ["mensaje"=>"Actualizado"];
     }
 
     /**

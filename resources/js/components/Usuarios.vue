@@ -97,6 +97,11 @@
                     </select>
                     <has-error :form="form" field="type"></has-error>
                 </div>
+                 <div class="form-group">
+                    <input v-model="form.cargo" type="text" name="cargo" placeholder="Breve descripción del cargo"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('cargo') }">
+                    <has-error :form="form" field="cargo"></has-error>
+                </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Subir foto de perfil</label>
@@ -128,7 +133,8 @@
                     name: '',
                     email:'',
                     password: '',
-                    type:0
+                    type:0,
+                    cargo:''
                     
                 })
             }
