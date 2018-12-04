@@ -66,11 +66,43 @@ class userController extends Controller
         return auth('api')->user(); //para mostrar info de usuario en el perfil
     }
 
-    public function actPerfil(Request $request)
+    public function actPerfil(Request $request) //actualizar tu info de perfil
     {
-        $user= auth('api')->user(); //para mostrar info de usuario en el perfil
+        $user= auth('api')->user(); 
+        
+        $this->validate($request,[
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users,email,'.$user->id,
+            'password'=>'sometimes|required|min:6'
+        ]);
 
-        return $request->foto;
+            //validar foto de perfil
+        $fotoActual= $user->foto;
+
+        if($request->foto != $fotoActual){
+
+            $name= time(). '.' . explode('/', explode(':', substr($request->foto,0,strpos
+            ($request->foto,';')))[1])[1];
+
+            \Image::make($request->foto)->save(public_path('img/profile/').$name);
+
+            $request->merge(['foto'=> $name]);
+
+            //para borrar la foto anterior de la carpeta
+            $userFoto= public_path('img/profile/').$fotoActual;
+
+                if(file_exists($userFoto)){
+                    @unlink($userFoto);
+                }
+        }
+            //hashear pass
+            if(!empty($request->password)){
+
+            $request->merge(['password'=> Hash::make($request['password'])]);//encriptar la pass al actualizar 
+                }
+        
+
+            $user->update($request->all());
 
         //return ["mensaje"=>"Actualizado"];
     }
@@ -91,6 +123,11 @@ class userController extends Controller
             'email' => 'required|string|email|max:191|unique:users,email,'.$user->id,
             'password'=>'sometimes|min:6'
         ]);
+
+        if(!empty($request->password)){
+
+            $request->merge(['password'=> Hash::make($request['password'])]);//encriptar la pass al actualizar 
+                }
 
         $user->update($request->all());
         
