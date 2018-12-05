@@ -14,9 +14,9 @@
                 <div class="card card-default">
                     
               <!-- Add the bg color to the header using any of the bg-* classes -->
-              <div class="widget-user-header bg-info-active" style="background-image:url('./img/banner.png')">
+              <!--<div class="widget-user-header bg-info-active" style="background-image:url('./img/banner.png')">
                
-              </div>
+              </div>-->
               <!--<div class="widget-user-image">
                 <img class="img-circle elevation-2" src="" alt="User Avatar">
               </div>-->
@@ -33,7 +33,7 @@
                     <div class="col-sm-8 border-right">
                     <div class="description-block">
                     <div class="widget-user-image">
-                      <img class="img-circle elevation-2" src="" alt="User Avatar">
+                      <img class="img-circle elevation-2" :src="displayFoto()" alt="User Avatar">
                     </div>
                     </div>
                     </div>
@@ -140,6 +140,12 @@
         },
 
         methods:{
+
+          displayFoto(){
+            let foto = (this.form.foto.length > 200) ? this.form.foto : "img/profile/"+ this.form.foto;
+            return foto;
+
+          },
 
           actPerfil(){
             this.$Progress.start();

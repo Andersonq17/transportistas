@@ -84,7 +84,9 @@ class userController extends Controller
             $name= time(). '.' . explode('/', explode(':', substr($request->foto,0,strpos
             ($request->foto,';')))[1])[1];
 
-            \Image::make($request->foto)->save(public_path('img/profile/').$name);
+            \Image::make($request->foto)->resize(140,120)->save(public_path('img/profile/').$name);
+            //$request->foto->resize(320, 240);
+
 
             $request->merge(['foto'=> $name]);
 
@@ -123,6 +125,25 @@ class userController extends Controller
             'email' => 'required|string|email|max:191|unique:users,email,'.$user->id,
             'password'=>'sometimes|min:6'
         ]);
+
+        $fotoActual= $user->foto;
+
+        if($request->foto != $fotoActual){
+
+            $name= time(). '.' . explode('/', explode(':', substr($request->foto,0,strpos
+            ($request->foto,';')))[1])[1];
+
+            \Image::make($request->foto)->save(public_path('img/profile/').$name);
+
+            $request->merge(['foto'=> $name]);
+
+            //para borrar la foto anterior de la carpeta
+            $userFoto= public_path('img/profile/').$fotoActual;
+
+                if(file_exists($userFoto)){
+                    @unlink($userFoto);
+                }
+        }
 
         if(!empty($request->password)){
 

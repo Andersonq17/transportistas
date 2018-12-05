@@ -70969,6 +70969,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
+    displayFoto: function displayFoto() {
+      var foto = this.form.foto.length > 200 ? this.form.foto : "img/profile/" + this.form.foto;
+      return foto;
+    },
     actPerfil: function actPerfil() {
       var _this = this;
 
@@ -71031,11 +71035,6 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-12 mt-3" }, [
         _c("div", { staticClass: "card card-default" }, [
-          _c("div", {
-            staticClass: "widget-user-header bg-info-active",
-            staticStyle: { "background-image": "url('./img/banner.png')" }
-          }),
-          _vm._v(" "),
           _c("div", { staticClass: "card-footer" }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-sm-4 border-right" }, [
@@ -71052,7 +71051,16 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _c("div", { staticClass: "col-sm-8 border-right" }, [
+                _c("div", { staticClass: "description-block" }, [
+                  _c("div", { staticClass: "widget-user-image" }, [
+                    _c("img", {
+                      staticClass: "img-circle elevation-2",
+                      attrs: { src: _vm.displayFoto(), alt: "User Avatar" }
+                    })
+                  ])
+                ])
+              ])
             ])
           ])
         ])
@@ -71062,7 +71070,7 @@ var render = function() {
     _c("div", { staticClass: "col-md-9" }, [
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-body" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-12" }, [
@@ -71317,21 +71325,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-8 border-right" }, [
-      _c("div", { staticClass: "description-block" }, [
-        _c("div", { staticClass: "widget-user-image" }, [
-          _c("img", {
-            staticClass: "img-circle elevation-2",
-            attrs: { src: "", alt: "User Avatar" }
-          })
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("h4", [_vm._v("Tus Datos")]),
@@ -71538,7 +71531,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 email: '',
                 password: '',
                 type: 0,
-                cargo: ''
+                cargo: '',
+                foto: ''
 
             })
         };
@@ -71627,6 +71621,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     });
                 }
             });
+        },
+        subirFoto: function subirFoto(e) {
+            var _this5 = this;
+
+            //console.log('Subiendo...')
+
+            var file = e.target.files[0]; //aqui agarra el archivo
+            console.log(file);
+            var reader = new FileReader();
+            //let me = this;
+
+            if (file['size'] < 2111775) {
+                reader.onloadend = function (file) {
+                    //console.log('RESULT',reader.result);
+                    _this5.form.foto = reader.result; //aqui lo convierte en base64 string
+                };
+
+                reader.readAsDataURL(file); //leer como url
+            } else {
+                swal({
+                    type: 'error',
+                    title: 'Ha ocurrido un error',
+                    text: 'Debes subir un archivo menor a 2MB'
+                });
+            }
         }
     },
     created: function created() {
@@ -72020,7 +72039,19 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(2),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
+                        { attrs: { for: "exampleFormControlFile1" } },
+                        [_vm._v("Subir foto de perfil")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control-file",
+                        attrs: { type: "file", id: "exampleFormControlFile1" },
+                        on: { change: _vm.subirFoto }
+                      })
+                    ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-footer" }, [
                       _c(
@@ -72111,21 +72142,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
-        _vm._v("Subir foto de perfil")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control-file",
-        attrs: { type: "file", id: "exampleFormControlFile1" }
-      })
-    ])
   }
 ]
 render._withStripped = true

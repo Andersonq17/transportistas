@@ -105,7 +105,7 @@
 
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Subir foto de perfil</label>
-                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                    <input type="file" @change="subirFoto" class="form-control-file" id="exampleFormControlFile1">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -134,7 +134,8 @@
                     email:'',
                     password: '',
                     type:0,
-                    cargo:''
+                    cargo:'',
+                    foto :''
                     
                 })
             }
@@ -238,7 +239,37 @@
                     
                     })
 
-             }
+             },
+
+
+             subirFoto(e){
+            //console.log('Subiendo...')
+
+            let file= e.target.files[0];//aqui agarra el archivo
+            console.log(file);
+            let reader= new FileReader();
+            //let me = this;
+
+            if(file['size'] < 2111775){
+               reader.onloadend = (file)=>{
+              //console.log('RESULT',reader.result);
+              this.form.foto = reader.result; //aqui lo convierte en base64 string
+            }
+
+               reader.readAsDataURL(file); //leer como url
+
+            }else{
+              swal({
+                  type: 'error',
+                  title:'Ha ocurrido un error',
+                  text: 'Debes subir un archivo menor a 2MB'
+              }
+                
+              )
+
+            }
+            
+          }
              
             
         },
