@@ -4,7 +4,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Administración de usuarios</h3>
+                <h3 class="card-title">Administración de Usuarios</h3>
 
                 <div class="card-tools">
                     <button class="btn btn-success" @click="abrirModal">Crear Nuevo <i class="fas fa-user-plus fa-fw"></i></button>
@@ -37,6 +37,7 @@
                     <td>{{user.email}}</td>
                     <td>{{user.type | upText}}</td>
                     <td>{{user.created_at | fechas}}</td>
+                    
                      <td>
 
                         <a href="#" @click="editModal(user)">
@@ -48,6 +49,7 @@
                         </a>
 
                     </td>
+                  
                   </tr>
                  
                 </tbody></table>
@@ -93,7 +95,7 @@
                         class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
                         <option value="0">Seleccione rol de usuario</option>
                         <option value="admin">Administrador</option>
-                        <option value="usuario">Usuario Estandar</option>
+                        <option value="user">Usuario Estandar</option>
                     </select>
                     <has-error :form="form" field="type"></has-error>
                 </div>

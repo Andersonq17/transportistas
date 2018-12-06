@@ -48,6 +48,8 @@ class userController extends Controller
             'cargo'=>$request['cargo'],
             'password' => Hash::make($request['password']),
         ]);
+
+        
     }
 
     /**
@@ -163,6 +165,7 @@ class userController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $user = User::findOrFail($id);
 
         $user->delete();

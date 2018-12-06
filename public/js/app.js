@@ -71519,6 +71519,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -71667,7 +71669,7 @@ var render = function() {
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
             _c("h3", { staticClass: "card-title" }, [
-              _vm._v("Administración de usuarios")
+              _vm._v("Administración de Usuarios")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-tools" }, [
@@ -71988,7 +71990,7 @@ var render = function() {
                               _vm._v("Administrador")
                             ]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "usuario" } }, [
+                            _c("option", { attrs: { value: "user" } }, [
                               _vm._v("Usuario Estandar")
                             ])
                           ]
