@@ -16,6 +16,10 @@ Vue.use(VueProgressBar, {
   height: '3px'
 })
 
+import Gate from "./gate";
+Vue.prototype.$gate = new Gate(window.user);// usar el prototipo en cualquier parte de la app
+
+
 import { Form, HasError, AlertError } from 'vform'//manejo de errores en formularios
 import swal from 'sweetalert2'//sweetalert
 window.swal=swal;
@@ -64,7 +68,7 @@ let routes = [
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('not-found', require('./components/404.vue'));
 Vue.component(
   'passport-clients',
   require('./components/passport/Clients.vue')

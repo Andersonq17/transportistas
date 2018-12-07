@@ -2,7 +2,7 @@
     <div class="container">
        <div class="row mt-5">
           <div class="col-12">
-            <div class="card">
+            <div class="card" v-if="$gate.isAdmin()">
               <div class="card-header">
                 <h3 class="card-title">Administración de Usuarios</h3>
 
@@ -58,6 +58,10 @@
             </div>
             <!-- /.card -->
           </div>
+        </div>
+
+        <div v-if="!$gate.isAdmin()">
+            <not-found></not-found>
         </div>
 
         <!-- Modal -->
@@ -161,7 +165,11 @@
             },
                
              listarUsuarios(){
-                 axios.get("api/user").then(({ data })=>(this.users = data.data)); //(api/user) por defecto agara al index de primero
+                 if(this.$gate.isAdmin()){
+                    axios.get("api/user").then(({ data })=>(this.users = data.data)); //(api/user) por defecto agara al index de primero
+                    //enviar la peticion solo si es admin
+                 }
+                 
              },
 
 
