@@ -32,16 +32,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+    <div class="inline ml-3">
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Buscar" aria-label="Buscar">
+        <input class="form-control form-control-navbar" @keyup="busca" v-model="buscar" type="search" placeholder="Buscar" aria-label="Buscar">
         <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
+          <button class="btn btn-navbar" @click="busca">
             <i class="fa fa-search"></i>
           </button>
         </div>
       </div>
-    </form>
+</div>
 
    
   </nav>

@@ -30754,7 +30754,7 @@ Vue.component(__WEBPACK_IMPORTED_MODULE_3_vform__["AlertError"].name, __WEBPACK_
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
 
-var routes = [{ path: '/escritorio', component: __webpack_require__(172) }, { path: '/perfil', component: __webpack_require__(175) }, { path: '/usuarios', component: __webpack_require__(181) }, { path: '/dev', component: __webpack_require__(184) }];
+var routes = [{ path: '/escritorio', component: __webpack_require__(172) }, { path: '/perfil', component: __webpack_require__(175) }, { path: '/usuarios', component: __webpack_require__(181) }, { path: '/dev', component: __webpack_require__(184) }, { path: '*', component: __webpack_require__(222) }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]({
   mode: 'history',
@@ -30768,6 +30768,8 @@ Vue.filter('upText', function (text) {
 Vue.filter('fechas', function (created) {
   return __WEBPACK_IMPORTED_MODULE_0_moment___default()(created).format('MMMM Do YYYY, h:mm:ss a');
 });
+
+window.Fire = new Vue();
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -30783,7 +30785,18 @@ Vue.component('passport-personal-access-tokens', __webpack_require__(200));
 
 var app = new Vue({
   el: '#app',
-  router: router
+  router: router,
+  data: {
+    buscar: ''
+
+  },
+
+  methods: {
+    busca: _.debounce(function () {
+      Fire.$emit('buscando');
+    }, 2000)
+
+  }
 });
 
 /***/ }),
@@ -71678,6 +71691,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
+        var _this7 = this;
+
+        Fire.$on('buscando', function () {
+            var query = _this7.$parent.buscar;
+            axios.get('api/buscarUsuario?q=' + query).then(function (data) {
+                _this7.users = data.data;
+            }).catch(function () {});
+        });
         this.listarUsuarios();
     }
 });
@@ -74596,8 +74617,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-10" }, [
-        _c("h3", [_vm._v("No tienes acceso a esta sección de la aplicación")]),
+      _c("div", { staticClass: "col-md-10 mt-4" }, [
+        _c("h3", [_vm._v("Esta Página no existe")]),
         _vm._v(" "),
         _c(
           "svg",
@@ -74607,8 +74628,8 @@ var render = function() {
               "data-name": "Layer 1",
               xmlns: "http://www.w3.org/2000/svg",
               "xmlns:xlink": "http://www.w3.org/1999/xlink",
-              width: "820.16",
-              height: "780.81",
+              width: "600",
+              height: "400",
               viewBox: "0 0 820.16 780.81"
             }
           },

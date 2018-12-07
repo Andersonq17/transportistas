@@ -153,7 +153,7 @@
 
         methods:{
                 getResults(page = 1) {
-			axios.get('api/user?page=' + page)
+			        axios.get('api/user?page=' + page)
 				.then(response => {
 					this.users = response.data;
 				});
@@ -293,6 +293,16 @@
             
         },
         created() {
+            Fire.$on('buscando',() =>{
+                let query = this.$parent.buscar;
+                axios.get('api/buscarUsuario?q='+ query)
+                .then((data)=>{
+                    this.users=data.data;
+                })
+                .catch(()=>{
+
+                })
+            });
             this.listarUsuarios();
         }
     }

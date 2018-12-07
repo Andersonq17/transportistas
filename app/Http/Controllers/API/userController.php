@@ -61,9 +61,17 @@ class userController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function buscar() 
     {
-        //
+       
+        if($buscar = \Request::get('q')){
+            $users= User:: where(function($query) use ($buscar){
+                $query->where('name','LIKE', "%$buscar%")->orWhere('email','LIKE',"%$buscar%");
+
+            })->paginate(20);
+        }
+
+        return $users; //retorna toda la consulta
     }
 
     public function perfil()

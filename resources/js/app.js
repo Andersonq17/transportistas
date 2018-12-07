@@ -49,7 +49,8 @@ let routes = [
     { path: '/escritorio', component: require('./components/Escritorio.vue')},
     { path: '/perfil', component: require('./components/Perfil.vue')},
     { path: '/usuarios', component: require('./components/Usuarios.vue')},
-    { path: '/dev', component: require('./components/Desarrollador.vue')}
+    { path: '/dev', component: require('./components/Desarrollador.vue')},
+    { path: '*', component: require('./components/404.vue')}
   ]
 
   const router = new VueRouter({
@@ -64,6 +65,8 @@ let routes = [
   Vue.filter('fechas',function(created){
     return moment(created).format('MMMM Do YYYY, h:mm:ss a');             
   })
+
+  window.Fire= new Vue();
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -88,5 +91,17 @@ Vue.component(
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+     data:{
+       buscar:''
+
+     },
+
+     methods:{
+       busca: _.debounce(()=>{
+        Fire.$emit('buscando');
+       },2000)
+         
+       
+     }
 });
