@@ -16,6 +16,8 @@ Vue.use(VueProgressBar, {
   height: '3px'
 })
 
+Vue.component('pagination', require('laravel-vue-pagination')); //paginacion
+
 import Gate from "./gate";
 Vue.prototype.$gate = new Gate(window.user);// usar el prototipo en cualquier parte de la app
 
