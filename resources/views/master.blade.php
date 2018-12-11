@@ -117,8 +117,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-<<<<<<< HEAD
-=======
               <router-link to="/personas" class="nav-link">
                 <i class="fas fa-users"></i>
                   <p>Choferes</p>
@@ -126,7 +124,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link >
               </li>
               <li class="nav-item">
->>>>>>> chofer
                 <a href="#" class="nav-link">
                 <i class="fas fa-paste"></i>
                   <p>Sindicatos</p>
