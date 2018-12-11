@@ -50,6 +50,10 @@ let routes = [
     { path: '/perfil', component: require('./components/Perfil.vue')},
     { path: '/usuarios', component: require('./components/Usuarios.vue')},
     { path: '/dev', component: require('./components/Desarrollador.vue')},
+<<<<<<< HEAD
+=======
+    { path: '/personas', component: require('./components/Personas.vue')},
+>>>>>>> chofer
     { path: '*', component: require('./components/404.vue')}
   ]
 
@@ -100,7 +104,11 @@ const app = new Vue({
      methods:{
        busca: _.debounce(()=>{
         Fire.$emit('buscando');
+<<<<<<< HEAD
        },2000)
+=======
+       },1500)
+>>>>>>> chofer
          
        
      }

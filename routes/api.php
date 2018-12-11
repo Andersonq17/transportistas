@@ -20,4 +20,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResources(['user'=>'API\userController']);
 Route::get('Perfil','Api\userController@perfil');
 Route::get('buscarUsuario','Api\userController@buscar');
+<<<<<<< HEAD
 Route::put('Perfil','Api\userController@actPerfil');
+=======
+Route::put('Perfil','Api\userController@actPerfil');
+
+//personas
+Route::apiResources(['personas'=>'API\personasController']);
+Route::get('personas', 'Api\personasController@index');
+Route::get('buscarPersona','Api\personasController@buscar');
+Route::post('personas', 'Api\personasController@store');
+Route::put('personas', 'Api\personasController@update');
+>>>>>>> chofer
