@@ -51,6 +51,7 @@ let routes = [
     { path: '/usuarios', component: require('./components/Usuarios.vue')},
     { path: '/dev', component: require('./components/Desarrollador.vue')},
     { path: '/personas', component: require('./components/Personas.vue')},
+    { path: '/sindicatos', component: require('./components/Sindicatos.vue')},
     { path: '*', component: require('./components/404.vue')}
   ]
 

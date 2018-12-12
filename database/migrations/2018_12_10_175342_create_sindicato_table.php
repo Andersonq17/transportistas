@@ -13,7 +13,7 @@ class CreateSindicatoTable extends Migration
      */
     public function up()
     {
-        Schema::create('sindicato', function (Blueprint $table) {
+        Schema::create('sindicatos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre',80)->unique();
             $table->string('rif',10)->unique();
@@ -23,7 +23,9 @@ class CreateSindicatoTable extends Migration
             $table->string('estado',50)->nullable();
             $table->integer('id_persona')->unsigned();
 
-            //$table->timestamps();
+            $table->foreign('id_persona')->references('id')->on('personas');
+
+            $table->timestamps();
         });
     }
 
