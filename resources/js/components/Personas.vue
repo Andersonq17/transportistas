@@ -28,6 +28,7 @@
                     <th>Cedula</th>
                     <th>Telefono</th>
                     <th>Correo</th>
+                    <th>Tipo</th>
                   </tr>
 
                   
@@ -37,7 +38,8 @@
                     <td>{{persona.apellido | upText}}</td>
                     <td>{{persona.cedula}}</td>
                     <td>{{persona.telefono}}</td>
-                    <td>{{persona.correo}}</td>                    
+                    <td>{{persona.correo}}</td>
+                    <td>{{persona.tipo}}</td>                       
                      <td>
 
                         <a href="#" @click="editModal(persona)">
@@ -107,7 +109,12 @@
                         class="form-control" :class="{ 'is-invalid': form.errors.has('correo') }">
                     <has-error :form="form" field="correo"></has-error>
                 </div>
-
+               <select class="form-control" v-model="form.tipo">
+                    <option disabled value="">Seleccione tipo de Conductor</option>
+                    <option value="Conductor">Conductor</option>
+                    <option value="Socio">Socio</option>
+                   
+                </select>
                 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -136,7 +143,8 @@
                     apellido:'',
                     cedula: '',
                     telefono:'',
-                    correo:''
+                    correo:'',
+                    tipo:''
     
                 })
             }

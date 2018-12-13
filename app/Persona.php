@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Persona extends Model
 {
     protected $fillable = [
-        'nombre', 'apellido', 'cedula','telefono','correo'
+        'nombre', 'apellido', 'cedula','telefono','correo','tipo'
     ];
 
     public function sindicato(){

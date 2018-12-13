@@ -36,6 +36,7 @@ Route::put('personas', 'Api\personasController@update');
 
 Route::apiResources(['sindicatos'=>'API\sindicatoController']);
 Route::get('sindicatos', 'Api\sindicatoController@index');
+Route::get('selectPersona', 'Api\personasController@selectPersona');
 //Route::get('buscarSindicato','Api\sindicatoController@buscar');
 Route::post('sindicatos', 'Api\sindicatoController@store');
 Route::put('sindicatos', 'Api\sindicatoController@update');

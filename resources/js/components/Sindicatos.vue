@@ -48,7 +48,7 @@
                             <i class="fa fa-edit"></i>
                         </a>
                             \
-                         <a href="#" @click="borrarPersona(sindi.id)">
+                         <a href="#" @click="borrarSindicato(sindi.id)">
                             <i style="color:red;" class="fa fa-trash"></i>
                         </a>
 
@@ -116,8 +116,9 @@
                         class="form-control" :class="{ 'is-invalid': form.errors.has('estado') }">
                     <has-error :form="form" field="estado"></has-error>
                 </div>
-                <select value="Seleccione al presidente del sindicato" class="form-group">
-                    <option ></option>
+                <select class="form-control" v-model="form.id_persona">
+                    <option disabled value="">Seleccione Presidente de Sindicato</option>
+                    <option v-show="this.selectPersona()"></option>
                     
                 </select>
 
@@ -142,8 +143,8 @@
         data(){
             return{
                 editar: false,
-                sindicatos:{}, //objeto js de axios
-                sindi:'',
+                sindicatos:{},
+                sindi:{}, //objeto js de axios
                 form : new Form({
                     id :'',
                     nombre: '',
@@ -152,7 +153,7 @@
                     telefono:'',
                     correo:'',
                     estado:'',
-                    id_persona:0
+                    id_persona:{}
     
                 })
             }
@@ -180,6 +181,15 @@
                  this.form.fill(sindi);
                  this.editar=true;
             },
+
+            selectPersona(){
+                axios.get('api/selectPersona').then((data)=>{
+                    this.id_persona=data.data;
+                    })
+                    .catch(()=>{
+
+                    })
+            },
                
              listarSindicatos(){
                 axios.get("api/sindicatos").then(({ data })=>(this.sindicatos =data)); // por defecto agara al index de primero
@@ -187,7 +197,7 @@
              },
 
 
-             crearSindicatos(){
+             crearSindicato(){
                  
                  this.form.post('api/sindicatos').then(()=>{ //validar si se envio todos los datos bien
                         this.$Progress.start();

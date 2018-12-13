@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sindicato extends Model
 {
-    protected $table='sindicatos';
+    public $table='sindicato';
     protected $fillable = [
         'nombre', 'rif', 'direccion','telefono','correo','estado','id_persona'
     ];

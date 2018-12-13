@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSindicatoTable extends Migration
+class CreateSindicatosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSindicatoTable extends Migration
      */
     public function up()
     {
-        Schema::create('sindicatos', function (Blueprint $table) {
+        Schema::create('sindicato', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre',80)->unique();
-            $table->string('rif',10)->unique();
+            $table->string('rif',15)->unique();
             $table->string('direccion',120);
             $table->string('telefono',12)->nullable();
             $table->string('correo',50)->unique();

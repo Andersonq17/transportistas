@@ -72192,7 +72192,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.widget-user-header{\n  background-position: center center;\n  background-size: cover;\n  height: 350px;\n}\n", ""]);
+exports.push([module.i, "\n.widget-user-header{\r\n  background-position: center center;\r\n  background-size: cover;\r\n  height: 350px;\n}\r\n", ""]);
 
 // exports
 
@@ -73917,6 +73917,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -73929,7 +73936,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 apellido: '',
                 cedula: '',
                 telefono: '',
-                correo: ''
+                correo: '',
+                tipo: ''
 
             })
         };
@@ -74105,6 +74113,8 @@ var render = function() {
                       _c("td", [_vm._v(_vm._s(persona.telefono))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(persona.correo))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(persona.tipo))]),
                       _vm._v(" "),
                       _c("td", [
                         _c(
@@ -74441,6 +74451,53 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.tipo,
+                            expression: "form.tipo"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.form,
+                              "tipo",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Seleccione tipo de Conductor")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "Conductor" } }, [
+                          _vm._v("Conductor")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "Socio" } }, [
+                          _vm._v("Socio")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
                     _c("div", { staticClass: "modal-footer" }, [
                       _c(
                         "button",
@@ -74511,7 +74568,9 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Telefono")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Correo")])
+      _c("th", [_vm._v("Correo")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tipo")])
     ])
   },
   function() {
@@ -74732,13 +74791,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             editar: false,
-            sindicatos: {}, //objeto js de axios
-            sindi: '',
+            sindicatos: {},
+            sindi: {}, //objeto js de axios
             form: new Form({
                 id: '',
                 nombre: '',
@@ -74747,7 +74807,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 telefono: '',
                 correo: '',
                 estado: '',
-                id_persona: 0
+                id_persona: {}
 
             })
         };
@@ -74776,24 +74836,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.fill(sindi);
             this.editar = true;
         },
-        listarSindicatos: function listarSindicatos() {
+        selectPersona: function selectPersona() {
             var _this2 = this;
+
+            axios.get('api/selectPersona').then(function (data) {
+                _this2.id_persona = data.data;
+            }).catch(function () {});
+        },
+        listarSindicatos: function listarSindicatos() {
+            var _this3 = this;
 
             axios.get("api/sindicatos").then(function (_ref) {
                 var data = _ref.data;
-                return _this2.sindicatos = data;
+                return _this3.sindicatos = data;
             }); // por defecto agara al index de primero
         },
-        crearSindicatos: function crearSindicatos() {
-            var _this3 = this;
+        crearSindicato: function crearSindicato() {
+            var _this4 = this;
 
             this.form.post('api/sindicatos').then(function () {
                 //validar si se envio todos los datos bien
-                _this3.$Progress.start();
+                _this4.$Progress.start();
                 $('#nuevoSindicato').modal('hide');
 
-                _this3.$Progress.finish();
-                _this3.listarSindicatos();
+                _this4.$Progress.finish();
+                _this4.listarSindicatos();
 
                 toast({
                     type: 'success',
@@ -74809,23 +74876,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         actSindicato: function actSindicato() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.$Progress.start();
             this.form.put('api/sindicatos/' + this.form.id).then(function () {
                 $('#nuevoSindicato').modal('hide');
                 swal('Datos actualizados', 'Ok para continuar', 'success');
-                _this4.listarSindicatos();
-                _this4.$Progress.finish();
+                _this5.listarSindicatos();
+                _this5.$Progress.finish();
             }).catch(function () {
 
-                _this4.$Progress.fail();
+                _this5.$Progress.fail();
                 swal('Falló', 'Algo salió mal', 'warning');
             });
             //console.log('Editando');
         },
         borrarSindicato: function borrarSindicato(id) {
-            var _this5 = this;
+            var _this6 = this;
 
             swal({
                 title: '¿Estas seguro de eliminar este Sindicato?',
@@ -74840,12 +74907,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //enviar la peticion al servidor
                 if (result.value) {
                     //evaluar si Si o No elimina
-                    _this5.form.delete('api/sindicatos/' + id).then(function () {
+                    _this6.form.delete('api/sindicatos/' + id).then(function () {
                         //llamar al metodo borrar del controlador mediante el route list
 
                         swal('Eliminado', ' Sindicato eliminado', 'success');
 
-                        _this5.listarSindicatos();
+                        _this6.listarSindicatos();
                     }).catch(function () {
                         swal('Falló', 'Algo salió mal', 'warning');
                     });
@@ -74854,13 +74921,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        var _this6 = this;
+        var _this7 = this;
 
         Fire.$on('buscando', function () {
-            var query = _this6.$parent.buscar;
+            var query = _this7.$parent.buscar;
 
             axios.get('api/buscarSindicato?q=' + query).then(function (data) {
-                _this6.sindicatos = data.data;
+                _this7.sindicatos = data.data;
             }).catch(function () {});
         });
         this.listarSindicatos();
@@ -74950,7 +75017,7 @@ var render = function() {
                             attrs: { href: "#" },
                             on: {
                               click: function($event) {
-                                _vm.borrarPersona(sindi.id)
+                                _vm.borrarSindicato(sindi.id)
                               }
                             }
                           },
@@ -75301,7 +75368,55 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(2),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.id_persona,
+                            expression: "form.id_persona"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.form,
+                              "id_persona",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Seleccione Presidente de Sindicato")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: this.selectPersona(),
+                              expression: "this.selectPersona()"
+                            }
+                          ]
+                        })
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-footer" }, [
                       _c(
@@ -75395,19 +75510,6 @@ var staticRenderFns = [
         }
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "select",
-      {
-        staticClass: "form-group",
-        attrs: { value: "Seleccione al presidente del sindicato" }
-      },
-      [_c("option")]
     )
   }
 ]

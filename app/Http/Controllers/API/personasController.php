@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Persona;
-
+use App\Sindicato;
 
 class personasController extends Controller
 {
@@ -26,6 +26,15 @@ class personasController extends Controller
     {
     
         return Persona::latest()->paginate(5);
+    }
+
+    public function selectPersona(){
+        $personas = DB::table('personas')
+            ->join('sindicato', 'personas.id', '=', 'sindicato.id_persona')
+            ->select('personas.id','personas.nombre')
+            ->get();
+            
+            
     }
 
     /**
@@ -51,6 +60,7 @@ class personasController extends Controller
             'cedula' =>$request['cedula'],
             'telefono' =>$request['telefono'],
             'correo' =>$request['correo'],
+            'tipo' =>$request['tipo'],
         ]);
 
         
