@@ -74791,14 +74791,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             editar: false,
             sindicatos: {},
-            sindi: {}, //objeto js de axios
+            select: [],
+            persona: {},
+            sindi: {},
+            //objeto js de axios
             form: new Form({
                 id: '',
                 nombre: '',
@@ -74807,7 +74809,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 telefono: '',
                 correo: '',
                 estado: '',
-                id_persona: {}
+                id_persona: 0
 
             })
         };
@@ -74840,7 +74842,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             axios.get('api/selectPersona').then(function (data) {
-                _this2.id_persona = data.data;
+                _this2.select = data.data;
             }).catch(function () {});
         },
         listarSindicatos: function listarSindicatos() {
@@ -74974,62 +74976,66 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _vm._l(_vm.sindicatos.data, function(sindi) {
-                    return _c("tr", { key: sindi.id }, [
-                      _c("td", [_vm._v(_vm._s(sindi.id))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(sindi.nombre)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(sindi.rif))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(sindi.direccion))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(sindi.telefono))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(sindi.correo))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(sindi.estado)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(sindi.id_persona))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.editModal(sindi)
+                    return _c(
+                      "tr",
+                      { key: sindi.id, attrs: { value: sindi } },
+                      [
+                        _c("td", [_vm._v(_vm._s(sindi.id))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("upText")(sindi.nombre)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(sindi.rif))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(sindi.direccion))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(sindi.telefono))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(sindi.correo))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("upText")(sindi.estado)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(sindi.id_persona))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.editModal(sindi)
+                                }
                               }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit" })]
-                        ),
-                        _vm._v(
-                          "\n                            \\\n                         "
-                        ),
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.borrarSindicato(sindi.id)
+                            },
+                            [_c("i", { staticClass: "fa fa-edit" })]
+                          ),
+                          _vm._v(
+                            "\n                            \\\n                         "
+                          ),
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.borrarSindicato(sindi.id)
+                                }
                               }
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fa fa-trash",
-                              staticStyle: { color: "red" }
-                            })
-                          ]
-                        )
-                      ])
-                    ])
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-trash",
+                                staticStyle: { color: "red" }
+                              })
+                            ]
+                          )
+                        ])
+                      ]
+                    )
                   })
                 ],
                 2
@@ -75405,17 +75411,13 @@ var render = function() {
                           _vm._v("Seleccione Presidente de Sindicato")
                         ]),
                         _vm._v(" "),
-                        _c("option", {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: this.selectPersona(),
-                              expression: "this.selectPersona()"
-                            }
-                          ]
+                        _vm._l(_vm.select, function(persona) {
+                          return _c("option", { key: persona.id }, [
+                            _vm._v(_vm._s(_vm.select))
+                          ])
                         })
-                      ]
+                      ],
+                      2
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-footer" }, [

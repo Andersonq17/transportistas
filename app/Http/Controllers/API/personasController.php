@@ -29,9 +29,9 @@ class personasController extends Controller
     }
 
     public function selectPersona(){
-        $personas = DB::table('personas')
+         return DB::table('personas')
             ->join('sindicato', 'personas.id', '=', 'sindicato.id_persona')
-            ->select('personas.id','personas.nombre')
+            ->select('personas.id','personas.nombre','personas.cedula')
             ->get();
             
             

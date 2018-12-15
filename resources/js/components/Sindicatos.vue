@@ -33,7 +33,7 @@
                   </tr>
 
                   
-                  <tr v-for="sindi in sindicatos.data" :key="sindi.id">
+                  <tr v-for="sindi in sindicatos.data" :value="sindi" :key="sindi.id">
                     <td>{{sindi.id}}</td>
                     <td>{{sindi.nombre | upText}}</td>
                     <td>{{sindi.rif}}</td>
@@ -118,8 +118,7 @@
                 </div>
                 <select class="form-control" v-model="form.id_persona">
                     <option disabled value="">Seleccione Presidente de Sindicato</option>
-                    <option v-show="this.selectPersona()"></option>
-                    
+                    <option v-for="persona in select" :key="persona.id">{{select}}</option>
                 </select>
 
                 
@@ -144,7 +143,10 @@
             return{
                 editar: false,
                 sindicatos:{},
-                sindi:{}, //objeto js de axios
+                select:[],
+                persona:{},
+                sindi:{},
+                 //objeto js de axios
                 form : new Form({
                     id :'',
                     nombre: '',
@@ -153,7 +155,7 @@
                     telefono:'',
                     correo:'',
                     estado:'',
-                    id_persona:{}
+                    id_persona:0
     
                 })
             }
@@ -184,7 +186,7 @@
 
             selectPersona(){
                 axios.get('api/selectPersona').then((data)=>{
-                    this.id_persona=data.data;
+                    this.select=data.data;
                     })
                     .catch(()=>{
 

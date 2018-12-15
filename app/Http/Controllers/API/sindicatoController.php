@@ -36,7 +36,7 @@ class sindicatoController extends Controller
         //validaciones en el servidor
         $this->validate($request,[
             'nombre' => 'required|string|max:191',
-            'rif' => 'required|string|min:12',
+            'rif' => 'required|string|max:15',
             'correo'=>'required|string|unique:sindicato',
             'id_persona' => 'required|integer|',
             
@@ -87,12 +87,12 @@ class sindicatoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $personas = Sindicato::findOrFail($id);
+        $sindicatos = Sindicato::findOrFail($id);
 
         $this->validate($request,[
             'nombre' => 'required|string|max:191',
-            'rif' => 'required|string|min:12',
-            'correo'=>'required|string|unique:sindicato',
+            'rif' => 'required|string|max:15',
+            'correo' => 'required|string|email|max:191|unique:sindicato,correo,'.$sindicatos->id,
             'id_persona' => 'required|integer|',
             
         ]);
