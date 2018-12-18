@@ -74791,14 +74791,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             editar: false,
             sindicatos: {},
-            select: [],
-            persona: {},
+            select: {},
             sindi: {},
             //objeto js de axios
             form: new Form({
@@ -74932,7 +74932,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this7.sindicatos = data.data;
             }).catch(function () {});
         });
+
         this.listarSindicatos();
+        this.selectPersona();
     }
 });
 
@@ -74980,8 +74982,6 @@ var render = function() {
                       "tr",
                       { key: sindi.id, attrs: { value: sindi } },
                       [
-                        _c("td", [_vm._v(_vm._s(sindi.id))]),
-                        _vm._v(" "),
                         _c("td", [
                           _vm._v(_vm._s(_vm._f("upText")(sindi.nombre)))
                         ]),
@@ -75000,40 +75000,38 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(sindi.id_persona))]),
                         _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "a",
-                            {
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  _vm.editModal(sindi)
-                                }
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                _vm.editModal(sindi)
                               }
-                            },
-                            [_c("i", { staticClass: "fa fa-edit" })]
-                          ),
-                          _vm._v(
-                            "\n                            \\\n                         "
-                          ),
-                          _c(
-                            "a",
-                            {
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  _vm.borrarSindicato(sindi.id)
-                                }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit" })]
+                        ),
+                        _vm._v(
+                          "\n                            \\\n                         "
+                        ),
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                _vm.borrarSindicato(sindi.id)
                               }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-trash",
-                                staticStyle: { color: "red" }
-                              })
-                            ]
-                          )
-                        ])
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fa fa-trash",
+                              staticStyle: { color: "red" }
+                            })
+                          ]
+                        )
                       ]
                     )
                   })
@@ -75407,14 +75405,20 @@ var render = function() {
                         }
                       },
                       [
-                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                        _c("option", { attrs: { disabled: "", value: "0" } }, [
                           _vm._v("Seleccione Presidente de Sindicato")
                         ]),
                         _vm._v(" "),
                         _vm._l(_vm.select, function(persona) {
-                          return _c("option", { key: persona.id }, [
-                            _vm._v(_vm._s(_vm.select))
-                          ])
+                          return _c("option", {
+                            key: persona.id,
+                            domProps: {
+                              value: persona.id,
+                              textContent: _vm._s(
+                                persona.nombre + " " + persona.apellido
+                              )
+                            }
+                          })
                         })
                       ],
                       2
@@ -75480,13 +75484,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Nombre")]),
       _vm._v(" "),
       _c("th", [_vm._v("RIF")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Direccion")]),
+      _c("th", [_vm._v("Dirección")]),
       _vm._v(" "),
       _c("th", [_vm._v("Telefono")]),
       _vm._v(" "),
@@ -75494,7 +75496,9 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Estado")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Presidente")])
+      _c("th", [_vm._v("Presidente")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Acciones")])
     ])
   },
   function() {

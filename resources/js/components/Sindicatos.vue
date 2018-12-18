@@ -22,27 +22,28 @@
                 <table class="table table-hover">
                   <tbody>
                     <tr>
-                    <th>ID</th>
+                    
                     <th>Nombre</th>
                     <th>RIF</th>
-                    <th>Direccion</th>
+                    <th>Dirección</th>
                     <th>Telefono</th>
                     <th>Correo</th>
                     <th>Estado</th>
                     <th>Presidente</th>
+                    <th>Acciones</th>
                   </tr>
 
                   
                   <tr v-for="sindi in sindicatos.data" :value="sindi" :key="sindi.id">
-                    <td>{{sindi.id}}</td>
+                    
                     <td>{{sindi.nombre | upText}}</td>
                     <td>{{sindi.rif}}</td>
                     <td>{{sindi.direccion}}</td>
                     <td>{{sindi.telefono}}</td>
                     <td>{{sindi.correo}}</td>
                     <td>{{sindi.estado | upText}}</td>
-                    <td>{{sindi.id_persona}}</td>                    
-                     <td>
+                    <td>{{sindi.id_persona}}</td>
+                
 
                         <a href="#" @click="editModal(sindi)">
                             <i class="fa fa-edit"></i>
@@ -52,7 +53,7 @@
                             <i style="color:red;" class="fa fa-trash"></i>
                         </a>
 
-                    </td>
+                 
                   
                   </tr>
                  
@@ -117,8 +118,8 @@
                     <has-error :form="form" field="estado"></has-error>
                 </div>
                 <select class="form-control" v-model="form.id_persona">
-                    <option disabled value="">Seleccione Presidente de Sindicato</option>
-                    <option v-for="persona in select" :key="persona.id">{{select}}</option>
+                    <option disabled value="0">Seleccione Presidente de Sindicato</option>
+                    <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido"></option>
                 </select>
 
                 
@@ -143,8 +144,7 @@
             return{
                 editar: false,
                 sindicatos:{},
-                select:[],
-                persona:{},
+                select:{},
                 sindi:{},
                  //objeto js de axios
                 form : new Form({
@@ -283,7 +283,7 @@
                         }
                     
                     })
-
+          
              },
             
         },
@@ -300,7 +300,9 @@
                     })
                 
             });
+            
             this.listarSindicatos();
+            this.selectPersona();
         }
     }
 </script>

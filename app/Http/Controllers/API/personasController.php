@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Persona;
-use App\Sindicato;
+
 
 class personasController extends Controller
 {
@@ -28,15 +28,11 @@ class personasController extends Controller
         return Persona::latest()->paginate(5);
     }
 
-    public function selectPersona(){
-         return DB::table('personas')
-            ->join('sindicato', 'personas.id', '=', 'sindicato.id_persona')
-            ->select('personas.id','personas.nombre','personas.cedula')
-            ->get();
+    public function selectPersona(Request $request){
+        $personas= Persona::select('id','nombre','apellido')->orderby('id','asc')->get();
             
-            
+        return $personas ; 
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -77,7 +73,8 @@ class personasController extends Controller
        
         if($buscar = \Request::get('q')){
             $personas= Persona:: where(function($query) use ($buscar){
-                $query->where('nombre','LIKE', "%$buscar%")->orWhere('cedula','LIKE',"%$buscar%");
+                $query->where('nombre','LIKE', "%$buscar%")->orWhere('cedula','LIKE',"%$buscar%")
+                ->orWhere('tipo','LIKE',"%$buscar%");
 
             })->paginate(20);
         }
