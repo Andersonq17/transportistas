@@ -13,4 +13,8 @@ class Persona extends Model
     public function sindicato(){
         return $this->hasOne('App\Sindicato');
     }
+
+    public function lineas_transporte(){
+        return $this->hasOne('App\Linea');
+    }
 }
