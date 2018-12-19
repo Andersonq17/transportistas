@@ -42,7 +42,9 @@
                     <td>{{sindi.telefono}}</td>
                     <td>{{sindi.correo}}</td>
                     <td>{{sindi.estado | upText}}</td>
-                    <td>{{sindi.id_persona}}</td>
+                    <td>{{sindi.presidente+' '+ sindi.apellido}}</td>
+                   
+                    
                 
 
                         <a href="#" @click="editModal(sindi)">
@@ -146,6 +148,7 @@
                 sindicatos:{},
                 select:{},
                 sindi:{},
+                
                  //objeto js de axios
                 form : new Form({
                     id :'',
@@ -155,7 +158,9 @@
                     telefono:'',
                     correo:'',
                     estado:'',
-                    id_persona:0
+                    id_persona:0,
+                    presidente:'',
+                    apellido:''
     
                 })
             }

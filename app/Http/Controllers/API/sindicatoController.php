@@ -22,11 +22,10 @@ class sindicatoController extends Controller
     public function index()
     {
     
-        return Sindicato::latest()->paginate(5);
-        /*join('personas','personas.id','=','sindicato.id_persona')
+        return Sindicato::join('personas','personas.id','=','sindicato.id_persona')
         ->select('sindicato.id','sindicato.nombre','sindicato.rif','sindicato.direccion','sindicato.telefono','sindicato.correo','sindicato.estado',
-        'personas.id','personas.nombre','personas.apellido')
-        ->paginate(5);*/
+        'personas.id as id_persona','personas.nombre as presidente','personas.apellido as apellido')
+        ->paginate(5);
     }
 
     /**

@@ -10,7 +10,7 @@ class Sindicato extends Model
     protected $fillable = [
         'nombre', 'rif', 'direccion','telefono','correo','estado','id_persona'
     ];
-    //public $timestamps= false;
+    public $timestamps= false;
 
     public function persona(){  
         return $this->belongsTo('App\Persona');

@@ -74792,6 +74792,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -74800,6 +74802,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             sindicatos: {},
             select: {},
             sindi: {},
+
             //objeto js de axios
             form: new Form({
                 id: '',
@@ -74809,7 +74812,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 telefono: '',
                 correo: '',
                 estado: '',
-                id_persona: 0
+                id_persona: 0,
+                presidente: '',
+                apellido: ''
 
             })
         };
@@ -74998,7 +75003,11 @@ var render = function() {
                           _vm._v(_vm._s(_vm._f("upText")(sindi.estado)))
                         ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(sindi.id_persona))]),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(sindi.presidente + " " + sindi.apellido)
+                          )
+                        ]),
                         _vm._v(" "),
                         _c(
                           "a",

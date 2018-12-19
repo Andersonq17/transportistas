@@ -15,7 +15,7 @@ class CreateSindicatosTable extends Migration
     {
         Schema::create('sindicato', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre',80)->unique();
+            $table->string('nombre',80);
             $table->string('rif',15)->unique();
             $table->string('direccion',120);
             $table->string('telefono',12)->nullable();
@@ -25,7 +25,7 @@ class CreateSindicatosTable extends Migration
 
             $table->foreign('id_persona')->references('id')->on('personas');
 
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 
