@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Linea;
 
 class lineasController extends Controller
@@ -23,9 +23,10 @@ class lineasController extends Controller
     {
     
         return Linea::join('personas','personas.id','=','.id_persona')
-        ->select('lineas_transporte.id','lineas_transporte.nombre','lineas_transporte.rif','lineas_transporte.direccion','lineas_transporte.telefono','lineas_transporte.correo','lineas_transporte.estado',
+        ->select('lineas.id','lineas.nombre','lineas.rif','lineas.correo','lineas.direccion','lineas.estado','lineas.municipio',
+        'lineas.telefono','lineas.tipo_ruta','lineas.id_persona','lineas.cps','lineas.status',
         'personas.id as id_persona','personas.nombre as presidente','personas.apellido as apellido')
-        ->paginate(5);
+        ->paginate(10);
     }
 
     /**
@@ -39,8 +40,8 @@ class lineasController extends Controller
         //validaciones en el servidor
         $this->validate($request,[
             'nombre' => 'required|string|max:191',
-            'rif' => 'required|string|max:15',
-            'correo'=>'required|string|unique:sindicato',
+            'rif' => 'required|string|max:15|unique:lineas',
+            'correo'=>'required|string|unique:lineas',
             'id_persona' => 'required|integer|',
             
         ]);
@@ -71,13 +72,15 @@ class lineasController extends Controller
     {
        
         if($buscar = \Request::get('q')){
-            $sindicatos= Sindicato:: where(function($query) use ($buscar){
-                $query->where('nombre','LIKE', "%$buscar%")->orWhere('rif','LIKE',"%$buscar%");
+            $lineas= Linea:: where(function($query) use ($buscar){
+                $query->where('nombre','LIKE', "%$buscar%")->orWhere('rif','LIKE',"%$buscar%")
+                ->orWhere('estado','LIKE',"%$buscar%")->orWhere('municipio','LIKE',"%$buscar%")
+                ->orWhere('tipo_ruta','LIKE',"%$buscar%");
 
             })->paginate(20);
         }
 
-        return $sindicatos; //retorna toda la consulta
+        return $lineas; //retorna toda la consulta
     }
 
     
@@ -93,18 +96,18 @@ class lineasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $sindicatos = Sindicato::findOrFail($id);
+        $lineas = Linea::findOrFail($id);
 
         $this->validate($request,[
             'nombre' => 'required|string|max:191',
-            'rif' => 'required|string|max:15',
-            'correo' => 'required|string|email|max:191|unique:sindicato,correo,'.$sindicatos->id,
+            'rif' => 'required|string|max:15|unique:lineas,rif,'.$lineas->id,
+            'correo' => 'required|string|email|max:191|unique:lineas,correo,'.$lineas->id,
             'id_persona' => 'required|integer|',
             
         ]);
 
         
-        $sindicatos->update($request->all());
+        $lineas->update($request->all());
         
         //return ['mensaje','editando'];
     }
@@ -118,9 +121,9 @@ class lineasController extends Controller
     public function destroy($id)
     {
         $this->authorize('isAdmin');
-        $sindicatos = Sindicato::findOrFail($id);
+        $lineas = Linea::findOrFail($id);
 
-        $sindicatos->delete();
+        $lineas->delete();
 
         //return['mensaje' => 'Usuario eliminado'];
     }

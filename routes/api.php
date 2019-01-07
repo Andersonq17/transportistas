@@ -40,3 +40,10 @@ Route::get('selectPersona', 'Api\personasController@selectPersona');
 //Route::get('buscarSindicato','Api\sindicatoController@buscar');
 Route::post('sindicatos', 'Api\sindicatoController@store');
 Route::put('sindicatos', 'Api\sindicatoController@update');
+
+//lineas de transporte
+Route::apiResources(['lineas'=>'API\lineasController']);
+Route::get('lineas', 'Api\lineasController@index');
+Route::get('buscarLinea','Api\lineasController@buscar');
+Route::post('lineas', 'Api\lineasController@store');
+Route::put('lineas', 'Api\lineasController@update');

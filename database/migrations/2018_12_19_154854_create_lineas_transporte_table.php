@@ -13,7 +13,7 @@ class CreateLineasTransporteTable extends Migration
      */
     public function up()
     {
-        Schema::create('lineas_transporte', function (Blueprint $table) {
+        Schema::create('lineas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre',100);
             $table->string('rif',20)->unique();

@@ -52,6 +52,7 @@ let routes = [
     { path: '/dev', component: require('./components/Desarrollador.vue')},
     { path: '/personas', component: require('./components/Personas.vue')},
     { path: '/sindicatos', component: require('./components/Sindicatos.vue')},
+    { path: '/lineas', component: require('./components/Lineas.vue')},
     { path: '*', component: require('./components/404.vue')}
   ]
 

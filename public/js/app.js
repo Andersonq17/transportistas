@@ -30801,7 +30801,7 @@ Vue.component(__WEBPACK_IMPORTED_MODULE_3_vform__["AlertError"].name, __WEBPACK_
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
 
-var routes = [{ path: '/escritorio', component: __webpack_require__(175) }, { path: '/perfil', component: __webpack_require__(178) }, { path: '/usuarios', component: __webpack_require__(184) }, { path: '/dev', component: __webpack_require__(187) }, { path: '/personas', component: __webpack_require__(190) }, { path: '/sindicatos', component: __webpack_require__(193) }, { path: '*', component: __webpack_require__(140) }];
+var routes = [{ path: '/escritorio', component: __webpack_require__(175) }, { path: '/perfil', component: __webpack_require__(178) }, { path: '/usuarios', component: __webpack_require__(184) }, { path: '/dev', component: __webpack_require__(187) }, { path: '/personas', component: __webpack_require__(190) }, { path: '/sindicatos', component: __webpack_require__(193) }, { path: '/lineas', component: __webpack_require__(229) }, { path: '*', component: __webpack_require__(140) }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]({
   mode: 'history',
@@ -78079,6 +78079,1092 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(230)
+/* template */
+var __vue_template__ = __webpack_require__(231)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Lineas.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f1b38b5e", Component.options)
+  } else {
+    hotAPI.reload("data-v-f1b38b5e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 230 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            editar: false,
+            lineas: {}, //objeto js de axios
+            form: new Form({
+                id: '',
+                nombre: '',
+                rif: '',
+                correo: '',
+                direccion: '',
+                estado: '',
+                municipio: '',
+                telefono: '',
+                tipo_ruta: '',
+                id_persona: '',
+                cps: ''
+
+            })
+        };
+    },
+
+
+    methods: {
+        getResults: function getResults() {
+            var _this = this;
+
+            var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+            axios.get('api/lineas?page=' + page).then(function (response) {
+                _this.lineas = response.data;
+            });
+        },
+        abrirModal: function abrirModal() {
+
+            this.form.reset();
+            $('#nuevaLinea').modal('show');
+            this.editar = false;
+        },
+        editModal: function editModal(linea) {
+            this.form.reset();
+            $('#nuevaLinea').modal('show');
+            this.form.fill(linea);
+            this.editar = true;
+        },
+        listarLineas: function listarLineas() {
+            var _this2 = this;
+
+            axios.get("api/lineas").then(function (_ref) {
+                var data = _ref.data;
+                return _this2.lineas = data;
+            }); // por defecto agara al index de primero
+        },
+        crearLinea: function crearLinea() {
+            var _this3 = this;
+
+            this.form.post('api/lineas').then(function () {
+                //validar si se envio todos los datos bien
+                _this3.$Progress.start();
+                $('#nuevaLinea').modal('hide');
+
+                _this3.$Progress.finish();
+                _this3.listarLineas();
+
+                toast({
+                    type: 'success',
+                    title: 'Nueva linea registrada!'
+                });
+            }).catch(function () {
+                //mostrar error
+
+                toast({
+                    type: 'error',
+                    title: 'Hay un error!'
+                });
+            });
+        },
+        actLinea: function actLinea() {
+            var _this4 = this;
+
+            this.$Progress.start();
+            this.form.put('api/lineas/' + this.form.id).then(function () {
+                $('#nuevaLinea').modal('hide');
+                swal('Datos actualizados', 'Ok para continuar', 'success');
+                _this4.listarLineas();
+                _this4.$Progress.finish();
+            }).catch(function () {
+
+                _this4.$Progress.fail();
+                swal('Falló', 'Algo salió mal', 'warning');
+            });
+            //console.log('Editando');
+        },
+        borrarLinea: function borrarLinea(id) {
+            var _this5 = this;
+
+            swal({
+                title: '¿Estas seguro de eliminar esta Linea de transporte?',
+                text: "¡Esta acción no se puede revertir! Muchas unidades de transporte se quedarán sin linea ",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then(function (result) {
+
+                //enviar la peticion al servidor
+                if (result.value) {
+                    //evaluar si Si o No elimina
+                    _this5.form.delete('api/lineas/' + id).then(function () {
+                        //llamar al metodo borrar del controlador mediante el route list
+
+                        swal('Eliminado', 'Linea de Transporte eliminada', 'success');
+
+                        _this5.listarLineas();
+                    }).catch(function () {
+                        swal('Falló', 'Algo salió mal', 'warning');
+                    });
+                }
+            });
+        }
+    },
+    created: function created() {
+        var _this6 = this;
+
+        Fire.$on('buscando', function () {
+            var query = _this6.$parent.buscar;
+
+            axios.get('api/buscarLinea?q=' + query).then(function (data) {
+                _this6.lineas = data.data;
+            }).catch(function () {});
+        });
+        this.listarLineas();
+    }
+});
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [
+              _vm._v("Administración Lineas de transporte")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-tools" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  on: { click: _vm.abrirModal }
+                },
+                [
+                  _vm._v("Nueva Linea "),
+                  _c("i", { staticClass: "fas fa-plus fa-fw" })
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _c(
+                "tbody",
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._l(_vm.lineas.data, function(linea) {
+                    return _c("tr", { key: linea.id }, [
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("upText")(linea.nombre)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(_vm._f("upText")(linea.rif)))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(linea.correo))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(linea.direccion))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("upText")(linea.estado)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("upText")(linea.municipio)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(linea.telefono))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(linea.tipo_ruta))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(linea.id_persona))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(linea.status))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                _vm.editModal(linea)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit" })]
+                        ),
+                        _vm._v(
+                          "\n                            \\\n                         "
+                        ),
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                _vm.borrarLinea(linea.id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fa fa-trash",
+                              staticStyle: { color: "red" }
+                            })
+                          ]
+                        )
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card footer" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.lineas },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    !_vm.$gate.isAdmin() ? _c("div", [_c("not-found")], 1) : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "nuevaLinea",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "nuevaLinea",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editar,
+                        expression: "!editar"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "nuevaLinea" }
+                  },
+                  [_vm._v("Agregar Nueva Linea de Transporte")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editar,
+                        expression: "editar"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "nuevaLinea" }
+                  },
+                  [_vm._v("Editar datos de Linea de transporte")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        _vm.editar ? _vm.actLinea() : _vm.crearLinea()
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.nombre,
+                              expression: "form.nombre"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("nombre")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "nombre",
+                            placeholder: "Nombre completo de la linea"
+                          },
+                          domProps: { value: _vm.form.nombre },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "nombre", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "nombre" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.rif,
+                              expression: "form.rif"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("rif") },
+                          attrs: {
+                            type: "text",
+                            name: "rif",
+                            placeholder: "RIF"
+                          },
+                          domProps: { value: _vm.form.rif },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "rif", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "rif" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.correo,
+                              expression: "form.correo"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("correo")
+                          },
+                          attrs: {
+                            type: "email",
+                            name: "correo",
+                            placeholder: "Correo"
+                          },
+                          domProps: { value: _vm.form.correo },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "correo", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "correo" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.direccion,
+                              expression: "form.direccion"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("direccion")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "direccion",
+                            placeholder: "Direccion"
+                          },
+                          domProps: { value: _vm.form.direccion },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "direccion",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "direccion" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.estado,
+                              expression: "form.estado"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("estado")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "estado",
+                            placeholder: "Estado"
+                          },
+                          domProps: { value: _vm.form.estado },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "estado", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "estado" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.municipio,
+                              expression: "form.municipio"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("municipio")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "municipio",
+                            placeholder: "Municipio"
+                          },
+                          domProps: { value: _vm.form.municipio },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "municipio",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "municipio" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.telefono,
+                              expression: "form.telefono"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("telefono")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "telefono",
+                            placeholder: "Numero de telefono"
+                          },
+                          domProps: { value: _vm.form.telefono },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "telefono",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "telefono" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.cps,
+                              expression: "form.cps"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("cps") },
+                          attrs: {
+                            type: "text",
+                            name: "cps",
+                            placeholder: "Numero de cps (opcional)"
+                          },
+                          domProps: { value: _vm.form.cps },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "cps", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "cps" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.tipo_ruta,
+                            expression: "form.tipo_ruta"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.form,
+                              "tipo_ruta",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Seleccione tipo de Ruta")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "Urbana" } }, [
+                          _vm._v("Urbana")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "SubUrbana" } }, [
+                          _vm._v("Sub-Urbana")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "InterUrbana" } }, [
+                          _vm._v("Inter-Urbana")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "Periferica" } }, [
+                          _vm._v("Periferica")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "ExtraUrbana" } }, [
+                          _vm._v("Extra-Urbana")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" }
+                        },
+                        [_vm._v("Cerrar")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.editar,
+                              expression: "!editar"
+                            }
+                          ],
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Guardar")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.editar,
+                              expression: "editar"
+                            }
+                          ],
+                          staticClass: "btn btn-success",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Actualizar")]
+                      )
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("Nombre")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("RIF")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Correo")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Dirección")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Estado")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Municipio")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Teléfono")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tipo de Ruta")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Presidente de Linea")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Acciones")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "form-group input-group",
+        staticStyle: { width: "300px" }
+      },
+      [
+        _c("input", {
+          staticClass: "form-control float-right",
+          attrs: {
+            type: "text",
+            name: "table_search",
+            placeholder: "Buscar Presidente de Linea"
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group-append" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-default", attrs: { type: "submit" } },
+            [_c("i", { staticClass: "fa fa-search" })]
+          )
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-f1b38b5e", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

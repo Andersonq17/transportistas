@@ -107,14 +107,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
                 <a href="#" class="nav-link ">
                 <i class="fas fa-address-card"></i>
-                  <p>Transportistas</p>
+                  <p>Unidades de transporte</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas fa-subway"></i>
-                  <p>Lineas de transporte</p>
-                </a>
+              <router-link to="/lineas" class="nav-link">
+                  <i class="fas fa-subway"></i>
+                  <p>
+                    Lineas de transporte
+                  </p>
+                </router-link>
               </li>
               <li class="nav-item">
               <router-link to="/personas" class="nav-link">
