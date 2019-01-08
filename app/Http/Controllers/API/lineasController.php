@@ -61,7 +61,7 @@ class lineasController extends Controller
 
         
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -81,6 +81,12 @@ class lineasController extends Controller
         }
 
         return $lineas; //retorna toda la consulta
+    }
+
+    public function selectLinea(){
+        $lineas= Linea::select('id','nombre')->orderby('id','asc')->get();
+            
+        return $lineas ; 
     }
 
     

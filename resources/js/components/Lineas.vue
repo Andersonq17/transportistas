@@ -18,30 +18,19 @@
                     <tr>
                     <th>Nombre</th>
                     <th>RIF</th>
-                    <th>Correo</th>
-                    <th>Dirección</th>
                     <th>Estado</th>
                     <th>Municipio</th>
-                    <th>Teléfono</th>
-                    <th>Tipo de Ruta</th>
-                    <th>Presidente de Linea</th>
                     <th>Status</th>
-                    <th>Acciones</th>
                   </tr>
 
                   
                   <tr v-for="linea in lineas.data" :key="linea.id">
                     <td>{{linea.nombre | upText}}</td>
                     <td>{{linea.rif | upText}}</td>
-                    <td>{{linea.correo}}</td>
-                    <td>{{linea.direccion}}</td>
                     <td>{{linea.estado | upText}}</td>
                     <td>{{linea.municipio | upText}}</td>
-                    <td>{{linea.telefono}}</td> 
-                    <td>{{linea.tipo_ruta}}</td>
-                    <td>{{linea.id_persona}}</td>
                     <td>{{linea.status}}</td>                      
-                     <td>
+                     <!--<td>
 
                         <a href="#" @click="editModal(linea)">
                             <i class="fa fa-edit"></i>
@@ -51,7 +40,7 @@
                             <i style="color:red;" class="fa fa-trash"></i>
                         </a>
 
-                    </td>
+                    </td>-->
                   
                   </tr>
                  
@@ -121,12 +110,18 @@
                     <has-error :form="form" field="telefono"></has-error>
                 </div>
                 <div class="form-group input-group" style="width: 300px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar Presidente de Linea">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar Presidente de Linea" v-model="form.id_persona">
 
                     <div class="input-group-append">
                       <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                     </div>
                   </div>
+                  <div class="form-group">
+                <select class="form-control" v-model="form.id_sindicato">
+                    <option disabled value="0">Seleccione Propietario del Vehiculo</option>
+                    <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido"></option>
+                </select>
+                </div>
                 <div class="form-group">
                     <input v-model="form.cps" type="text" name="cps" placeholder="Numero de cps (opcional)"
                         class="form-control" :class="{ 'is-invalid': form.errors.has('cps') }">
@@ -174,6 +169,7 @@
                     telefono:'',
                     tipo_ruta:'',
                     id_persona:'',
+                    id_sindicato:'',
                     cps:''
     
                 })

@@ -24,10 +24,12 @@ class CreateLineasTransporteTable extends Migration
             $table->string('telefono',20)->nullable();
             $table->string('tipo_ruta',20);
             $table->integer('id_persona')->unsigned();
+            $table->integer('id_sindicato')->unsigned();
             $table->string('cps',20)->nullable();
             $table->boolean('status')->default(1);
 
             $table->foreign('id_persona')->references('id')->on('personas');
+            $table->foreign('id_sindicato')->references('id')->on('sindicato');
             //$table->timestamps();
         });
     }
@@ -39,6 +41,6 @@ class CreateLineasTransporteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lineas_transporte');
+        Schema::dropIfExists('lineas');
     }
 }

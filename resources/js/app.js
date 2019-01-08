@@ -53,6 +53,7 @@ let routes = [
     { path: '/personas', component: require('./components/Personas.vue')},
     { path: '/sindicatos', component: require('./components/Sindicatos.vue')},
     { path: '/lineas', component: require('./components/Lineas.vue')},
+    { path: '/unidades', component: require('./components/Unidades.vue')},
     { path: '*', component: require('./components/404.vue')}
   ]
 

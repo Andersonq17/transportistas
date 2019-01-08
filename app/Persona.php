@@ -17,4 +17,7 @@ class Persona extends Model
     public function lineas_transporte(){
         return $this->hasOne('App\Linea');
     }
+    public function unidades(){
+        return $this->hasMany('App\Unidades');
+    }
 }

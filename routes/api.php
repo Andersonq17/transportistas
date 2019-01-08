@@ -47,3 +47,12 @@ Route::get('lineas', 'Api\lineasController@index');
 Route::get('buscarLinea','Api\lineasController@buscar');
 Route::post('lineas', 'Api\lineasController@store');
 Route::put('lineas', 'Api\lineasController@update');
+
+//unidades de transporte
+Route::apiResources(['unidades'=>'API\unidadesController']);
+Route::get('unidades', 'Api\unidadesController@index');
+Route::get('selectPersona', 'Api\personasController@selectPersona');
+Route::get('buscarUnidad','Api\unidadesController@buscar');
+Route::post('unidades', 'Api\unidadesController@store');
+Route::put('unidades', 'Api\unidadesController@update');
+Route::get('selectLinea', 'Api\lineasController@selectLinea');
