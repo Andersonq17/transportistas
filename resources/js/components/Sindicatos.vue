@@ -42,7 +42,7 @@
                     <td>{{sindi.telefono}}</td>
                     <td>{{sindi.correo}}</td>
                     <td>{{sindi.estado | upText}}</td>
-                    <td>{{sindi.presidente+' '+ sindi.apellido}}</td>
+                    <td>{{sindi.presidente+' '+sindi.apellido}}</td>
                    
                     
                 
@@ -121,7 +121,7 @@
                 </div>
                 <select class="form-control" v-model="form.id_persona">
                     <option disabled value="0">Seleccione Presidente de Sindicato</option>
-                    <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido"></option>
+                    <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido +'  '+ persona.cedula"></option>
                 </select>
 
                 
@@ -160,7 +160,8 @@
                     estado:'',
                     id_persona:0,
                     presidente:'',
-                    apellido:''
+                    apellido:'',
+                    cedula:''
     
                 })
             }

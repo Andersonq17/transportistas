@@ -113,7 +113,7 @@
                   <div class="form-group">
                 <select class="form-control" v-model="form.id_persona">
                     <option disabled value="">Seleccione Presidente de Linea</option>
-                    <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido"></option>
+                    <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido+ ' ' +persona.cedula"></option>
                 </select>
                 
                 </div>
@@ -173,8 +173,8 @@
                     tipo_ruta:'',
                     id_persona:'',
                     id_sindicato:'',
-                    cps:''
-    
+                    cps:'',
+                    cedula:''    
                 })
             }
 

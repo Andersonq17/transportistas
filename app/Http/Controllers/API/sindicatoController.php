@@ -24,7 +24,7 @@ class sindicatoController extends Controller
     
         return Sindicato::join('personas','personas.id','=','sindicato.id_persona')
         ->select('sindicato.id','sindicato.nombre','sindicato.rif','sindicato.direccion','sindicato.telefono','sindicato.correo','sindicato.estado',
-        'personas.id as id_persona','personas.nombre as presidente','personas.apellido as apellido')
+        'personas.id as id_persona','personas.nombre as presidente','personas.apellido as apellido','personas.cedula as cedula')
         ->paginate(5);
     }
 

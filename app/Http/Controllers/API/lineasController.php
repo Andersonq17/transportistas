@@ -25,7 +25,7 @@ class lineasController extends Controller
         return Linea::join('personas','personas.id','=','.id_persona')
         ->select('lineas.id','lineas.nombre','lineas.rif','lineas.correo','lineas.direccion','lineas.estado','lineas.municipio',
         'lineas.telefono','lineas.tipo_ruta','lineas.id_persona','lineas.cps','lineas.status',
-        'personas.id as id_persona','personas.nombre as presidente','personas.apellido as apellido')
+        'personas.id as id_persona','personas.nombre as presidente','personas.apellido as apellido','personas.cedula as cedula')
         ->paginate(10);
     }
 

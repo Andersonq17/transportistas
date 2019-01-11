@@ -74814,7 +74814,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 estado: '',
                 id_persona: 0,
                 presidente: '',
-                apellido: ''
+                apellido: '',
+                cedula: ''
 
             })
         };
@@ -75424,7 +75425,11 @@ var render = function() {
                             domProps: {
                               value: persona.id,
                               textContent: _vm._s(
-                                persona.nombre + " " + persona.apellido
+                                persona.nombre +
+                                  " " +
+                                  persona.apellido +
+                                  "  " +
+                                  persona.cedula
                               )
                             }
                           })
@@ -75764,8 +75769,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 tipo_ruta: '',
                 id_persona: '',
                 id_sindicato: '',
-                cps: ''
-
+                cps: '',
+                cedula: ''
             })
         };
     },
@@ -76418,7 +76423,11 @@ var render = function() {
                               domProps: {
                                 value: persona.id,
                                 textContent: _vm._s(
-                                  persona.nombre + " " + persona.apellido
+                                  persona.nombre +
+                                    " " +
+                                    persona.apellido +
+                                    " " +
+                                    persona.cedula
                                 )
                               }
                             })

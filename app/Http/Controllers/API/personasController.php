@@ -29,7 +29,7 @@ class personasController extends Controller
     }
 
     public function selectPersona(Request $request){
-        $personas= Persona::select('id','nombre','apellido')->orderby('id','asc')->get();
+        $personas= Persona::select('id','nombre','apellido','cedula')->orderby('id','desc')->get();
             
         return $personas ; 
     }
