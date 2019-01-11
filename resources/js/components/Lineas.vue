@@ -30,17 +30,17 @@
                     <td>{{linea.estado | upText}}</td>
                     <td>{{linea.municipio | upText}}</td>
                     <td>{{linea.status}}</td>                      
-                     <!--<td>
+                     <td>
 
                         <a href="#" @click="editModal(linea)">
                             <i class="fa fa-edit"></i>
                         </a>
-                            \
+                            |
                          <a href="#" @click="borrarLinea(linea.id)">
                             <i style="color:red;" class="fa fa-trash"></i>
                         </a>
 
-                    </td>-->
+                    </td>
                   
                   </tr>
                  
@@ -109,17 +109,18 @@
                         class="form-control" :class="{ 'is-invalid': form.errors.has('telefono') }">
                     <has-error :form="form" field="telefono"></has-error>
                 </div>
-                <div class="form-group input-group" style="width: 300px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar Presidente de Linea" v-model="form.id_persona">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                    </div>
-                  </div>
+                
                   <div class="form-group">
-                <select class="form-control" v-model="form.id_sindicato">
-                    <option disabled value="0">Seleccione Propietario del Vehiculo</option>
+                <select class="form-control" v-model="form.id_persona">
+                    <option disabled value="">Seleccione Presidente de Linea</option>
                     <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido"></option>
+                </select>
+                
+                </div>
+                <div class="form-group">
+                <select class="form-control" v-model="form.id_sindicato">
+                    <option disabled value="">Seleccione Sindicato al que pertenece</option>
+                    <option v-for="sindicato in selectS" :key="sindicato.id" :value="sindicato.id" v-text="sindicato.nombre"></option>
                 </select>
                 </div>
                 <div class="form-group">
@@ -157,7 +158,9 @@
         data(){
             return{
                 editar: false,
-                lineas:{}, //objeto js de axios
+                lineas:{},
+                select:{},
+                selectS:{}, //objeto js de axios
                 form : new Form({
                     id :'',
                     nombre: '',
@@ -232,6 +235,23 @@
                    
              },
 
+                selectPersona(){
+                axios.get('api/selectPersona').then((data)=>{
+                    this.select=data.data;
+                    })
+                    .catch(()=>{
+
+                    })
+            },
+
+             selectSindicato(){
+                axios.get('api/selectSindicato').then((data)=>{
+                    this.selectS=data.data;
+                    })
+                    .catch(()=>{
+
+                    })
+            },
              actLinea(){
                  this.$Progress.start();
                  this.form.put('api/lineas/'+this.form.id).then(()=>{
@@ -308,6 +328,8 @@
                 
             });
             this.listarLineas();
+            this.selectPersona();
+            this.selectSindicato();
         }
     }
 </script>

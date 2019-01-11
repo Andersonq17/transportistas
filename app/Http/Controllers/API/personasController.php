@@ -25,7 +25,7 @@ class personasController extends Controller
     public function index()
     {
     
-        return Persona::latest()->paginate(5);
+        return Persona::select('id','nombre','apellido','cedula','telefono','correo','tipo')->orderby('id','desc')->paginate(10);
     }
 
     public function selectPersona(Request $request){

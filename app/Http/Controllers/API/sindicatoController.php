@@ -77,6 +77,12 @@ class sindicatoController extends Controller
         return $sindicatos; //retorna toda la consulta
     }
 
+    public function selectSindicato(){
+        $sindicatos= Sindicato::select('id','nombre')->orderby('id','asc')->get();
+            
+        return $sindicatos ; 
+    }
+
     
         //return ["mensaje"=>"Actualizado"];
     
