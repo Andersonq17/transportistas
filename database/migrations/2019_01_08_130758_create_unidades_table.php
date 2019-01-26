@@ -22,11 +22,11 @@ class CreateUnidadesTable extends Migration
             $table->string('tipo',20);
             $table->string('numero_cupo',10)->nullable();
             $table->boolean('status')->default('1');
-            $table->integer('id_linea')->unsigned();
-            $table->integer('id_persona')->unsigned();
+            $table->integer('id_linea')->unsigned()->nullable();
+            $table->integer('id_persona')->unsigned()->nullable();
 
-            $table->foreign('id_linea')->references('id')->on('lineas');
-            $table->foreign('id_persona')->references('id')->on('personas');
+            $table->foreign('id_linea')->references('id')->on('lineas')->onDelete('SET NULL');
+            $table->foreign('id_persona')->references('id')->on('personas')->onDelete('SET NULL');
 
 
             //$table->timestamps();

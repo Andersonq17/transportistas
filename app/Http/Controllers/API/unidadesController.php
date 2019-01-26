@@ -127,6 +127,6 @@ class unidadesController extends Controller
         $unidades->delete();
 
         //return['mensaje' => 'Usuario eliminado'];
-    }
+    } 
 }
 

@@ -15,13 +15,13 @@
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover">
                   <tbody>
-                    <tr>
+                    <tr class="text-center">
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>Año</th>
                     <th>Placa</th>
                     <th>Tipo</th>
-                    <th>Numero de Cupo</th>
+                    <th>Número de Cupo</th>
                     <th>Status</th>
                     <th>Organización</th>
                     <th>Propietario</th>
@@ -29,15 +29,22 @@
                   </tr>
 
                   
-                  <tr v-for="unidad in unidades.data" :key="unidad.id">
+                  <tr v-for="unidad in unidades.data" :key="unidad.id" class="text-center">
                     <td>{{unidad.marca | upText}}</td>
                     <td>{{unidad.modelo | upText}}</td>
                     <td>{{unidad.anio}}</td>
                     <td>{{unidad.placa}}</td>
                     <td>{{unidad.tipo | upText}}</td>
                     <td>{{unidad.numero_cupo}}</td> 
-                    <td v-if="unidad.status === 1"><p v-text="Activo"></p></td>
-                    <td v-else><p v-text="Inactivo"></p></td>
+                     <td>
+                    <div v-if="unidad.status">
+                         <span class="badge badge-success">Activa</span>
+
+                        </div>
+                        <div v-else>
+                            <span class="badge badge-danger">Inactiva</span>
+                        </div>
+                        </td>
                     <td>{{unidad.nombre_linea}}</td>
                     <td>{{unidad.propietario+' '+unidad.apellido |upText}}</td>
                      <td>
@@ -51,17 +58,6 @@
                         </a>
 
                     </td>                        
-                     <!--<td>
-
-                        <a href="#" @click="editModal(linea)">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                            \
-                         <a href="#" @click="borrarLinea(linea.id)">
-                            <i style="color:red;" class="fa fa-trash"></i>
-                        </a>
-
-                    </td>-->
                   
                   </tr>
                  

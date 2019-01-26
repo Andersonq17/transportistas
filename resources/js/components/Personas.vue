@@ -4,7 +4,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Administración de datos de Choferes</h3>
+                <h3 class="card-title">Administración de datos de Conductores y Socios</h3>
 
                 <div class="card-tools">
                     <button class="btn btn-success" @click="abrirModal">Registrar Nuevo <i class="fas fa-user-plus fa-fw"></i></button>
@@ -21,19 +21,18 @@
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover">
                   <tbody>
-                    <tr>
-                    <th>ID</th>
+                    <tr class="text-center">
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Cedula</th>
                     <th>Telefono</th>
                     <th>Correo</th>
                     <th>Tipo</th>
+                    <th>Acciones</th>
                   </tr>
 
                   
-                  <tr v-for="persona in personas.data" :key="persona.id">
-                    <td>{{persona.id}}</td>
+                  <tr v-for="persona in personas.data" :key="persona.id" class="text-center">
                     <td>{{persona.nombre | upText}}</td>
                     <td>{{persona.apellido | upText}}</td>
                     <td>{{persona.cedula}}</td>
@@ -55,12 +54,16 @@
                   </tr>
                  
                 </tbody></table>
+                
               </div>
+                
               <!-- /.card-body -->
-              <div class="card footer">
-                  <pagination :data="personas" @pagination-change-page="getResults"></pagination>
-              </div>
+              
             </div>
+             <div class="card-footer">
+                  <pagination :data="personas" @pagination-change-page="getResults" limit=-4></pagination>
+              </div>
+           
             <!-- /.card -->
           </div>
         </div>

@@ -15,21 +15,40 @@
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover">
                   <tbody>
-                    <tr>
+                    <tr class="text-center">
                     <th>Nombre</th>
                     <th>RIF</th>
-                    <th>Estado</th>
                     <th>Municipio</th>
+                    <th>Correo</th>
+                    <th>Telefono</th>
+                    <th>Tipo de Ruta</th>
+                    <th>Representante</th>
+                    <th>Sindicato</th>
                     <th>Status</th>
+                    <th>Acciones</th>
                   </tr>
 
                   
-                  <tr v-for="linea in lineas.data" :key="linea.id">
+                  <tr v-for="linea in lineas.data" :key="linea.id" class="text-center">
                     <td>{{linea.nombre | upText}}</td>
                     <td>{{linea.rif | upText}}</td>
-                    <td>{{linea.estado | upText}}</td>
                     <td>{{linea.municipio | upText}}</td>
-                    <td>{{linea.status}}</td>                      
+                    <td>{{linea.correo}}</td>
+                     <td>{{linea.telefono}}</td>
+                    <td>{{linea.tipo_ruta}}</td>
+                    <td>{{linea.presidente+' '+linea.apellido |upText}}</td>
+                    <td>{{linea.nombre_sindicato}}</td>
+                    
+                    <td>
+                    <div v-if="linea.status">
+                         <span class="badge badge-success">Activa</span>
+
+                        </div>
+                        <div v-else>
+                            <span class="badge badge-danger">Inactiva</span>
+                        </div>
+                        </td>
+                                          
                      <td>
 
                         <a href="#" @click="editModal(linea)">
@@ -174,7 +193,8 @@
                     id_persona:'',
                     id_sindicato:'',
                     cps:'',
-                    cedula:''    
+                    cedula:'',
+                      
                 })
             }
 
@@ -288,7 +308,7 @@
 
                         //enviar la peticion al servidor
                     if (result.value) { //evaluar si Si o No elimina
-                        this.form.delete('api/lineas/'+id).then(()=>{ //llamar al metodo borrar del controlador mediante el route list
+                        this.form.put('api/lineas/desactivar/'+this.form.id).then(()=>{ //llamar al metodo borrar del controlador mediante el route list
                            
                                 swal(
                                 'Eliminado',

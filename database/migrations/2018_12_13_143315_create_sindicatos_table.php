@@ -21,9 +21,9 @@ class CreateSindicatosTable extends Migration
             $table->string('telefono',12)->nullable();
             $table->string('correo',50)->unique();
             $table->string('estado',50)->nullable();
-            $table->integer('id_persona')->unsigned();
+            $table->integer('id_persona')->unsigned()->nullable();
 
-            $table->foreign('id_persona')->references('id')->on('personas');
+            $table->foreign('id_persona')->references('id')->on('personas')->onDelete('SET NULL');
 
             //$table->timestamps();
         });

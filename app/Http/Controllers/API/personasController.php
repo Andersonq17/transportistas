@@ -29,7 +29,7 @@ class personasController extends Controller
     }
 
     public function selectPersona(Request $request){
-        $personas= Persona::select('id','nombre','apellido','cedula')->orderby('id','desc')->get();
+        $personas= Persona::select('id','nombre','apellido','cedula')->where('tipo','=','Socio')->orderby('id','desc')->get();
             
         return $personas ; 
     }
@@ -74,7 +74,7 @@ class personasController extends Controller
         if($buscar = \Request::get('q')){
             $personas= Persona:: where(function($query) use ($buscar){
                 $query->where('nombre','LIKE', "%$buscar%")->orWhere('cedula','LIKE',"%$buscar%")
-                ->orWhere('tipo','LIKE',"%$buscar%");
+                ->orWhere('tipo','LIKE',"%$buscar%")->orWhere('apellido','LIKE',"%$buscar%");
 
             })->paginate(20);
         }

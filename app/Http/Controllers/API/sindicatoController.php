@@ -41,7 +41,7 @@ class sindicatoController extends Controller
             'nombre' => 'required|string|max:191',
             'rif' => 'required|string|max:15',
             'correo'=>'required|string|unique:sindicato',
-            'id_persona' => 'required|integer|',
+            
             
         ]);
 

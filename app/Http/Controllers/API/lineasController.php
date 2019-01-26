@@ -22,10 +22,11 @@ class lineasController extends Controller
     public function index()
     {
     
-        return Linea::join('personas','personas.id','=','.id_persona')
+        return Linea::join('personas','personas.id','=','id_persona')
+        ->join('sindicato','sindicato.id','=','id_sindicato')
         ->select('lineas.id','lineas.nombre','lineas.rif','lineas.correo','lineas.direccion','lineas.estado','lineas.municipio',
         'lineas.telefono','lineas.tipo_ruta','lineas.id_persona','lineas.cps','lineas.status',
-        'personas.id as id_persona','personas.nombre as presidente','personas.apellido as apellido','personas.cedula as cedula')
+        'personas.id as id_persona','personas.nombre as presidente','personas.apellido as apellido','personas.cedula as cedula','sindicato.nombre as nombre_sindicato')
         ->paginate(10);
     }
 
@@ -56,6 +57,7 @@ class lineasController extends Controller
             'telefono' =>$request['telefono'],
             'tipo_ruta' =>$request['tipo_ruta'],
             'id_persona' =>$request['id_persona'],
+            'id_sindicato' =>$request['id_sindicato'],
             'cps' =>$request['cps'],
         ]);
 
@@ -124,7 +126,7 @@ class lineasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    /*public function destroy($id)
     {
         $this->authorize('isAdmin');
         $lineas = Linea::findOrFail($id);
@@ -132,6 +134,21 @@ class lineasController extends Controller
         $lineas->delete();
 
         //return['mensaje' => 'Usuario eliminado'];
+    }*/
+
+    public function activar(Request $request,$id){
+        $lineas= Linea::findOrFail($id);
+        $lineas->status='1';
+
+        $lineas->update();
+
+    }
+    public function desactivar(Request $request,$id){
+        $lineas= Linea::findOrFail($id);
+        $lineas->status='0';
+
+        $lineas->update();
+
     }
 }
 

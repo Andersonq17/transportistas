@@ -73924,6 +73924,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -74071,7 +74074,7 @@ var render = function() {
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
             _c("h3", { staticClass: "card-title" }, [
-              _vm._v("Administración de datos de Choferes")
+              _vm._v("Administración de datos de Conductores y Socios")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-tools" }, [
@@ -74097,79 +74100,81 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _vm._l(_vm.personas.data, function(persona) {
-                    return _c("tr", { key: persona.id }, [
-                      _c("td", [_vm._v(_vm._s(persona.id))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(persona.nombre)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(persona.apellido)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(persona.cedula))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(persona.telefono))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(persona.correo))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(persona.tipo))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.editModal(persona)
+                    return _c(
+                      "tr",
+                      { key: persona.id, staticClass: "text-center" },
+                      [
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("upText")(persona.nombre)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("upText")(persona.apellido)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(persona.cedula))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(persona.telefono))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(persona.correo))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(persona.tipo))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.editModal(persona)
+                                }
                               }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit" })]
-                        ),
-                        _vm._v(
-                          "\n                            \\\n                         "
-                        ),
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.borrarPersona(persona.id)
+                            },
+                            [_c("i", { staticClass: "fa fa-edit" })]
+                          ),
+                          _vm._v(
+                            "\n                            \\\n                         "
+                          ),
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.borrarPersona(persona.id)
+                                }
                               }
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fa fa-trash",
-                              staticStyle: { color: "red" }
-                            })
-                          ]
-                        )
-                      ])
-                    ])
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-trash",
+                                staticStyle: { color: "red" }
+                              })
+                            ]
+                          )
+                        ])
+                      ]
+                    )
                   })
                 ],
                 2
               )
             ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card footer" },
-            [
-              _c("pagination", {
-                attrs: { data: _vm.personas },
-                on: { "pagination-change-page": _vm.getResults }
-              })
-            ],
-            1
-          )
-        ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-footer" },
+          [
+            _c("pagination", {
+              attrs: { data: _vm.personas, limit: "-4" },
+              on: { "pagination-change-page": _vm.getResults }
+            })
+          ],
+          1
+        )
       ])
     ]),
     _vm._v(" "),
@@ -74557,9 +74562,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
+    return _c("tr", { staticClass: "text-center" }, [
       _c("th", [_vm._v("Nombre")]),
       _vm._v(" "),
       _c("th", [_vm._v("Apellido")]),
@@ -74570,7 +74573,9 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Correo")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Tipo")])
+      _c("th", [_vm._v("Tipo")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Acciones")])
     ])
   },
   function() {
@@ -74986,7 +74991,11 @@ var render = function() {
                   _vm._l(_vm.sindicatos.data, function(sindi) {
                     return _c(
                       "tr",
-                      { key: sindi.id, attrs: { value: sindi } },
+                      {
+                        key: sindi.id,
+                        staticClass: "text-center",
+                        attrs: { value: sindi }
+                      },
                       [
                         _c("td", [
                           _vm._v(_vm._s(_vm._f("upText")(sindi.nombre)))
@@ -75006,7 +75015,11 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [
                           _vm._v(
-                            _vm._s(sindi.presidente + " " + sindi.apellido)
+                            _vm._s(
+                              _vm._f("upText")(
+                                sindi.presidente + " " + sindi.apellido
+                              )
+                            )
                           )
                         ]),
                         _vm._v(" "),
@@ -75497,7 +75510,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
+    return _c("tr", { staticClass: "text-center" }, [
       _c("th", [_vm._v("Nombre")]),
       _vm._v(" "),
       _c("th", [_vm._v("RIF")]),
@@ -75749,6 +75762,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -75771,6 +75803,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 id_sindicato: '',
                 cps: '',
                 cedula: ''
+
             })
         };
     },
@@ -75876,7 +75909,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //enviar la peticion al servidor
                 if (result.value) {
                     //evaluar si Si o No elimina
-                    _this7.form.delete('api/lineas/' + id).then(function () {
+                    _this7.form.put('api/lineas/desactivar/' + _this7.form.id).then(function () {
                         //llamar al metodo borrar del controlador mediante el route list
 
                         swal('Eliminado', 'Linea de Transporte eliminada', 'success');
@@ -75945,58 +75978,92 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _vm._l(_vm.lineas.data, function(linea) {
-                    return _c("tr", { key: linea.id }, [
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(linea.nombre)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(_vm._f("upText")(linea.rif)))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(linea.estado)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(linea.municipio)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(linea.status))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.editModal(linea)
+                    return _c(
+                      "tr",
+                      { key: linea.id, staticClass: "text-center" },
+                      [
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("upText")(linea.nombre)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm._f("upText")(linea.rif)))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("upText")(linea.municipio)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(linea.correo))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(linea.telefono))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(linea.tipo_ruta))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("upText")(
+                                linea.presidente + " " + linea.apellido
+                              )
+                            )
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(linea.nombre_sindicato))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          linea.status
+                            ? _c("div", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-success" },
+                                  [_vm._v("Activa")]
+                                )
+                              ])
+                            : _c("div", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-danger" },
+                                  [_vm._v("Inactiva")]
+                                )
+                              ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.editModal(linea)
+                                }
                               }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit" })]
-                        ),
-                        _vm._v(
-                          "\n                            |\n                         "
-                        ),
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.borrarLinea(linea.id)
+                            },
+                            [_c("i", { staticClass: "fa fa-edit" })]
+                          ),
+                          _vm._v(
+                            "\n                            |\n                         "
+                          ),
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.borrarLinea(linea.id)
+                                }
                               }
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fa fa-trash",
-                              staticStyle: { color: "red" }
-                            })
-                          ]
-                        )
-                      ])
-                    ])
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-trash",
+                                staticStyle: { color: "red" }
+                              })
+                            ]
+                          )
+                        ])
+                      ]
+                    )
                   })
                 ],
                 2
@@ -76645,16 +76712,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
+    return _c("tr", { staticClass: "text-center" }, [
       _c("th", [_vm._v("Nombre")]),
       _vm._v(" "),
       _c("th", [_vm._v("RIF")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Estado")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Municipio")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Status")])
+      _c("th", [_vm._v("Correo")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Telefono")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tipo de Ruta")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Representante")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Sindicato")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Acciones")])
     ])
   },
   function() {
@@ -76737,10 +76814,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -77100,82 +77173,94 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _vm._l(_vm.unidades.data, function(unidad) {
-                    return _c("tr", { key: unidad.id }, [
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(unidad.marca)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(unidad.modelo)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(unidad.anio))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(unidad.placa))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(_vm._f("upText")(unidad.tipo)))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(unidad.numero_cupo))]),
-                      _vm._v(" "),
-                      unidad.status === 1
-                        ? _c("td", [
-                            _c("p", {
-                              domProps: { textContent: _vm._s(_vm.Activo) }
-                            })
-                          ])
-                        : _c("td", [
-                            _c("p", {
-                              domProps: { textContent: _vm._s(_vm.Inactivo) }
-                            })
-                          ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(unidad.nombre_linea))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          _vm._s(
-                            _vm._f("upText")(
-                              unidad.propietario + " " + unidad.apellido
+                    return _c(
+                      "tr",
+                      { key: unidad.id, staticClass: "text-center" },
+                      [
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("upText")(unidad.marca)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("upText")(unidad.modelo)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(unidad.anio))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(unidad.placa))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("upText")(unidad.tipo)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(unidad.numero_cupo))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          unidad.status
+                            ? _c("div", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-success" },
+                                  [_vm._v("Activa")]
+                                )
+                              ])
+                            : _c("div", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-danger" },
+                                  [_vm._v("Inactiva")]
+                                )
+                              ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(unidad.nombre_linea))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("upText")(
+                                unidad.propietario + " " + unidad.apellido
+                              )
                             )
                           )
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.editModal(unidad)
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.editModal(unidad)
+                                }
                               }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit" })]
-                        ),
-                        _vm._v(
-                          "\n                            |\n                         "
-                        ),
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.borrarUnidad(unidad.id)
+                            },
+                            [_c("i", { staticClass: "fa fa-edit" })]
+                          ),
+                          _vm._v(
+                            "\n                            |\n                         "
+                          ),
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.borrarUnidad(unidad.id)
+                                }
                               }
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fa fa-trash",
-                              staticStyle: { color: "red" }
-                            })
-                          ]
-                        )
-                      ])
-                    ])
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-trash",
+                                staticStyle: { color: "red" }
+                              })
+                            ]
+                          )
+                        ])
+                      ]
+                    )
                   })
                 ],
                 2
@@ -77751,7 +77836,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
+    return _c("tr", { staticClass: "text-center" }, [
       _c("th", [_vm._v("Marca")]),
       _vm._v(" "),
       _c("th", [_vm._v("Modelo")]),
@@ -77762,7 +77847,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Tipo")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Numero de Cupo")]),
+      _c("th", [_vm._v("Número de Cupo")]),
       _vm._v(" "),
       _c("th", [_vm._v("Status")]),
       _vm._v(" "),

@@ -21,7 +21,7 @@
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover">
                   <tbody>
-                    <tr>
+                    <tr class="text-center">
                     
                     <th>Nombre</th>
                     <th>RIF</th>
@@ -34,7 +34,7 @@
                   </tr>
 
                   
-                  <tr v-for="sindi in sindicatos.data" :value="sindi" :key="sindi.id">
+                  <tr v-for="sindi in sindicatos.data" :value="sindi" :key="sindi.id" class="text-center">
                     
                     <td>{{sindi.nombre | upText}}</td>
                     <td>{{sindi.rif}}</td>
@@ -42,7 +42,7 @@
                     <td>{{sindi.telefono}}</td>
                     <td>{{sindi.correo}}</td>
                     <td>{{sindi.estado | upText}}</td>
-                    <td>{{sindi.presidente+' '+sindi.apellido}}</td>
+                    <td>{{sindi.presidente+' '+sindi.apellido |upText}}</td>
                    
                     
                 

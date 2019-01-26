@@ -53,7 +53,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <a href="index3.html" class="brand-link">
       <img src="./img/bus.png" alt="AdminLTE Logo" class="brand-image  elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Transportistas</span>
+      <span class="brand-text font-weight-light">Transporte Público</span>
     </a>
 
     <!-- Sidebar -->
