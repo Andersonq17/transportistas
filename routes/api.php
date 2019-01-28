@@ -60,3 +60,8 @@ Route::get('buscarUnidad','Api\unidadesController@buscar');
 Route::post('unidades', 'Api\unidadesController@store');
 Route::put('unidades', 'Api\unidadesController@update');
 Route::get('selectLinea', 'Api\lineasController@selectLinea');
+
+
+//reporte
+Route::apiResources(['reportes'=>'API\Pdfcontroller']);
+Route::get('reporte_lineas/{tipo}', 'Api\Pdfcontroller@reporte_lineas');

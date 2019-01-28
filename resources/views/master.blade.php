@@ -139,6 +139,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Insumos</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+              <router-link to="/reportes" class="nav-link">
+               
+               <i class="fas fa-paste"></i>
+                 <p>Reportes</p>
+               
+               </router-link >
+              </li>
             </ul>
           </li>
           @can('isAdmin')
