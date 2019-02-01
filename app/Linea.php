@@ -14,6 +14,6 @@ class Linea extends Model
         return $this->belongsTo('App\Persona');
     }
     public function unidades(){  
-        return $this->hasMany('App\Unidades');
+        return $this->hasMany('App\Unidades','id');
     }
 }

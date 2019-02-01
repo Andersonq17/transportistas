@@ -16,6 +16,6 @@ class Unidades extends Model
         return $this->belongsTo('App\Persona');
     }
     public function lineas(){   
-        return $this->belongsTo('App\Linea');
+        return $this->hasOne('App\Linea');
     }
 }
