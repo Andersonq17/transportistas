@@ -133,12 +133,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 
                 </router-link >
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas fa-bus-alt"></i>
-                  <p>Insumos</p>
-                </a>
+              <li class="nav-item has-treeview ">
+            <a href="#" class="nav-link ">
+            <i class="fas fa-shuttle-van"></i>
+              <i class="nav-icon"></i>
+              <p>
+                Insumos
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <router-link to="/proveedores" class="nav-link">
+               
+               <i class="fas fa-paste"></i>
+                 <p>Proveedores</p>
+               
+               </router-link >
               </li>
+            </ul>
+            </li>
+              
+            
 
               <li class="nav-item">
               <router-link to="/reportes" class="nav-link">
