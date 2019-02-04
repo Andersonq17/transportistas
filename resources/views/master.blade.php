@@ -133,7 +133,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 
                 </router-link >
               </li>
-              <li class="nav-item has-treeview ">
+              
+              <li class="nav-item">
+              <router-link to="/reportes" class="nav-link">
+               
+               <i class="fas fa-paste"></i>
+                 <p>Reportes</p>
+               
+               </router-link >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview ">
             <a href="#" class="nav-link ">
             <i class="fas fa-shuttle-van"></i>
               <i class="nav-icon"></i>
@@ -151,21 +162,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                
                </router-link >
               </li>
-            </ul>
-            </li>
-              
-            
-
               <li class="nav-item">
-              <router-link to="/reportes" class="nav-link">
+              <router-link to="/insumos" class="nav-link">
                
                <i class="fas fa-paste"></i>
-                 <p>Reportes</p>
+                 <p>Registro de Insumos</p>
                
                </router-link >
               </li>
             </ul>
-          </li>
+            </li>
           @can('isAdmin')
               <li class="nav-item">
               <router-link to="/usuarios" class="nav-link">
