@@ -79160,20 +79160,18 @@ var render = function() {
                       { key: insumo.id, staticClass: "text-center" },
                       [
                         _c("td", [
-                          _vm._v(_vm._s(_vm._f("upText")(insumo.nombre)))
+                          _vm._v(_vm._s(_vm._f("upText")(insumo.marca)))
                         ]),
                         _vm._v(" "),
                         _c("td", [
-                          _vm._v(_vm._s(_vm._f("upText")(insumo.apellido)))
+                          _vm._v(_vm._s(_vm._f("upText")(insumo.tipo)))
                         ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(insumo.cedula))]),
+                        _c("td", [_vm._v(_vm._s(insumo.medidas_caucho))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(insumo.telefono))]),
+                        _c("td", [_vm._v(_vm._s(insumo.amperaje))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(insumo.correo))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(insumo.tipo))]),
+                        _c("td", [_vm._v(_vm._s(insumo.tipo_aceite))]),
                         _vm._v(" "),
                         _c("td", [
                           _c(
@@ -79321,56 +79319,58 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.tipo,
-                            expression: "form.tipo"
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.tipo,
+                              expression: "form.tipo"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.form,
+                                "tipo",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
                           }
-                        ],
-                        staticClass: "form-control",
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.form,
-                              "tipo",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          }
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { disabled: "", value: "" } }, [
-                          _vm._v("Seleccione tipo de Insumo")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Caucho" } }, [
-                          _vm._v("Caucho")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Bateria" } }, [
-                          _vm._v("Bateria")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Aceite" } }, [
-                          _vm._v("Aceite")
-                        ])
-                      ]
-                    ),
+                        },
+                        [
+                          _c("option", { attrs: { disabled: "", value: "" } }, [
+                            _vm._v("Seleccione tipo de Insumo")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Caucho" } }, [
+                            _vm._v("Caucho")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Bateria" } }, [
+                            _vm._v("Bateria")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Aceite" } }, [
+                            _vm._v("Aceite")
+                          ])
+                        ]
+                      )
+                    ]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -79381,8 +79381,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.medidas,
-                              expression: "form.medidas"
+                              value: _vm.form.medidas_caucho,
+                              expression: "form.medidas_caucho"
                             }
                           ],
                           staticClass: "form-control",
@@ -79394,13 +79394,17 @@ var render = function() {
                             name: "medidas",
                             placeholder: "Medidas de cauchos"
                           },
-                          domProps: { value: _vm.form.medidas },
+                          domProps: { value: _vm.form.medidas_caucho },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(_vm.form, "medidas", $event.target.value)
+                              _vm.$set(
+                                _vm.form,
+                                "medidas_caucho",
+                                $event.target.value
+                              )
                             }
                           }
                         }),
@@ -79474,9 +79478,9 @@ var render = function() {
                             "is-invalid": _vm.form.errors.has("tipo_aceite")
                           },
                           attrs: {
-                            type: "email",
+                            type: "text",
                             name: "tipo_aceite",
-                            placeholder: "tipo_aceite electronico"
+                            placeholder: "Tipo de Aceite"
                           },
                           domProps: { value: _vm.form.tipo_aceite },
                           on: {

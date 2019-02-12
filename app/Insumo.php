@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Insumo extends Model
 {
     protected $fillable = [
-        'marca', 'tipo', 'medida_caucho','amperaje','tipo_aceite'
+        'marca', 'tipo', 'medidas_caucho','amperaje','tipo_aceite'
     ];
+
+    public $timestamps=false;
 }

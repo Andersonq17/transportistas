@@ -32,12 +32,11 @@
 
                   
                   <tr v-for="insumo in insumos.data" :key="insumo.id" class="text-center">
-                    <td>{{insumo.nombre | upText}}</td>
-                    <td>{{insumo.apellido | upText}}</td>
-                    <td>{{insumo.cedula}}</td>
-                    <td>{{insumo.telefono}}</td>
-                    <td>{{insumo.correo}}</td>
-                    <td>{{insumo.tipo}}</td>                       
+                    <td>{{insumo.marca | upText}}</td>
+                    <td>{{insumo.tipo | upText}}</td>
+                    <td>{{insumo.medidas_caucho}}</td>
+                    <td>{{insumo.amperaje}}</td>
+                    <td>{{insumo.tipo_aceite}}</td>                      
                      <td>
 
                         <a href="#" @click="editModal(insumo)">
@@ -85,16 +84,17 @@
                         class="form-control" :class="{ 'is-invalid': form.errors.has('marca') }">
                     <has-error :form="form" field="marca"></has-error>
                 </div>
-                
+                <div class="form-group">
                  <select class="form-control" v-model="form.tipo">
                     <option disabled value="">Seleccione tipo de Insumo</option>
                     <option value="Caucho">Caucho</option>
                     <option value="Bateria">Bateria</option>
                     <option value="Aceite">Aceite</option>
                 </select>
+                </div>
 
                  <div class="form-group">
-                    <input v-model="form.medidas" type="text" name="medidas" placeholder="Medidas de cauchos"
+                    <input v-model="form.medidas_caucho" type="text" name="medidas" placeholder="Medidas de cauchos"
                         class="form-control" :class="{ 'is-invalid': form.errors.has('medidas') }">
                     <has-error :form="form" field="medidas"></has-error>
                 </div>
@@ -105,7 +105,7 @@
                     <has-error :form="form" field="amperaje"></has-error>
                 </div>
                  <div class="form-group">
-                    <input v-model="form.tipo_aceite" type="email" name="tipo_aceite" placeholder="tipo_aceite electronico"
+                    <input v-model="form.tipo_aceite" type="text" name="tipo_aceite" placeholder="Tipo de Aceite"
                         class="form-control" :class="{ 'is-invalid': form.errors.has('tipo_aceite') }">
                     <has-error :form="form" field="tipo_aceite"></has-error>
                 </div>
