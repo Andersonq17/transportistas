@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Ingreso;
+use App\DetalleIngreso;
 
 class ingresoController extends Controller
 {
@@ -24,14 +25,11 @@ class ingresoController extends Controller
     
         return Ingreso::join('proveedores','ingreso.idproveedor','=','proveedores.id')
         ->join('users','ingreso.idusuario','=','users.id')
-        ->select('id','idproveedor','idusuario','cedula','telefono','correo','tipo')->orderby('id','desc')->paginate(10);
+        ->select('id','idproveedor','idusuario','tipo_comprobante','serie_comprobante','num_comprobante',
+        'fecha_hora','impuesto','total','impuesto','proveedores.nombre','users.nombre as nombre_usuario')
+        ->orderby('id','desc')->paginate(5);
     }
 
-    public function selectPersona(Request $request){
-        $personas= Persona::select('id','nombre','apellido','cedula')->where('tipo','=','Socio')->orderby('id','desc')->get();
-            
-        return $personas ; 
-    }
     /**
      * Store a newly created resource in storage.
      *
@@ -49,7 +47,7 @@ class ingresoController extends Controller
             
         ]);
 
-        return Persona::create([
+        return Ingreso::create([
             'nombre' =>$request['nombre'],
             'apellido' =>$request['apellido'],
             'cedula' =>$request['cedula'],
