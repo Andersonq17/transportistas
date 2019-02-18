@@ -23,10 +23,10 @@ class ingresoController extends Controller
     public function index()
     {
     
-        return Ingreso::join('proveedores','ingreso.idproveedor','=','proveedores.id')
-        ->join('users','ingreso.idusuario','=','users.id')
-        ->select('id','idproveedor','idusuario','tipo_comprobante','serie_comprobante','num_comprobante',
-        'fecha_hora','impuesto','total','impuesto','proveedores.nombre','users.nombre as nombre_usuario')
+        return Ingreso::join('proveedores','ingresos.idproveedor','=','proveedores.id')
+        ->join('users','ingresos.idusuario','=','users.id')
+        ->select('ingresos.id','ingresos.idproveedor','ingresos.idusuario','ingresos.tipo_comprobante','ingresos.serie_comprobante','ingresos.num_comprobante',
+        'ingresos.fecha_hora','ingresos.impuesto','ingresos.total','ingresos.estado','proveedores.nombre','users.name as nombre_usuario')
         ->orderby('id','desc')->paginate(5);
     }
 
@@ -40,20 +40,30 @@ class ingresoController extends Controller
     {
         //validaciones en el servidor
         $this->validate($request,[
-            'nombre' => 'required|string|max:191',
-            'apellido' => 'required|string|max:191',
-            'cedula'=>'required|string|min:6|unique:personas',
-            'correo' => 'required|string|email|max:191|unique:personas',
+            'idproveedor' => 'required|string|max:191',
+            'tipo_comprobante' => 'required|string|max:191',
+            'num_comprobante'=>'required|string|min:191',
+            
             
         ]);
 
         return Ingreso::create([
-            'nombre' =>$request['nombre'],
-            'apellido' =>$request['apellido'],
-            'cedula' =>$request['cedula'],
-            'telefono' =>$request['telefono'],
-            'correo' =>$request['correo'],
-            'tipo' =>$request['tipo'],
+            'idproveedor' =>$request['nombre'],
+            'idusuario' =>\Auth::usuario['idusuario']->id,
+            'tipo_comprobante' =>$request['tipo_comprobante'],
+            'serie_comprobante' =>$request['serie_comprobante'],
+            'num_comprobante' =>$request['num_comprobante'],
+            'fecha_hora' =>$request['fecha_hora'],
+            'impuesto'=>$request['impuesto'],
+            'total'=>$request['total'],
+            'estado'=>$request['estado']='Registrado'
+        ]);
+
+        return DetalleIngreso::create([
+            'idingreso'=>$request['idingreso'],
+            'idinsumo'=>$request['idinsumo'],
+            'cantidad'=>$request['cantidad'],
+            'precio'=>$request['precio']
         ]);
 
         
@@ -90,23 +100,7 @@ class ingresoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $personas = Persona::findOrFail($id);
-
-        $this->validate($request,[
-            'nombre' => 'required|string|max:191',
-            'apellido' => 'required|string|max:191',
-            'cedula'=>'sometimes|min:6',
-            'correo' => 'required|string|email|max:191|unique:personas,correo,'.$personas->id,
-            
-        ]);
-
-        
-        $personas->update($request->all());
-        
-        //return ['mensaje','editando'];
-    }
+   
 
     /**
      * Remove the specified resource from storage.
@@ -114,12 +108,12 @@ class ingresoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function anular($id)
     {
         $this->authorize('isAdmin');
-        $personas = Persona::findOrFail($id);
-
-        $personas->delete();
+        $ingreso = Ingreso::findOrFail($id);
+        $ingreso->estado='Anulado';
+        $ingreso->save();
 
         //return['mensaje' => 'Usuario eliminado'];
     }

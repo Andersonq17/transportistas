@@ -87,3 +87,6 @@ Route::put('insumos', 'Api\insumosController@update');
 //ingresos insumos
 
 Route::apiResources(['ingreso'=>'API\ingresoController']);
+Route::get('ingreso', 'Api\ingresoController@index');
+Route::post('ingreso', 'Api\ingresoController@store');
+Route::put('ingreso', 'Api\ingresoController@anular');

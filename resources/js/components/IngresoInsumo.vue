@@ -1,53 +1,357 @@
-<template>
-  <div class="container">
-    <div class="row mt-5">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title text-center"> Ingresar Insumos</h3>
-          </div>
-          <div class="card-body">
-            <form class="col-md-12">
-              <div class="form-group">
-                <div class="input-group">
-                      
-                  <select class="form-control col-md-6">
-                    <option disabled value="0">Seleccione Proveedor</option>
-                  </select>
 
-                  <select class="form-control col-md-6 ml-2">
-                    <option disabled value="0">Tipo de Comprobante</option>
-                    <option value="NE">Nota de Entrega</option>
-                    <option value="FC">Factura</option>
-                    <option value="RC">Recibo</option>
-                  </select>
-                
+<template>
+    <div class="container">
+       <div class="row mt-5">
+          <div class="col-12">
+            <div class="card" v-if="$gate.isAdmin()">
+              <div class="card-header">
+                <h3 class="card-title text-center">Registro de Ingreso de Insumos</h3>
+
+                <div class="card-tools">
+                    
+                  <!--<div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>-->
                 </div>
               </div>
-              <div class="form-row">
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                  <tbody>
+                    <tr class="text-center">
+                    <th>Usuario</th>
+                    <th>Proveedor</th>
+                    <th>Tipo de Comprobante</th>
+                    <th>Serie de Comprobante</th>
+                    <th>Numero de Comprobante</th>
+                    <th>Fecha y Hora</th>
+                    <th>Impuesto</th>
+                    <th>Total</th>
+                    <th>Opciones</th>
+                  </tr>
 
-                  <label>Numero Comprobante
-                  <input type="text" placeholder="000xxx" class="form-control">
-                  </label>
-                   <label>Numero de Serie
-                  <input type="text" placeholder="0000-xxxx" class="form-control ml-2">
-                  </label>
-                  <label>Fecha de Documento
-                  <input type='datetime-local' placeholder="Fecha Documento" class="form-control ml-4">
-                  </label>
-                
+                  
+                  <tr class="text-center" v-for="ingreso in ingresos.data" :key="ingreso.id">
+                    <td>{{ingreso.idusuario}}</td>
+                    <td>{{ingreso.idproveedor}}</td>
+                    <td>{{ingreso.tipo_comprobante}}</td>
+                    <td>{{ingreso.serie_comprobante}}</td>
+                    <td>{{ingreso.num_comprobante}}</td>
+                    <td>{{ingreso.fecha_hora}}</td>
+                    <td>{{ingreso.impuesto}}</td>
+                    <td>{{ingreso.total}}</td>
+                    
+                     <td>
+
+                        <a href="#" @click="editModal(ingreso)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                            \
+                         <a href="#" @click="borrarUsuario(ingreso.id)">
+                            <i style="color:red;" class="fa fa-trash"></i>
+                        </a>
+
+                    </td>
+                  
+                  </tr>
+                 
+                </tbody></table>
               </div>
-              
-             </form>
+              <!-- /.card-body -->
+              <div class="card footer">
+                  <pagination :data="ingresos" @pagination-change-page="getResults"></pagination>
+              </div>
             </div>
+            <!-- /.card -->
+            <div class="card-body">
+                <div class="form-group row border">
+
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="">Proveedor</label>
+                            <select class="form-control" ></select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="">Impuesto</label>
+                        <input class="form-control" type="text" v-model="form.impuesto">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Tipo de Comprobante</label>
+                            <select class="form-control" v-model="form.tipo_comprobante">
+                                <option value="0">Seleccione</option>
+                                <option value="NE">Nota de Entrega</option>
+                                <option value="FC">Factura</option>
+                                <option value="RC">Recibo</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Serie de comprobante</label>
+                                <input type="text" class="form-control" v-model="form.serie_comprobante" placeholder="000-xxx">
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                            <label>(*)Numero de comprobante</label>
+                                <input type="text" class="form-control" v-model="form.num_comprobante" placeholder="000-xxx">
+                        </div>
+                    </div>
+                </div>
+            
+             
+                <div class="form-group row border">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Insumo</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="idinsumo" placeholder="Ingrese Insumo">
+                            <button class="btn btn-primary">...</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="">Precio</label>
+                        <input class="form-control" type="number" step="any" v-model="precio">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="">Cantidad</label>
+                        <input class="form-control" type="number" step="any" v-model="cantidad">
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button class="btn btn-success form-control btnagregar"><i class="fas fa-plus fa-fw"></i></button>
+                    </div>
+                </div>
+               </div> 
+            
+             
+                <div class="form-group row border">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Insumo</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Articulo x</td>
+                                    <td>Precio x</td>
+                                    <td> Cantidad x</td>
+                                    <td> Subtotal x</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-times-circle"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+                </div>
+            
+          </div>
         </div>
 
-      </div>
-    </div>
+        <div v-if="!$gate.isAdmin()">
+            <not-found></not-found>
+        </div>
 
+        <!-- Modal -->
+<div class="modal fade" id="nuevoIngreso" tabindex="-1" role="dialog" aria-labelledby="nuevoIngreso" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          
+      </div>
+      
+    </div>
   </div>
-  
+</div>
+    </div>
 </template>
 
+<script>
+    export default {
 
+        data(){
+            return{
+                ingresos:{}, //objeto js de axios
+                form : new Form({
+                    id :'',
+                    idproveedor: '',
+                    idusuario:'',
+                    tipo_comprobante: 'NE',
+                    serie_comprobante:'',
+                    num_comprobante:'',
+                    impuesto :0.12,
+                    total:0.0,
+                    arrayIngreso:[],
+                    arrayDetalle:[]
+                    
+                })
+            }
+
+        },
+
+        methods:{
+                getResults(page = 1) {
+			        axios.get('api/ingreso?page=' + page)
+				.then(response => {
+					this.users = response.data;
+				});
+            },
+
+            abrirModal(){
+                
+                this.form.reset();
+                 $('#nuevoIngreso').modal('show');
+                 this.editar =false;
+            },
+
+             editModal(user){
+                this.form.reset();
+                 $('#nuevoIngreso').modal('show');
+                 this.form.fill(user);
+                 this.editar=true;
+            },
+               
+             listarIngreso(){
+                 if(this.$gate.isAdmin()){
+                    axios.get("api/ingreso").then(({ data })=>(this.ingresos = data)); //(api/user) por defecto agara al index de primero
+                    //enviar la peticion solo si es admin
+                 }
+                 
+             },
+
+
+             crearIngreso(){
+                 
+                 this.form.post('api/ingreso').then(()=>{ //validar si se envio todos los datos bien
+                        this.$Progress.start();
+                        $('#nuevoIngreso').modal('hide')
+
+                        this.$Progress.finish();
+                        this.listarIngreso();
+                        
+                        toast({
+                            type: 'success',
+                            title: 'Usuario creado con exito!'
+                            })
+
+                 })
+                 
+                 .catch(()=>{ //mostrar error
+
+
+                 })
+
+                   
+             },
+
+             actUsuario(){
+                 this.$Progress.start();
+                 this.form.put('api/ingreso/'+this.form.id).then(()=>{
+                     $('#nuevoIngreso').modal('hide')
+                     swal(
+                                'Actualizado',
+                                'El usuario ha sido actualizado',
+                                'success'
+                                )
+                     this.listarIngreso();
+                     this.$Progress.finish();
+                 }).catch(()=>{
+                    this.$Progress.fail();
+                 })
+                 //console.log('Editando');
+             },
+
+             borrarUsuario(id){
+                 swal({
+                    title: 'Estas seguro de eliminar este usuario?',
+                    text: "Esta acción no se puede revertir!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si'
+                    }).then((result) => {
+
+                        //enviar la peticion al servidor
+                    if (result.value) { //evaluar si Si o No elimina
+                        this.form.delete('api/ingreso/'+id).then(()=>{ //llamar al metodo borrar del controlador mediante el route list
+                           
+                                swal(
+                                'Eliminado',
+                                'El usuario ha sido eliminado',
+                                'success'
+                                )
+
+                                this.listarIngreso();
+                    
+
+                        }).catch(()=>{
+                             swal(
+                                'Falló',
+                                'Algo salió mal',
+                                'warning'
+                                )
+                        })
+                        }
+                    
+                    })
+
+             },
+
+
+             
+            
+        },
+        created() {
+            Fire.$on('buscando',() =>{
+                let query = this.$parent.buscar;
+                axios.get('api/buscarIngreso?q='+ query)
+                .then((data)=>{
+                    this.ingresos=data.data;
+                })
+                .catch(()=>{
+
+                })
+            });
+            this.listarIngreso();
+        }
+    }
+</script>
+<style>
+    @media(min-width: 600px){
+        .btnagregar{
+            margin-top:2rem;
+        }
+    }
+</style>
 

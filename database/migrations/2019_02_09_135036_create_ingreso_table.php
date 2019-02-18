@@ -13,7 +13,7 @@ class CreateIngresoTable extends Migration
      */
     public function up()
     {
-        Schema::create('ingreso', function (Blueprint $table) {
+        Schema::create('ingresos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idproveedor')->unsigned();
             $table->foreign('idproveedor')->references('id')->on('proveedores');
@@ -37,6 +37,6 @@ class CreateIngresoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ingreso');
+        Schema::dropIfExists('ingresos');
     }
 }
