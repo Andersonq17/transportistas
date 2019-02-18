@@ -70,7 +70,7 @@ Route::get('reporte_lineas/{tipo}', 'Api\Pdfcontroller@reporte_lineas');
 
 Route::apiResources(['proveedores'=>'API\proveedoresController']);
 Route::get('proveedores', 'Api\proveedoresController@index');
-Route::get('selectProveedor', 'Api\proveedoresController@selectPersona');
+Route::get('selectProveedor', 'Api\proveedoresController@selectProveedor');
 Route::get('buscarProveedor','Api\proveedoresController@buscar');
 Route::post('proveedores', 'Api\proveedoresController@store');
 Route::put('proveedores', 'Api\proveedoresController@update');

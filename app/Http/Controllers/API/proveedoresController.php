@@ -26,7 +26,9 @@ class proveedoresController extends Controller
     }
 
     public function selectProveedor(Request $request){
-        $proveedor= Proveedor::select('id','nombre','rif')->where('status','=','1')->orderby('id','desc')->get();
+        $filtro=$request->filtro;
+
+        $proveedor= Proveedor::select('id','nombre','rif')->where('nombre','like','%'. $filtro . '%')->orderby('id','desc')->get();
             
         return $proveedor ; 
     }

@@ -3,12 +3,17 @@
     <div class="container">
        <div class="row mt-5">
           <div class="col-12">
+              <!--Listado de compras-->
+              <template v-if="listado">
             <div class="card" v-if="$gate.isAdmin()">
               <div class="card-header">
                 <h3 class="card-title text-center">Registro de Ingreso de Insumos</h3>
 
                 <div class="card-tools">
-                    
+                    <div class="card-tools">
+                    <button class="btn btn-success" @click="mostrarDetalle()">Nuevo <i class="fas fa-plus fa-fw"></i></button>
+                  
+                </div>
                   <!--<div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar">
 
@@ -66,14 +71,25 @@
                   <pagination :data="ingresos" @pagination-change-page="getResults"></pagination>
               </div>
             </div>
-            <!-- /.card -->
+              </template>
+            
+            <!--Fin listado de compras-->
+
+        <!--Ingresar compras-->
+        <template v-else>
             <div class="card-body">
                 <div class="form-group row border">
 
                     <div class="col-md-9">
-                        <div class="form-group">
+                        <div class="form-group" >
                             <label for="">Proveedor</label>
-                            <select class="form-control" ></select>
+                            <v-select 
+                            :on-search="selectProveedor"
+                            label="nombre"
+                            :options="arrayProveedor"
+                            placeholder="Buscar Proveedores...."
+                            v-model="form.idproveedor" >
+                            </v-select>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -163,15 +179,37 @@
                                         </button>
                                     </td>
                                 </tr>
+
+                                <tr style="background-color: #CEECF5;">
+                                    <td colspan="4" align="right">Total Parcial:</td>
+                                    <td>$5</td>
+                                </tr>
+                                 <tr style="background-color: #CEECF5;">
+                                    <td colspan="4" align="right"><strong> Impuesto:</strong></td>
+                                    <td>$1</td>
+                                </tr>
+                                <tr style="background-color: #CEECF5;">
+                                    <td colspan="4" align="right"><strong> Total Neto:</strong></td>
+                                    <td>$6</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                     
                 </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
+                        <button type="button" class="btn btn-primary" @click="registrarIngreso()">Registrar Ingreso</button>
+                    </div>
+
                 </div>
-            
-          </div>
+            </div>
+        </template>
         </div>
+    </div>
+       
+        <!--Fin ingreso de compras-->
 
         <div v-if="!$gate.isAdmin()">
             <not-found></not-found>
@@ -201,7 +239,9 @@
 
         data(){
             return{
-                ingresos:{}, //objeto js de axios
+                ingresos:{},
+                listado:1,
+                arrayProveedor:[], //objeto js de axios
                 form : new Form({
                     id :'',
                     idproveedor: '',
@@ -212,7 +252,8 @@
                     impuesto :0.12,
                     total:0.0,
                     arrayIngreso:[],
-                    arrayDetalle:[]
+                    arrayDetalle:[],
+                    
                     
                 })
             }
@@ -223,7 +264,7 @@
                 getResults(page = 1) {
 			        axios.get('api/ingreso?page=' + page)
 				.then(response => {
-					this.users = response.data;
+					this.ingresos = response.data;
 				});
             },
 
@@ -248,7 +289,30 @@
                  }
                  
              },
+             mostrarDetalle(){
+                 this.listado=0;
+             },
+             ocultarDetalle(){
+                 this.listado=1;
+             },
 
+             selectProveedor(search,loading){
+                 loading=true;
+                 axios.get('api/selectProveedor?filtro='+search).then((data)=>{
+                    this.arrayProveedor=data.data;
+                    loading=false;
+                    })
+                    .catch(()=>{
+
+                    })
+             },
+
+                getDatosProveedor(val1){
+                   
+                   loading=true;
+                    this.form.idproveedor=val1.id;
+
+            },
 
              crearIngreso(){
                  
@@ -344,6 +408,7 @@
                 })
             });
             this.listarIngreso();
+            this.selectProveedor();
         }
     }
 </script>

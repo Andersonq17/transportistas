@@ -8,6 +8,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import vSelect from 'vue-select';
 import moment from 'moment'; //para el formato de las fechas
 import VueProgressBar from 'vue-progressbar' //barra de progreso
 Vue.use(VueProgressBar, {
@@ -17,7 +18,7 @@ Vue.use(VueProgressBar, {
 })
 
 Vue.component('pagination', require('laravel-vue-pagination')); //paginacion
-
+Vue.component('v-select',vSelect);
 import Gate from "./gate";
 Vue.prototype.$gate = new Gate(window.user);// usar el prototipo en cualquier parte de la app
 
