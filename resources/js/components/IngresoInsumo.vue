@@ -128,8 +128,8 @@
                         <div class="form-group">
                             <label for="">Insumo</label>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="idinsumo" placeholder="Ingrese Insumo">
-                            <button class="btn btn-primary">...</button>
+                            <input type="text" class="form-control" placeholder="Ingrese Insumo">
+                            <button class="btn btn-primary" @click="abrirModal()">...</button>
                         </div>
                     </div>
 
@@ -137,13 +137,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Precio</label>
-                        <input class="form-control" type="number" step="any" v-model="precio">
+                        <input class="form-control" type="number" step="any" >
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Cantidad</label>
-                        <input class="form-control" type="number" step="any" v-model="cantidad">
+                        <input class="form-control" type="number" step="any">
                     </div>
                 </div>
 
@@ -167,12 +167,16 @@
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Articulo x</td>
-                                    <td>Precio x</td>
-                                    <td> Cantidad x</td>
-                                    <td> Subtotal x</td>
+                            <tbody v-if="arrayDetalle.length">
+                                <tr v-for="detalle in arrayDetalle" :key="detalle.id">
+                                    <td v-text="detalle.idinsumo"></td>
+                                    <td>
+                                        <input type="number" class="form-control" v-model="detalle.precio">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" v-model="detalle.cantidad">
+                                    </td>
+                                    <td>{{detalle.precio*detalle.cantidad}}</td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm">
                                             <i class="fas fa-times-circle"></i>
@@ -191,6 +195,11 @@
                                 <tr style="background-color: #CEECF5;">
                                     <td colspan="4" align="right"><strong> Total Neto:</strong></td>
                                     <td>$6</td>
+                                </tr>
+                            </tbody>
+                            <tbody v-else>
+                                <tr>
+                                    <td colspan="5" class="text-center">No hay items agregados</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -220,12 +229,38 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+          <h5 class="modal-title">Seleccione Insumo</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          
+          <div class="form-group">
+              <div class="table-responsive">
+                  <table class="table table-hover">
+                      <tbody>
+                          <tr class="text-center">
+                              <th>Marca</th>
+                              <th>Tipo</th>
+                              <th>Medidas</th>
+                              <th>Amperaje</th>
+                              <th>Tipo Aceite</th>
+                              <th>Selecionar</th>
+                          </tr>
+
+                          <tr v-for="insumo in arrayInsumo" :key="insumo.id" class="text-center">
+                              <td ></td>
+                              <td ></td>
+                              <td ></td>
+                              <td ></td>
+                              <td ></td>
+                              <td ></td>
+
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
       </div>
       
     </div>
@@ -241,7 +276,10 @@
             return{
                 ingresos:{},
                 listado:1,
-                arrayProveedor:[], //objeto js de axios
+                arrayProveedor:[],
+                arrayDetalle:[],
+                arrayIngreso:[],
+                arrayInsumo:[], //objeto js de axios
                 form : new Form({
                     id :'',
                     idproveedor: '',
@@ -251,8 +289,9 @@
                     num_comprobante:'',
                     impuesto :0.12,
                     total:0.0,
-                    arrayIngreso:[],
-                    arrayDetalle:[],
+                    idinsumo:0,
+                    precio:0,
+                    cantidad:0
                     
                     
                 })
@@ -272,15 +311,10 @@
                 
                 this.form.reset();
                  $('#nuevoIngreso').modal('show');
-                 this.editar =false;
+                
             },
 
-             editModal(user){
-                this.form.reset();
-                 $('#nuevoIngreso').modal('show');
-                 this.form.fill(user);
-                 this.editar=true;
-            },
+            
                
              listarIngreso(){
                  if(this.$gate.isAdmin()){
