@@ -79983,6 +79983,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -79993,20 +79995,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arrayDetalle: [],
             arrayIngreso: [],
             arrayInsumo: [], //objeto js de axios
-            form: new Form({
-                id: '',
-                idproveedor: '',
-                idusuario: '',
-                tipo_comprobante: 'NE',
-                serie_comprobante: '',
-                num_comprobante: '',
-                impuesto: 0.12,
-                total: 0.0,
-                idinsumo: 0,
-                precio: 0,
-                cantidad: 0
 
-            })
+            id: '',
+            idproveedor: '',
+            idusuario: '',
+            tipo_comprobante: 'NE',
+            serie_comprobante: '',
+            num_comprobante: '',
+            impuesto: 0.12,
+            total: 0.0,
+            idinsumo: '',
+            precio: 0,
+            cantidad: 0,
+            marca: ''
+
         };
     },
 
@@ -80023,19 +80025,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         abrirModal: function abrirModal() {
 
-            this.form.reset();
             $('#nuevoIngreso').modal('show');
         },
-        listarIngreso: function listarIngreso() {
+        listarInsumo: function listarInsumo() {
             var _this2 = this;
 
             if (this.$gate.isAdmin()) {
-                axios.get("api/ingreso").then(function (_ref) {
+                axios.get("api/listarInsumo").then(function (_ref) {
                     var data = _ref.data;
-                    return _this2.ingresos = data;
+                    return _this2.arrayInsumo = data.data;
+                });
+            }
+        },
+        listarIngreso: function listarIngreso() {
+            var _this3 = this;
+
+            if (this.$gate.isAdmin()) {
+                axios.get("api/ingreso").then(function (_ref2) {
+                    var data = _ref2.data;
+                    return _this3.ingresos = data;
                 }); //(api/user) por defecto agara al index de primero
                 //enviar la peticion solo si es admin
             }
+        },
+        agregarDetalle: function agregarDetalle() {
+            var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            this.arrayDetalle.push({
+                idinsumo: this.idinsumo,
+                marca: this.marca,
+                precio: this.precio,
+                cantidad: this.cantidad
+
+            });
         },
         mostrarDetalle: function mostrarDetalle() {
             this.listado = 0;
@@ -80044,11 +80066,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.listado = 1;
         },
         selectProveedor: function selectProveedor(search, loading) {
-            var _this3 = this;
+            var _this4 = this;
 
             loading = true;
             axios.get('api/selectProveedor?filtro=' + search).then(function (data) {
-                _this3.arrayProveedor = data.data;
+                _this4.arrayProveedor = data.data;
                 loading = false;
             }).catch(function () {});
         },
@@ -80058,15 +80080,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.idproveedor = val1.id;
         },
         crearIngreso: function crearIngreso() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.form.post('api/ingreso').then(function () {
                 //validar si se envio todos los datos bien
-                _this4.$Progress.start();
+                _this5.$Progress.start();
                 $('#nuevoIngreso').modal('hide');
 
-                _this4.$Progress.finish();
-                _this4.listarIngreso();
+                _this5.$Progress.finish();
+                _this5.listarIngreso();
 
                 toast({
                     type: 'success',
@@ -80078,21 +80100,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         actUsuario: function actUsuario() {
-            var _this5 = this;
+            var _this6 = this;
 
             this.$Progress.start();
             this.form.put('api/ingreso/' + this.form.id).then(function () {
                 $('#nuevoIngreso').modal('hide');
                 swal('Actualizado', 'El usuario ha sido actualizado', 'success');
-                _this5.listarIngreso();
-                _this5.$Progress.finish();
+                _this6.listarIngreso();
+                _this6.$Progress.finish();
             }).catch(function () {
-                _this5.$Progress.fail();
+                _this6.$Progress.fail();
             });
             //console.log('Editando');
         },
         borrarUsuario: function borrarUsuario(id) {
-            var _this6 = this;
+            var _this7 = this;
 
             swal({
                 title: 'Estas seguro de eliminar este usuario?',
@@ -80107,12 +80129,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //enviar la peticion al servidor
                 if (result.value) {
                     //evaluar si Si o No elimina
-                    _this6.form.delete('api/ingreso/' + id).then(function () {
+                    _this7.form.delete('api/ingreso/' + id).then(function () {
                         //llamar al metodo borrar del controlador mediante el route list
 
                         swal('Eliminado', 'El usuario ha sido eliminado', 'success');
 
-                        _this6.listarIngreso();
+                        _this7.listarIngreso();
                     }).catch(function () {
                         swal('Falló', 'Algo salió mal', 'warning');
                     });
@@ -80121,16 +80143,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        var _this7 = this;
+        var _this8 = this;
 
         Fire.$on('buscando', function () {
-            var query = _this7.$parent.buscar;
+            var query = _this8.$parent.buscar;
             axios.get('api/buscarIngreso?q=' + query).then(function (data) {
-                _this7.ingresos = data.data;
+                _this8.ingresos = data.data;
             }).catch(function () {});
         });
         this.listarIngreso();
         this.selectProveedor();
+        this.listarInsumo();
     }
 });
 
@@ -80235,25 +80258,6 @@ var render = function() {
                                             attrs: { href: "#" },
                                             on: {
                                               click: function($event) {
-                                                _vm.editModal(ingreso)
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass: "fa fa-edit"
-                                            })
-                                          ]
-                                        ),
-                                        _vm._v(
-                                          "\n                            \\\n                         "
-                                        ),
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: { href: "#" },
-                                            on: {
-                                              click: function($event) {
                                                 _vm.borrarUsuario(ingreso.id)
                                               }
                                             }
@@ -80310,11 +80314,11 @@ var render = function() {
                               placeholder: "Buscar Proveedores...."
                             },
                             model: {
-                              value: _vm.form.idproveedor,
+                              value: _vm.idproveedor,
                               callback: function($$v) {
-                                _vm.$set(_vm.form, "idproveedor", $$v)
+                                _vm.idproveedor = $$v
                               },
-                              expression: "form.idproveedor"
+                              expression: "idproveedor"
                             }
                           })
                         ],
@@ -80330,19 +80334,19 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.impuesto,
-                            expression: "form.impuesto"
+                            value: _vm.impuesto,
+                            expression: "impuesto"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: { type: "text" },
-                        domProps: { value: _vm.form.impuesto },
+                        domProps: { value: _vm.impuesto },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.form, "impuesto", $event.target.value)
+                            _vm.impuesto = $event.target.value
                           }
                         }
                       })
@@ -80359,8 +80363,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.form.tipo_comprobante,
-                                expression: "form.tipo_comprobante"
+                                value: _vm.tipo_comprobante,
+                                expression: "tipo_comprobante"
                               }
                             ],
                             staticClass: "form-control",
@@ -80374,13 +80378,9 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.$set(
-                                  _vm.form,
-                                  "tipo_comprobante",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
+                                _vm.tipo_comprobante = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
                               }
                             }
                           },
@@ -80418,23 +80418,19 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.serie_comprobante,
-                              expression: "form.serie_comprobante"
+                              value: _vm.serie_comprobante,
+                              expression: "serie_comprobante"
                             }
                           ],
                           staticClass: "form-control",
                           attrs: { type: "text", placeholder: "000-xxx" },
-                          domProps: { value: _vm.form.serie_comprobante },
+                          domProps: { value: _vm.serie_comprobante },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(
-                                _vm.form,
-                                "serie_comprobante",
-                                $event.target.value
-                              )
+                              _vm.serie_comprobante = $event.target.value
                             }
                           }
                         })
@@ -80450,23 +80446,19 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.num_comprobante,
-                              expression: "form.num_comprobante"
+                              value: _vm.num_comprobante,
+                              expression: "num_comprobante"
                             }
                           ],
                           staticClass: "form-control",
                           attrs: { type: "text", placeholder: "000-xxx" },
-                          domProps: { value: _vm.form.num_comprobante },
+                          domProps: { value: _vm.num_comprobante },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(
-                                _vm.form,
-                                "num_comprobante",
-                                $event.target.value
-                              )
+                              _vm.num_comprobante = $event.target.value
                             }
                           }
                         })
@@ -80484,7 +80476,7 @@ var render = function() {
                             staticClass: "form-control",
                             attrs: {
                               type: "text",
-                              placeholder: "Ingrese Insumo"
+                              placeholder: "Buscar Insumo"
                             }
                           }),
                           _vm._v(" "),
@@ -80504,11 +80496,85 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(1),
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("Precio")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.precio,
+                              expression: "precio"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number", step: "any" },
+                          domProps: { value: _vm.precio },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.precio = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _vm._m(2),
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Cantidad")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.cantidad,
+                              expression: "cantidad"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number", step: "any" },
+                          domProps: { value: _vm.cantidad },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.cantidad = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _vm._m(3)
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-success form-control btnagregar"
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fas fa-plus fa-fw",
+                              on: {
+                                click: function($event) {
+                                  _vm.agregarDetalle()
+                                }
+                              }
+                            })
+                          ]
+                        )
+                      ])
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
@@ -80520,7 +80586,7 @@ var render = function() {
                             "table table-bordered table-striped table-sm"
                         },
                         [
-                          _vm._m(4),
+                          _vm._m(1),
                           _vm._v(" "),
                           _vm.arrayDetalle.length
                             ? _c(
@@ -80530,7 +80596,7 @@ var render = function() {
                                     return _c("tr", { key: detalle.id }, [
                                       _c("td", {
                                         domProps: {
-                                          textContent: _vm._s(detalle.idinsumo)
+                                          textContent: _vm._s(detalle.marca)
                                         }
                                       }),
                                       _vm._v(" "),
@@ -80598,19 +80664,19 @@ var render = function() {
                                         )
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(5, true)
+                                      _vm._m(2, true)
                                     ])
                                   }),
                                   _vm._v(" "),
-                                  _vm._m(6),
+                                  _vm._m(3),
                                   _vm._v(" "),
-                                  _vm._m(7),
+                                  _vm._m(4),
                                   _vm._v(" "),
-                                  _vm._m(8)
+                                  _vm._m(5)
                                 ],
                                 2
                               )
-                            : _c("tbody", [_vm._m(9)])
+                            : _c("tbody", [_vm._m(6)])
                         ]
                       )
                     ])
@@ -80674,7 +80740,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(10),
+              _vm._m(7),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "form-group" }, [
@@ -80683,24 +80749,56 @@ var render = function() {
                       _c(
                         "tbody",
                         [
-                          _vm._m(11),
+                          _vm._m(8),
                           _vm._v(" "),
                           _vm._l(_vm.arrayInsumo, function(insumo) {
                             return _c(
                               "tr",
                               { key: insumo.id, staticClass: "text-center" },
                               [
-                                _c("td"),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(insumo.marca)
+                                  }
+                                }),
                                 _vm._v(" "),
-                                _c("td"),
+                                _c("td", {
+                                  domProps: { textContent: _vm._s(insumo.tipo) }
+                                }),
                                 _vm._v(" "),
-                                _c("td"),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(insumo.medidas)
+                                  }
+                                }),
                                 _vm._v(" "),
-                                _c("td"),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(insumo.amperaje)
+                                  }
+                                }),
                                 _vm._v(" "),
-                                _c("td"),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(insumo.tipo_aceite)
+                                  }
+                                }),
                                 _vm._v(" "),
-                                _c("td")
+                                _c("td", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-success btn-sm",
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.agregarDetalle(insumo)
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fas fa-check" })]
+                                  )
+                                ])
                               ]
                             )
                           })
@@ -80741,50 +80839,6 @@ var staticRenderFns = [
       _c("th", [_vm._v("Total")]),
       _vm._v(" "),
       _c("th", [_vm._v("Opciones")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Precio")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "number", step: "any" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Cantidad")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "number", step: "any" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success form-control btnagregar" },
-          [_c("i", { staticClass: "fas fa-plus fa-fw" })]
-        )
-      ])
     ])
   },
   function() {
@@ -80899,7 +80953,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Tipo Aceite")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Selecionar")])
+      _c("th", [_vm._v("Seleccionar")])
     ])
   }
 ]

@@ -52,10 +52,6 @@
                     
                      <td>
 
-                        <a href="#" @click="editModal(ingreso)">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                            \
                          <a href="#" @click="borrarUsuario(ingreso.id)">
                             <i style="color:red;" class="fa fa-trash"></i>
                         </a>
@@ -88,18 +84,18 @@
                             label="nombre"
                             :options="arrayProveedor"
                             placeholder="Buscar Proveedores...."
-                            v-model="form.idproveedor" >
+                            v-model="idproveedor" >
                             </v-select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <label for="">Impuesto</label>
-                        <input class="form-control" type="text" v-model="form.impuesto">
+                        <input class="form-control" type="text" v-model="impuesto">
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Tipo de Comprobante</label>
-                            <select class="form-control" v-model="form.tipo_comprobante">
+                            <select class="form-control" v-model="tipo_comprobante">
                                 <option value="0">Seleccione</option>
                                 <option value="NE">Nota de Entrega</option>
                                 <option value="FC">Factura</option>
@@ -111,13 +107,13 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Serie de comprobante</label>
-                                <input type="text" class="form-control" v-model="form.serie_comprobante" placeholder="000-xxx">
+                                <input type="text" class="form-control" v-model="serie_comprobante" placeholder="000-xxx">
                         </div>
                     </div>
                      <div class="col-md-4">
                         <div class="form-group">
                             <label>(*)Numero de comprobante</label>
-                                <input type="text" class="form-control" v-model="form.num_comprobante" placeholder="000-xxx">
+                                <input type="text" class="form-control" v-model="num_comprobante" placeholder="000-xxx">
                         </div>
                     </div>
                 </div>
@@ -128,7 +124,7 @@
                         <div class="form-group">
                             <label for="">Insumo</label>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Ingrese Insumo">
+                            <input type="text" class="form-control" placeholder="Buscar Insumo">
                             <button class="btn btn-primary" @click="abrirModal()">...</button>
                         </div>
                     </div>
@@ -137,19 +133,19 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Precio</label>
-                        <input class="form-control" type="number" step="any" >
+                        <input class="form-control" type="number" step="any" v-model="precio" >
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Cantidad</label>
-                        <input class="form-control" type="number" step="any">
+                        <input class="form-control" type="number" step="any" v-model="cantidad">
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="form-group">
-                        <button class="btn btn-success form-control btnagregar"><i class="fas fa-plus fa-fw"></i></button>
+                        <button class="btn btn-success form-control btnagregar"><i class="fas fa-plus fa-fw" @click="agregarDetalle()"></i></button>
                     </div>
                 </div>
                </div> 
@@ -169,7 +165,9 @@
                             </thead>
                             <tbody v-if="arrayDetalle.length">
                                 <tr v-for="detalle in arrayDetalle" :key="detalle.id">
-                                    <td v-text="detalle.idinsumo"></td>
+                                    <td v-text="detalle.marca">
+                
+                                    </td>
                                     <td>
                                         <input type="number" class="form-control" v-model="detalle.precio">
                                     </td>
@@ -245,16 +243,20 @@
                               <th>Medidas</th>
                               <th>Amperaje</th>
                               <th>Tipo Aceite</th>
-                              <th>Selecionar</th>
+                              <th>Seleccionar</th>
                           </tr>
 
                           <tr v-for="insumo in arrayInsumo" :key="insumo.id" class="text-center">
-                              <td ></td>
-                              <td ></td>
-                              <td ></td>
-                              <td ></td>
-                              <td ></td>
-                              <td ></td>
+                              <td v-text="insumo.marca"></td>
+                              <td v-text="insumo.tipo"></td>
+                              <td v-text="insumo.medidas"></td>
+                              <td v-text="insumo.amperaje"></td>
+                              <td v-text="insumo.tipo_aceite"></td>
+                              <td>
+                                  <button class="btn btn-success btn-sm" type="button" @click="agregarDetalle(insumo)">
+                                      <i class="fas fa-check"></i>
+                                  </button>
+                              </td>
 
                           </tr>
                       </tbody>
@@ -280,7 +282,7 @@
                 arrayDetalle:[],
                 arrayIngreso:[],
                 arrayInsumo:[], //objeto js de axios
-                form : new Form({
+                
                     id :'',
                     idproveedor: '',
                     idusuario:'',
@@ -289,12 +291,12 @@
                     num_comprobante:'',
                     impuesto :0.12,
                     total:0.0,
-                    idinsumo:0,
+                    idinsumo:'',
                     precio:0,
-                    cantidad:0
+                    cantidad:0,
+                    marca:'',
                     
-                    
-                })
+                
             }
 
         },
@@ -309,19 +311,34 @@
 
             abrirModal(){
                 
-                this.form.reset();
                  $('#nuevoIngreso').modal('show');
                 
             },
 
+            listarInsumo(){
+                 if(this.$gate.isAdmin()){
+                    axios.get("api/listarInsumo").then(({ data })=>(this.arrayInsumo = data.data)); 
+                    
+                 }
+            },
+
             
-               
              listarIngreso(){
                  if(this.$gate.isAdmin()){
                     axios.get("api/ingreso").then(({ data })=>(this.ingresos = data)); //(api/user) por defecto agara al index de primero
                     //enviar la peticion solo si es admin
                  }
                  
+             },
+
+             agregarDetalle(data=[]){
+                 this.arrayDetalle.push({
+                     idinsumo: this.idinsumo,
+                     marca:this.marca,
+                     precio: this.precio,
+                     cantidad:this.cantidad,
+
+                 });
              },
              mostrarDetalle(){
                  this.listado=0;
@@ -443,6 +460,7 @@
             });
             this.listarIngreso();
             this.selectProveedor();
+            this.listarInsumo();
         }
     }
 </script>

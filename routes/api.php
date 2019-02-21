@@ -79,6 +79,7 @@ Route::put('proveedores', 'Api\proveedoresController@update');
 
 Route::apiResources(['insumos'=>'API\insumosController']);
 Route::get('insumos', 'Api\insumosController@index');
+Route::get('listarInsumo', 'Api\insumosController@listarInsumo');
 Route::get('selectInsumos', 'Api\insumosController@selectPersona');
 Route::get('buscarInsumos','Api\insumosController@buscar');
 Route::post('insumos', 'Api\insumosController@store');
