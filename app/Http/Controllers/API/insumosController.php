@@ -23,12 +23,19 @@ class insumosController extends Controller
     public function index()
     {
     
-        return Insumo::select('id','marca','tipo','medidas_caucho','amperaje','tipo_aceite')->orderby('id','desc')->paginate(10);
+        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite')->orderby('id','desc')->paginate(10);
+    }
+
+    public function buscarPorCodigo(Request $request){
+        $filtro=$request->filtro;
+
+        return Insumo::where('codigo','=',$filtro)
+                        ->select('id','marca')->orderBy('id','asc')->take(1)->get();
     }
     public function listarInsumo()
     {
     
-        return Insumo::select('id','marca','tipo','medidas_caucho','amperaje','tipo_aceite')->orderby('id','desc')->paginate(10);
+        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite')->orderby('id','desc')->paginate(10);
     }
 
     public function selectInsumo(Request $request){
@@ -47,11 +54,12 @@ class insumosController extends Controller
         //validaciones en el servidor
         $this->validate($request,[
             'marca' => 'required|string|max:191',
-            
+            'codigo'=>'required |string|max:191',
             
         ]);
 
         return Insumo::create([
+            'codigo'=>$request['codigo'],
             'marca' =>$request['marca'],
             'tipo' =>$request['tipo'],
             'medidas_caucho' =>$request['medidas_caucho'],
@@ -98,7 +106,7 @@ class insumosController extends Controller
 
         $this->validate($request,[
             'marca' => 'required|string|max:191',
-
+            'codigo'=>'required|string|max:191',
             
         ]);
 

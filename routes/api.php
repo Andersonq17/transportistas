@@ -84,6 +84,7 @@ Route::get('selectInsumos', 'Api\insumosController@selectPersona');
 Route::get('buscarInsumos','Api\insumosController@buscar');
 Route::post('insumos', 'Api\insumosController@store');
 Route::put('insumos', 'Api\insumosController@update');
+Route::get('buscarPorCodigo', 'Api\insumosController@buscarPorCodigo');
 
 //ingresos insumos
 

@@ -22,6 +22,7 @@
                 <table class="table table-hover">
                   <tbody>
                     <tr class="text-center">
+                    <th>Código</th>
                     <th>Marca</th>
                     <th>Tipo</th>
                     <th>Medidas</th>
@@ -32,6 +33,7 @@
 
                   
                   <tr v-for="insumo in insumos.data" :key="insumo.id" class="text-center">
+                    <td>{{insumo.codigo}}</td>
                     <td>{{insumo.marca | upText}}</td>
                     <td>{{insumo.tipo | upText}}</td>
                     <td>{{insumo.medidas_caucho}}</td>
@@ -79,6 +81,11 @@
       </div>
       <div class="modal-body">
           <form @submit.prevent="editar ? actInsumo() :crearInsumo()">
+            <div class="form-group">
+                    <input v-model="form.codigo" type="text" name="codigo" placeholder="Codigo"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('codigo') }">
+                    <has-error :form="form" field="codigo"></has-error>
+                </div>
                 <div class="form-group">
                     <input v-model="form.marca" type="text" name="marca" placeholder="Marca"
                         class="form-control" :class="{ 'is-invalid': form.errors.has('marca') }">
@@ -134,6 +141,7 @@
                 insumos:{}, //objeto js de axios
                 form : new Form({
                     id :'',
+                    codigo:'',
                     marca: '',
                     tipo:'',
                     medidas_caucho: '',

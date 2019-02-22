@@ -124,8 +124,9 @@
                         <div class="form-group">
                             <label for="">Insumo</label>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Buscar Insumo">
+                            <input type="text" class="form-control" placeholder="Buscar Insumo por Codigo" v-model="codigo" @keyup.enter="buscarPorCodigo()">
                             <button class="btn btn-primary" @click="abrirModal()">...</button>
+                            <input type="text" readonly class="form-control" v-model="marca">
                         </div>
                     </div>
 
@@ -145,7 +146,7 @@
 
                 <div class="col-md-2">
                     <div class="form-group">
-                        <button class="btn btn-success form-control btnagregar"><i class="fas fa-plus fa-fw" @click="agregarDetalle()"></i></button>
+                        <button @click="agregarDetalle()" class="btn btn-success form-control btnagregar"><i class="fas fa-plus fa-fw"></i></button>
                     </div>
                 </div>
                </div> 
@@ -166,7 +167,6 @@
                             <tbody v-if="arrayDetalle.length">
                                 <tr v-for="detalle in arrayDetalle" :key="detalle.id">
                                     <td v-text="detalle.marca">
-                
                                     </td>
                                     <td>
                                         <input type="number" class="form-control" v-model="detalle.precio">
@@ -235,7 +235,7 @@
       <div class="modal-body">
           <div class="form-group">
               <div class="table-responsive">
-                  <table class="table table-hover">
+                  <!--<table class="table table-hover">
                       <tbody>
                           <tr class="text-center">
                               <th>Marca</th>
@@ -249,7 +249,7 @@
                           <tr v-for="insumo in arrayInsumo" :key="insumo.id" class="text-center">
                               <td v-text="insumo.marca"></td>
                               <td v-text="insumo.tipo"></td>
-                              <td v-text="insumo.medidas"></td>
+                              <td v-text="insumo.medidas_caucho"></td>
                               <td v-text="insumo.amperaje"></td>
                               <td v-text="insumo.tipo_aceite"></td>
                               <td>
@@ -260,9 +260,11 @@
 
                           </tr>
                       </tbody>
-                  </table>
+                  </table>-->
               </div>
+              
           </div>
+          
       </div>
       
     </div>
@@ -282,7 +284,6 @@
                 arrayDetalle:[],
                 arrayIngreso:[],
                 arrayInsumo:[], //objeto js de axios
-                
                     id :'',
                     idproveedor: '',
                     idusuario:'',
@@ -291,7 +292,8 @@
                     num_comprobante:'',
                     impuesto :0.12,
                     total:0.0,
-                    idinsumo:'',
+                    idinsumo:0,
+                    codigo:'',
                     precio:0,
                     cantidad:0,
                     marca:'',
@@ -315,14 +317,24 @@
                 
             },
 
-            listarInsumo(){
+            /*listarInsumo(){
                  if(this.$gate.isAdmin()){
                     axios.get("api/listarInsumo").then(({ data })=>(this.arrayInsumo = data.data)); 
                     
                  }
-            },
+            },*/
 
-            
+            buscarPorCodigo(){
+                    axios.get("api/buscarPorCodigo?filtro="+this.codigo).then(({ data })=>(this.arrayInsumo=data ));
+                  if(this.arrayInsumo.length>0){
+                        this.marca=this.arrayInsumo[0]['marca'];
+                        this.idinsumo=this.arrayInsumo[0]['id'];
+                    }
+                    else{
+                        this.marca='No existe';
+                        this.idinsumo=0;
+                    }
+            },
              listarIngreso(){
                  if(this.$gate.isAdmin()){
                     axios.get("api/ingreso").then(({ data })=>(this.ingresos = data)); //(api/user) por defecto agara al index de primero
@@ -331,7 +343,7 @@
                  
              },
 
-             agregarDetalle(data=[]){
+             agregarDetalle(){
                  this.arrayDetalle.push({
                      idinsumo: this.idinsumo,
                      marca:this.marca,
@@ -460,7 +472,8 @@
             });
             this.listarIngreso();
             this.selectProveedor();
-            this.listarInsumo();
+            //this.listarInsumo();
+            //this.buscarPorCodigo();
         }
     }
 </script>

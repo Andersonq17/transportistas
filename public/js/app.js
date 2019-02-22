@@ -79022,6 +79022,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -79030,6 +79037,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             insumos: {}, //objeto js de axios
             form: new Form({
                 id: '',
+                codigo: '',
                 marca: '',
                 tipo: '',
                 medidas_caucho: '',
@@ -79170,6 +79178,8 @@ var render = function() {
                       "tr",
                       { key: insumo.id, staticClass: "text-center" },
                       [
+                        _c("td", [_vm._v(_vm._s(insumo.codigo))]),
+                        _vm._v(" "),
                         _c("td", [
                           _vm._v(_vm._s(_vm._f("upText")(insumo.marca)))
                         ]),
@@ -79292,6 +79302,46 @@ var render = function() {
                     }
                   },
                   [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.codigo,
+                              expression: "form.codigo"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("codigo")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "codigo",
+                            placeholder: "Codigo"
+                          },
+                          domProps: { value: _vm.form.codigo },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "codigo", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "codigo" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "form-group" },
@@ -79575,6 +79625,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticClass: "text-center" }, [
+      _c("th", [_vm._v("Código")]),
+      _vm._v(" "),
       _c("th", [_vm._v("Marca")]),
       _vm._v(" "),
       _c("th", [_vm._v("Tipo")]),
@@ -79985,6 +80037,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -79995,7 +80049,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arrayDetalle: [],
             arrayIngreso: [],
             arrayInsumo: [], //objeto js de axios
-
             id: '',
             idproveedor: '',
             idusuario: '',
@@ -80004,7 +80057,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             num_comprobante: '',
             impuesto: 0.12,
             total: 0.0,
-            idinsumo: '',
+            idinsumo: 0,
+            codigo: '',
             precio: 0,
             cantidad: 0,
             marca: ''
@@ -80027,14 +80081,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             $('#nuevoIngreso').modal('show');
         },
-        listarInsumo: function listarInsumo() {
+
+
+        /*listarInsumo(){
+             if(this.$gate.isAdmin()){
+                axios.get("api/listarInsumo").then(({ data })=>(this.arrayInsumo = data.data)); 
+                
+             }
+        },*/
+
+        buscarPorCodigo: function buscarPorCodigo() {
             var _this2 = this;
 
-            if (this.$gate.isAdmin()) {
-                axios.get("api/listarInsumo").then(function (_ref) {
-                    var data = _ref.data;
-                    return _this2.arrayInsumo = data.data;
-                });
+            axios.get("api/buscarPorCodigo?filtro=" + this.codigo).then(function (_ref) {
+                var data = _ref.data;
+                return _this2.arrayInsumo = data;
+            });
+            if (this.arrayInsumo.length > 0) {
+                this.marca = this.arrayInsumo[0]['marca'];
+                this.idinsumo = this.arrayInsumo[0]['id'];
+            } else {
+                this.marca = 'No existe';
+                this.idinsumo = 0;
             }
         },
         listarIngreso: function listarIngreso() {
@@ -80049,8 +80117,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         agregarDetalle: function agregarDetalle() {
-            var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
             this.arrayDetalle.push({
                 idinsumo: this.idinsumo,
                 marca: this.marca,
@@ -80153,7 +80219,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
         this.listarIngreso();
         this.selectProveedor();
-        this.listarInsumo();
+        //this.listarInsumo();
+        //this.buscarPorCodigo();
     }
 });
 
@@ -80473,10 +80540,42 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
                           _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.codigo,
+                                expression: "codigo"
+                              }
+                            ],
                             staticClass: "form-control",
                             attrs: {
                               type: "text",
-                              placeholder: "Buscar Insumo"
+                              placeholder: "Buscar Insumo por Codigo"
+                            },
+                            domProps: { value: _vm.codigo },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !("button" in $event) &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                _vm.buscarPorCodigo()
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.codigo = $event.target.value
+                              }
                             }
                           }),
                           _vm._v(" "),
@@ -80491,7 +80590,29 @@ var render = function() {
                               }
                             },
                             [_vm._v("...")]
-                          )
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.marca,
+                                expression: "marca"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", readonly: "" },
+                            domProps: { value: _vm.marca },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.marca = $event.target.value
+                              }
+                            }
+                          })
                         ])
                       ])
                     ]),
@@ -80560,18 +80681,14 @@ var render = function() {
                           "button",
                           {
                             staticClass:
-                              "btn btn-success form-control btnagregar"
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fas fa-plus fa-fw",
-                              on: {
-                                click: function($event) {
-                                  _vm.agregarDetalle()
-                                }
+                              "btn btn-success form-control btnagregar",
+                            on: {
+                              click: function($event) {
+                                _vm.agregarDetalle()
                               }
-                            })
-                          ]
+                            }
+                          },
+                          [_c("i", { staticClass: "fas fa-plus fa-fw" })]
                         )
                       ])
                     ])
@@ -80722,98 +80839,7 @@ var render = function() {
     _vm._v(" "),
     !_vm.$gate.isAdmin() ? _c("div", [_c("not-found")], 1) : _vm._e(),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "nuevoIngreso",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "nuevoIngreso",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _vm._m(7),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("div", { staticClass: "table-responsive" }, [
-                    _c("table", { staticClass: "table table-hover" }, [
-                      _c(
-                        "tbody",
-                        [
-                          _vm._m(8),
-                          _vm._v(" "),
-                          _vm._l(_vm.arrayInsumo, function(insumo) {
-                            return _c(
-                              "tr",
-                              { key: insumo.id, staticClass: "text-center" },
-                              [
-                                _c("td", {
-                                  domProps: {
-                                    textContent: _vm._s(insumo.marca)
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("td", {
-                                  domProps: { textContent: _vm._s(insumo.tipo) }
-                                }),
-                                _vm._v(" "),
-                                _c("td", {
-                                  domProps: {
-                                    textContent: _vm._s(insumo.medidas)
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("td", {
-                                  domProps: {
-                                    textContent: _vm._s(insumo.amperaje)
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("td", {
-                                  domProps: {
-                                    textContent: _vm._s(insumo.tipo_aceite)
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-success btn-sm",
-                                      attrs: { type: "button" },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.agregarDetalle(insumo)
-                                        }
-                                      }
-                                    },
-                                    [_c("i", { staticClass: "fas fa-check" })]
-                                  )
-                                ])
-                              ]
-                            )
-                          })
-                        ],
-                        2
-                      )
-                    ])
-                  ])
-                ])
-              ])
-            ])
-          ]
-        )
-      ]
-    )
+    _vm._m(7)
   ])
 }
 var staticRenderFns = [
@@ -80921,40 +80947,57 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Seleccione Insumo")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", { staticClass: "text-center" }, [
-      _c("th", [_vm._v("Marca")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Tipo")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Medidas")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Amperaje")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Tipo Aceite")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Seleccionar")])
-    ])
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "nuevoIngreso",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "nuevoIngreso",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h5", { staticClass: "modal-title" }, [
+                  _vm._v("Seleccione Insumo")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "table-responsive" })
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true

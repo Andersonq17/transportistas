@@ -15,12 +15,13 @@ class CreateInsumosTable extends Migration
     {
         Schema::create('insumos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('codigo');
             $table->string('marca');
             $table->string('tipo');
             $table->string('medidas_caucho')->nullable();
             $table->string('amperaje')->nullable();
             $table->string('tipo_aceite')->nullable();
-
+            $table->integer('existencia')->nullable();
 
             //$table->timestamps();
         });
