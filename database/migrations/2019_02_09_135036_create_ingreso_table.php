@@ -20,9 +20,9 @@ class CreateIngresoTable extends Migration
             $table->integer('idusuario')->unsigned();
             $table->foreign('idusuario')->references('id')->on('users');
             $table->string('tipo_comprobante',20);
-            $table->string('serie_comprobante',20)->nullable;
+            $table->string('serie_comprobante',20)->nullable();
             $table->string('num_comprobante',10);
-            $table->dateTime('fecha_hora');
+            $table->dateTime('fecha_hora')->nullable();
             $table->decimal('impuesto',4,2);
             $table->decimal('total',11,2);
             $table->string('estado',20);

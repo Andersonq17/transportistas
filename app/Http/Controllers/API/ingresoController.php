@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Ingreso;
 use App\DetalleIngreso;
+use App\User;
+
+
 
 class ingresoController extends Controller
 {
@@ -39,17 +43,18 @@ class ingresoController extends Controller
     public function store(Request $request)
     {
         //validaciones en el servidor
-        $this->validate($request,[
-            'idproveedor' => 'required|string|max:191',
+       /* $this->validate($request,[
+            'idproveedor' => 'required|integer|max:191',
             'tipo_comprobante' => 'required|string|max:191',
             'num_comprobante'=>'required|string|min:191',
+            'impuesto'=> 'required|integer',
+            'idinsumo'=>'required|integer',
             
-            
-        ]);
+        ]);*/
 
         return Ingreso::create([
-            'idproveedor' =>$request['nombre'],
-            'idusuario' =>\Auth::usuario['idusuario']->id,
+            'idproveedor' =>$request['idproveedor.id'],
+            'idusuario' =>Auth::user($request['idusuario'])->id,
             'tipo_comprobante' =>$request['tipo_comprobante'],
             'serie_comprobante' =>$request['serie_comprobante'],
             'num_comprobante' =>$request['num_comprobante'],

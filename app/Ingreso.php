@@ -12,7 +12,7 @@ class Ingreso extends Model
         'idproveedor',
         'idusuario',
         'tipo_comprobante',
-        'serie_conprobante',
+        'serie_comprobante',
         'num_comprobante',
         'fecha_hora',
         'impuesto',

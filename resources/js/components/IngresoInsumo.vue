@@ -122,9 +122,9 @@
                 <div class="form-group row border">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Insumo</label>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Buscar Insumo por Codigo" v-model="codigo" @keyup.enter="buscarPorCodigo()">
+                            <label for="">Insumo <span style="color:red;" v-show="idinsumo==0">*Seleccione</span></label>
+                        <div class="form-inline">
+                            <input type="text" class="form-control" placeholder="Buscar por Codigo" v-model="codigo" @keyup.enter="buscarPorCodigo()">
                             <button class="btn btn-primary" @click="abrirModal()">...</button>
                             <input type="text" readonly class="form-control" v-model="marca">
                         </div>
@@ -133,13 +133,13 @@
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="">Precio</label>
+                        <label for="">Precio<span style="color:red;" v-show="precio==0">*Ingrese</span></label>
                         <input class="form-control" type="number" step="any" v-model="precio" >
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="">Cantidad</label>
+                        <label for="">Cantidad <span style="color:red;" v-show="cantidad==0">*Ingrese</span></label>
                         <input class="form-control" type="number" step="any" v-model="cantidad">
                     </div>
                 </div>
@@ -165,7 +165,7 @@
                                 </tr>
                             </thead>
                             <tbody v-if="arrayDetalle.length">
-                                <tr v-for="detalle in arrayDetalle" :key="detalle.id">
+                                <tr v-for="(detalle,index) in arrayDetalle" :key="detalle.id">
                                     <td v-text="detalle.marca">
                                     </td>
                                     <td>
@@ -176,7 +176,7 @@
                                     </td>
                                     <td>{{detalle.precio*detalle.cantidad}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm">
+                                        <button @click="eliminarRenglon(index)" type="button" class="btn btn-danger btn-sm">
                                             <i class="fas fa-times-circle"></i>
                                         </button>
                                     </td>
@@ -184,15 +184,15 @@
 
                                 <tr style="background-color: #CEECF5;">
                                     <td colspan="4" align="right">Total Parcial:</td>
-                                    <td>$5</td>
+                                    <td>Bs.S {{total_parcial=(total-total_impuesto).toFixed(2)}}</td>
                                 </tr>
                                  <tr style="background-color: #CEECF5;">
                                     <td colspan="4" align="right"><strong> Impuesto:</strong></td>
-                                    <td>$1</td>
+                                    <td>Bs.S {{total_impuesto= ((total*impuesto)/(1+impuesto)).toFixed(2)}}</td>
                                 </tr>
                                 <tr style="background-color: #CEECF5;">
                                     <td colspan="4" align="right"><strong> Total Neto:</strong></td>
-                                    <td>$6</td>
+                                    <td>Bs.S {{total=calcularTotal}}</td>
                                 </tr>
                             </tbody>
                             <tbody v-else>
@@ -207,7 +207,7 @@
                 <div class="form-group row">
                     <div class="col-md-12">
                         <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
-                        <button type="button" class="btn btn-primary" @click="registrarIngreso()">Registrar Ingreso</button>
+                        <button type="button" class="btn btn-primary" @click="crearIngreso()">Registrar Ingreso</button>
                     </div>
 
                 </div>
@@ -224,7 +224,7 @@
 
         <!-- Modal -->
 <div class="modal fade" id="nuevoIngreso" tabindex="-1" role="dialog" aria-labelledby="nuevoIngreso" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-primary modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
           <h5 class="modal-title">Seleccione Insumo</h5>
@@ -235,7 +235,7 @@
       <div class="modal-body">
           <div class="form-group">
               <div class="table-responsive">
-                  <!--<table class="table table-hover">
+                  <table class="table table-hover">
                       <tbody>
                           <tr class="text-center">
                               <th>Marca</th>
@@ -253,14 +253,14 @@
                               <td v-text="insumo.amperaje"></td>
                               <td v-text="insumo.tipo_aceite"></td>
                               <td>
-                                  <button class="btn btn-success btn-sm" type="button" @click="agregarDetalle(insumo)">
+                                  <button @click="agregarDetalleModal(insumo)" class="btn btn-success btn-sm" type="button">
                                       <i class="fas fa-check"></i>
                                   </button>
                               </td>
 
                           </tr>
                       </tbody>
-                  </table>-->
+                  </table>
               </div>
               
           </div>
@@ -297,6 +297,8 @@
                     precio:0,
                     cantidad:0,
                     marca:'',
+                    total_impuesto:0.0,
+                    total_parcial:0.0,
                     
                 
             }
@@ -312,17 +314,16 @@
             },
 
             abrirModal(){
-                
                  $('#nuevoIngreso').modal('show');
                 
             },
 
-            /*listarInsumo(){
+            listarInsumo(){
                  if(this.$gate.isAdmin()){
                     axios.get("api/listarInsumo").then(({ data })=>(this.arrayInsumo = data.data)); 
                     
                  }
-            },*/
+            },
 
             buscarPorCodigo(){
                     axios.get("api/buscarPorCodigo?filtro="+this.codigo).then(({ data })=>(this.arrayInsumo=data ));
@@ -337,21 +338,75 @@
             },
              listarIngreso(){
                  if(this.$gate.isAdmin()){
-                    axios.get("api/ingreso").then(({ data })=>(this.ingresos = data)); //(api/user) por defecto agara al index de primero
+                    axios.get("api/ingreso").then(({ data })=>(this.ingresos = data)); 
                     //enviar la peticion solo si es admin
                  }
                  
              },
 
-             agregarDetalle(){
-                 this.arrayDetalle.push({
-                     idinsumo: this.idinsumo,
-                     marca:this.marca,
-                     precio: this.precio,
-                     cantidad:this.cantidad,
+             encuentra(id){
+                 let sw=0;
 
-                 });
+                 for (let i = 0; i < this.arrayDetalle.length; i++) {
+                    if(this.arrayDetalle[i].idinsumo==id){
+                        sw=true;
+                    }
+                     
+                 }
+                 return sw;
              },
+             eliminarRenglon(index){
+                 this.arrayDetalle.splice(index,1);
+             },
+
+             agregarDetalle(){
+
+                 if(this.idinsumo==0 || this.marca==0 || this.precio==0 || this.cantidad==0){
+
+                 }
+                 else{
+                     if(this.encuentra(this.idinsumo)){
+                         swal({
+                             type:'error',
+                             title:'Error...',
+                             text: 'Insumo ya está agregado',
+                         })
+                     }
+                     else{
+                    this.arrayDetalle.push({
+                        idinsumo: this.idinsumo,
+                        marca:this.marca,
+                        precio: this.precio,
+                        cantidad:this.cantidad,
+                 });//despues del push volver todos los valores a su estado original
+                    this.idinsumo='';
+                    this.marca='';
+                    this.precio=0;
+                    this.cantidad=0;
+                    this.codigo='';
+                     }
+                     
+            }  
+        },
+
+        agregarDetalleModal(data=[]){
+             if(this.encuentra(data['id'])){
+                         swal({
+                             type:'error',
+                             title:'Error...',
+                             text: 'Insumo ya está agregado',
+                         })
+                     }
+                     else{
+                    this.arrayDetalle.push({
+                        idinsumo: data['id'],
+                        marca: data['marca'],
+                        precio: 1,
+                        cantidad:1,
+                 });//despues del push volver todos los valores a su estado original
+                
+                     }
+        },
              mostrarDetalle(){
                  this.listado=0;
              },
@@ -373,22 +428,30 @@
                 getDatosProveedor(val1){
                    
                    loading=true;
-                    this.form.idproveedor=val1.id;
+                    this.idproveedor=val1.id;
 
             },
 
              crearIngreso(){
                  
-                 this.form.post('api/ingreso').then(()=>{ //validar si se envio todos los datos bien
+               axios.post('api/ingreso',{
+                   'idproveedor': this.idproveedor,
+                        'tipo_comprobante':this.tipo_comprobante,
+                        'serie_comprobante':this.serie_comprobante,
+                        'num_comprobante':this.num_comprobante,
+                        'impuesto':this.impuesto,
+                        'total':this.total,
+                        'data':this.arrayDetalle,
+               }).then(()=>{ 
+                   //validar si se envio todos los datos bien
                         this.$Progress.start();
-                        $('#nuevoIngreso').modal('hide')
-
+                        
                         this.$Progress.finish();
                         this.listarIngreso();
                         
                         toast({
                             type: 'success',
-                            title: 'Usuario creado con exito!'
+                            title: 'Compra Ingresada'
                             })
 
                  })
@@ -400,62 +463,6 @@
 
                    
              },
-
-             actUsuario(){
-                 this.$Progress.start();
-                 this.form.put('api/ingreso/'+this.form.id).then(()=>{
-                     $('#nuevoIngreso').modal('hide')
-                     swal(
-                                'Actualizado',
-                                'El usuario ha sido actualizado',
-                                'success'
-                                )
-                     this.listarIngreso();
-                     this.$Progress.finish();
-                 }).catch(()=>{
-                    this.$Progress.fail();
-                 })
-                 //console.log('Editando');
-             },
-
-             borrarUsuario(id){
-                 swal({
-                    title: 'Estas seguro de eliminar este usuario?',
-                    text: "Esta acción no se puede revertir!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si'
-                    }).then((result) => {
-
-                        //enviar la peticion al servidor
-                    if (result.value) { //evaluar si Si o No elimina
-                        this.form.delete('api/ingreso/'+id).then(()=>{ //llamar al metodo borrar del controlador mediante el route list
-                           
-                                swal(
-                                'Eliminado',
-                                'El usuario ha sido eliminado',
-                                'success'
-                                )
-
-                                this.listarIngreso();
-                    
-
-                        }).catch(()=>{
-                             swal(
-                                'Falló',
-                                'Algo salió mal',
-                                'warning'
-                                )
-                        })
-                        }
-                    
-                    })
-
-             },
-
-
              
             
         },
@@ -472,8 +479,17 @@
             });
             this.listarIngreso();
             this.selectProveedor();
-            //this.listarInsumo();
+            this.listarInsumo();
             //this.buscarPorCodigo();
+        },
+        computed:{
+            calcularTotal:function(){
+                let resultado=0.0;
+                for(let i=0; i<this.arrayDetalle.length; i++){
+                    resultado= resultado+(this.arrayDetalle[i].precio*this.arrayDetalle[i].cantidad)
+                }
+                return resultado;
+            }
         }
     }
 </script>
