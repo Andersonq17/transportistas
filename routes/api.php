@@ -49,8 +49,8 @@ Route::post('lineas', 'Api\lineasController@store');
 Route::put('lineas', 'Api\lineasController@update');
 Route::get('selectPersona', 'Api\personasController@selectPersona');
 Route::get('selectSindicato', 'Api\sindicatoController@selectSindicato');
-Route::put('lineas/activar', 'Api\lineasController@activar');
-Route::put('lineas/desactivar', 'Api\lineasController@desactivar');
+Route::put('lineasActivar', 'Api\lineasController@activar');
+Route::put('lineasDesactivar', 'Api\lineasController@desactivar');
 
 //unidades de transporte
 Route::apiResources(['unidades'=>'API\unidadesController']);

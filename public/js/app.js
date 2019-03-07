@@ -75920,7 +75920,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //enviar la peticion al servidor
                 if (result.value) {
                     //evaluar si Si o No elimina
-                    _this7.form.put('api/lineas/desactivar/' + _this7.form.id).then(function () {
+                    _this7.form.put('api/lineasDesactivar/' + _this7.form.id).then(function () {
                         //llamar al metodo borrar del controlador mediante el route list
 
                         swal('Eliminado', 'Linea de Transporte eliminada', 'success');
@@ -78260,6 +78260,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -78446,7 +78454,23 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(proveedor.telefono))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(proveedor.status))]),
+                        _c("td", [
+                          proveedor.status
+                            ? _c("div", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-success" },
+                                  [_vm._v("Activo")]
+                                )
+                              ])
+                            : _c("div", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-danger" },
+                                  [_vm._v("Inactivo")]
+                                )
+                              ])
+                        ]),
                         _vm._v(" "),
                         _c("td", [
                           _c(

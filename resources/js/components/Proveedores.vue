@@ -36,8 +36,16 @@
                     <td>{{proveedor.rif | upText}}</td>
                     <td>{{proveedor.direccion}}</td>
                     <td>{{proveedor.telefono}}</td>
-                    <td>{{proveedor.status}}</td>                       
-                     <td>
+                    <td>
+                    <div v-if="proveedor.status">
+                         <span class="badge badge-success">Activo</span>
+
+                        </div>
+                        <div v-else>
+                            <span class="badge badge-danger">Inactivo</span>
+                        </div>
+                        </td>                       
+                    <td>
 
                         <a href="#" @click="editModal(proveedor)">
                             <i class="fa fa-edit"></i>

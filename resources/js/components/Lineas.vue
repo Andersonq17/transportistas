@@ -308,7 +308,7 @@
 
                         //enviar la peticion al servidor
                     if (result.value) { //evaluar si Si o No elimina
-                        this.form.put('api/lineas/desactivar/'+this.form.id).then(()=>{ //llamar al metodo borrar del controlador mediante el route list
+                        this.form.put('api/lineasDesactivar/'+this.form.id).then(()=>{ //llamar al metodo borrar del controlador mediante el route list
                            
                                 swal(
                                 'Eliminado',

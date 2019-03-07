@@ -136,18 +136,18 @@ class lineasController extends Controller
         //return['mensaje' => 'Usuario eliminado'];
     }*/
 
-    public function activar(Request $request,$id){
+    public function activar($id){
         $lineas= Linea::findOrFail($id);
         $lineas->status='1';
 
-        $lineas->update();
+        $lineas->save();
 
     }
-    public function desactivar(Request $request,$id){
+    public function desactivar($id){
         $lineas= Linea::findOrFail($id);
         $lineas->status='0';
 
-        $lineas->update();
+        $lineas->save();
 
     }
 }
