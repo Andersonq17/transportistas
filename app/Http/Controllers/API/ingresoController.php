@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Ingreso;
 use App\DetalleIngreso;
 use App\User;
+use Carbon\Carbon;
+
+
 
 
 
@@ -30,7 +34,7 @@ class ingresoController extends Controller
         return Ingreso::join('proveedores','ingresos.idproveedor','=','proveedores.id')
         ->join('users','ingresos.idusuario','=','users.id')
         ->select('ingresos.id','ingresos.idproveedor','ingresos.idusuario','ingresos.tipo_comprobante','ingresos.serie_comprobante','ingresos.num_comprobante',
-        'ingresos.fecha_hora','ingresos.impuesto','ingresos.total','ingresos.estado','proveedores.nombre','users.name as nombre_usuario')
+        'ingresos.fecha_hora','ingresos.impuesto','ingresos.total','ingresos.estado','proveedores.nombre as nombre_proveedor','users.name as nombre_usuario')
         ->orderby('id','desc')->paginate(5);
     }
 
@@ -43,35 +47,50 @@ class ingresoController extends Controller
     public function store(Request $request)
     {
         //validaciones en el servidor
-       /* $this->validate($request,[
-            'idproveedor' => 'required|integer|max:191',
+       /* $validar= $request->validate([
+            'idproveedor' => 'required|max:191',
             'tipo_comprobante' => 'required|string|max:191',
-            'num_comprobante'=>'required|string|min:191',
-            'impuesto'=> 'required|integer',
+            'num_comprobante'=>'required|string|max:191',
+            'impuesto'=> 'required|numeric',
             'idinsumo'=>'required|integer',
             
         ]);*/
+    
+     try{
+         DB::beginTransaction();
+         $myTime=Carbon::now('America/Caracas');
+         $ingreso= new Ingreso();
 
-        return Ingreso::create([
-            'idproveedor' =>$request['idproveedor.id'],
-            'idusuario' =>Auth::user($request['idusuario'])->id,
-            'tipo_comprobante' =>$request['tipo_comprobante'],
-            'serie_comprobante' =>$request['serie_comprobante'],
-            'num_comprobante' =>$request['num_comprobante'],
-            'fecha_hora' =>$request['fecha_hora'],
-            'impuesto'=>$request['impuesto'],
-            'total'=>$request['total'],
-            'estado'=>$request['estado']='Registrado'
-        ]);
+         $ingreso->idproveedor=$request['idproveedor.id'];
+         $ingreso->idusuario= \Auth::user()->id;
+         $ingreso->tipo_comprobante= $request->tipo_comprobante;
+         $ingreso->serie_comprobante=$request->serie_comprobante;
+         $ingreso->num_comprobante=$request->num_comprobante;
+         $ingreso->fecha_hora=$myTime->toDateString();
+         $ingreso->impuesto=$request->impuesto;
+         $ingreso->total=$request->total;
+         $ingreso->estado='registrado';
+         $ingreso->save();
 
-        return DetalleIngreso::create([
-            'idingreso'=>$request['idingreso'],
-            'idinsumo'=>$request['idinsumo'],
-            'cantidad'=>$request['cantidad'],
-            'precio'=>$request['precio']
-        ]);
+         $detalles=$request->data;//lo que viene del arraydetalle de la vista
 
-        
+         foreach($detalles as $ep => $det) {
+            $detalle= new DetalleIngreso();
+
+            $detalle->idingreso=$ingreso->id;
+            $detalle->idinsumo=$det['idinsumo'];
+            $detalle->cantidad=$det['cantidad'];
+            $detalle->precio=$det['precio'];
+            $detalle->save();
+         }
+           
+         DB::commit();
+
+     }catch(Exception $e){
+         DB::rollback();
+     }
+
+
     }
 
     /**

@@ -41,8 +41,8 @@
 
                   
                   <tr class="text-center" v-for="ingreso in ingresos.data" :key="ingreso.id">
-                    <td>{{ingreso.idusuario}}</td>
-                    <td>{{ingreso.idproveedor}}</td>
+                    <td>{{ingreso.nombre_usuario}}</td>
+                    <td>{{ingreso.nombre_proveedor}}</td>
                     <td>{{ingreso.tipo_comprobante}}</td>
                     <td>{{ingreso.serie_comprobante}}</td>
                     <td>{{ingreso.num_comprobante}}</td>
@@ -52,7 +52,7 @@
                     
                      <td>
 
-                         <a href="#" @click="borrarUsuario(ingreso.id)">
+                         <a href="#" @click="anular(ingreso.id)">
                             <i style="color:red;" class="fa fa-trash"></i>
                         </a>
 
@@ -409,6 +409,12 @@
         },
              mostrarDetalle(){
                  this.listado=0;
+                        this.idproveedor="",
+                        this.tipo_comprobante="NE",
+                        this.serie_comprobante="",
+                        this.num_comprobante="",
+                        this.total=0
+                        this.arrayDetalle=[]
              },
              ocultarDetalle(){
                  this.listado=1;
@@ -435,7 +441,7 @@
              crearIngreso(){
                  
                axios.post('api/ingreso',{
-                   'idproveedor': this.idproveedor,
+                   'idproveedor':this.idproveedor,
                         'tipo_comprobante':this.tipo_comprobante,
                         'serie_comprobante':this.serie_comprobante,
                         'num_comprobante':this.num_comprobante,
@@ -444,11 +450,16 @@
                         'data':this.arrayDetalle,
                }).then(()=>{ 
                    //validar si se envio todos los datos bien
-                        this.$Progress.start();
-                        
+                        this.$Progress.start();   
                         this.$Progress.finish();
+                        this.listado=1,
                         this.listarIngreso();
-                        
+                        this.idproveedor="",
+                        this.tipo_comprobante="NE",
+                        this.serie_comprobante="",
+                        this.num_comprobante="",
+                        this.total=0
+                        this.arrayDetalle=[]
                         toast({
                             type: 'success',
                             title: 'Compra Ingresada'
@@ -464,6 +475,9 @@
                    
              },
              
+             anular(){
+
+             }
             
         },
         created() {

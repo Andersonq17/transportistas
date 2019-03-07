@@ -79029,6 +79029,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -79193,6 +79195,8 @@ var render = function() {
                         _c("td", [_vm._v(_vm._s(insumo.amperaje))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(insumo.tipo_aceite))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(insumo.existencia))]),
                         _vm._v(" "),
                         _c("td", [
                           _c(
@@ -79636,6 +79640,8 @@ var staticRenderFns = [
       _c("th", [_vm._v("Amperaje")]),
       _vm._v(" "),
       _c("th", [_vm._v("Tipo Aceite")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Existencia")]),
       _vm._v(" "),
       _c("th", [_vm._v("Acciones")])
     ])
@@ -80175,6 +80181,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         mostrarDetalle: function mostrarDetalle() {
             this.listado = 0;
+            this.idproveedor = "", this.tipo_comprobante = "NE", this.serie_comprobante = "", this.num_comprobante = "", this.total = 0;
+            this.arrayDetalle = [];
         },
         ocultarDetalle: function ocultarDetalle() {
             this.listado = 1;
@@ -80207,10 +80215,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function () {
                 //validar si se envio todos los datos bien
                 _this6.$Progress.start();
-
                 _this6.$Progress.finish();
-                _this6.listarIngreso();
-
+                _this6.listado = 1, _this6.listarIngreso();
+                _this6.idproveedor = "", _this6.tipo_comprobante = "NE", _this6.serie_comprobante = "", _this6.num_comprobante = "", _this6.total = 0;
+                _this6.arrayDetalle = [];
                 toast({
                     type: 'success',
                     title: 'Compra Ingresada'
@@ -80219,7 +80227,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
             });
-        }
+        },
+        anular: function anular() {}
     },
     created: function created() {
         var _this7 = this;
@@ -80310,11 +80319,11 @@ var render = function() {
                                     },
                                     [
                                       _c("td", [
-                                        _vm._v(_vm._s(ingreso.idusuario))
+                                        _vm._v(_vm._s(ingreso.nombre_usuario))
                                       ]),
                                       _vm._v(" "),
                                       _c("td", [
-                                        _vm._v(_vm._s(ingreso.idproveedor))
+                                        _vm._v(_vm._s(ingreso.nombre_proveedor))
                                       ]),
                                       _vm._v(" "),
                                       _c("td", [
@@ -80348,7 +80357,7 @@ var render = function() {
                                             attrs: { href: "#" },
                                             on: {
                                               click: function($event) {
-                                                _vm.borrarUsuario(ingreso.id)
+                                                _vm.anular(ingreso.id)
                                               }
                                             }
                                           },

@@ -28,6 +28,7 @@
                     <th>Medidas</th>
                     <th>Amperaje</th>
                     <th>Tipo Aceite</th>
+                    <th>Existencia</th>
                     <th>Acciones</th>
                   </tr>
 
@@ -38,7 +39,8 @@
                     <td>{{insumo.tipo | upText}}</td>
                     <td>{{insumo.medidas_caucho}}</td>
                     <td>{{insumo.amperaje}}</td>
-                    <td>{{insumo.tipo_aceite}}</td>                      
+                    <td>{{insumo.tipo_aceite}}</td>
+                    <td>{{insumo.existencia}}</td>                      
                      <td>
 
                         <a href="#" @click="editModal(insumo)">

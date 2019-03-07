@@ -23,7 +23,7 @@ class insumosController extends Controller
     public function index()
     {
     
-        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite')->orderby('id','desc')->paginate(10);
+        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite','existencia')->orderby('id','desc')->paginate(10);
     }
 
     public function buscarPorCodigo(Request $request){

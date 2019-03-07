@@ -14,5 +14,9 @@ class DetalleIngreso extends Model
         'precio'
     ];
 
+    public function ingreso(){
+        return $this->belongsTo('App\Ingreso');
+    }
+
     public $timestamps=false;
 }
