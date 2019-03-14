@@ -60,6 +60,7 @@ Route::get('buscarUnidad','Api\unidadesController@buscar');
 Route::post('unidades', 'Api\unidadesController@store');
 Route::put('unidades', 'Api\unidadesController@update');
 Route::get('selectLinea', 'Api\lineasController@selectLinea');
+Route::get('selectUnidad', 'Api\unidadesController@selectUnidad');
 
 
 //reporte
@@ -92,3 +93,10 @@ Route::apiResources(['ingreso'=>'API\ingresoController']);
 Route::get('ingreso', 'Api\ingresoController@index');
 Route::post('ingreso', 'Api\ingresoController@store');
 Route::put('ingreso', 'Api\ingresoController@anular');
+
+//ventas
+
+Route::apiResources(['ventas'=>'API\ventasController']);
+Route::get('ventas', 'Api\ventasController@index');
+Route::post('ventas', 'Api\ventasController@store');
+Route::put('ventas', 'Api\ventasController@anular');

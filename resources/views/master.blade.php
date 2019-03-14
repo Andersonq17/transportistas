@@ -178,6 +178,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                
                </router-link >
               </li>
+              <li class="nav-item">
+              <router-link to="/ventas" class="nav-link">
+               
+               <i class="fas fa-paste"></i>
+                 <p>Venta de Insumos</p>
+               
+               </router-link >
+              </li>
             </ul>
             </li>
           @can('isAdmin')

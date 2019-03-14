@@ -61,6 +61,14 @@ class unidadesController extends Controller
 
         
     }
+
+    public function selectUnidad(Request $request){
+        $filtro=$request->filtro;
+
+        $unidad= Unidades::select('id','marca','placa')->where('placa','like','%'. $filtro . '%')->orderby('id','desc')->get();
+            
+        return $unidad ; 
+    }
     
     /**
      * Display the specified resource.
