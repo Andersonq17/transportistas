@@ -81622,7 +81622,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             listado: 1,
             arrayUnidad: [],
             arrayDetalle: [],
-            arrayIngreso: [],
             arrayInsumo: [], //objeto js de axios
             id: '',
             idunidad: '',
@@ -82522,7 +82521,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Registrar Ingreso")]
+                        [_vm._v("Registrar Venta")]
                       )
                     ])
                   ])

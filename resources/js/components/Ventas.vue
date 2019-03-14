@@ -197,7 +197,7 @@
                 <div class="form-group row">
                     <div class="col-md-12">
                         <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
-                        <button type="button" class="btn btn-primary" @click="crearVenta()">Registrar Ingreso</button>
+                        <button type="button" class="btn btn-primary" @click="crearVenta()">Registrar Venta</button>
                     </div>
 
                 </div>
@@ -272,7 +272,6 @@
                 listado:1,
                 arrayUnidad:[],
                 arrayDetalle:[],
-                arrayIngreso:[],
                 arrayInsumo:[], //objeto js de axios
                     id :'',
                     idunidad: '',

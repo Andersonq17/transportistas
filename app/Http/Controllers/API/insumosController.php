@@ -23,19 +23,22 @@ class insumosController extends Controller
     public function index()
     {
     
-        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite','existencia')->orderby('id','desc')->paginate(10);
+        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite','existencia')
+        ->orderby('id','desc')->paginate(10);
     }
 
     public function buscarPorCodigo(Request $request){
         $filtro=$request->filtro;
 
         return Insumo::where('codigo','=',$filtro)
-                        ->select('id','marca')->orderBy('id','asc')->take(1)->get();
+                        ->select('id','marca','tipo','medidas_caucho','amperaje','tipo_aceite')
+                        ->orderBy('id','asc')->take(1)->get();
     }
     public function listarInsumo()
     {
     
-        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite')->orderby('id','desc')->paginate(10);
+        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite')
+        ->orderby('id','desc')->paginate(10);
     }
 
     public function selectInsumo(Request $request){
