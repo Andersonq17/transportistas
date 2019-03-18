@@ -46,7 +46,7 @@ class personasController extends Controller
             'nombre' => 'required|string|max:191',
             'apellido' => 'required|string|max:191',
             'cedula'=>'required|string|min:6|unique:personas',
-            'correo' => 'email|max:191|unique:personas',
+            'correo' => 'max:191|unique:personas',
             
         ]);
 

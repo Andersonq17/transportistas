@@ -40,6 +40,12 @@
                 top: 18px;
             }
 
+            .top-left{
+                position: absolute;
+                left: 10px;
+                top:18px;
+            }
+
             .content {
                 text-align: center;
             }
@@ -61,11 +67,20 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .inst{
+                width: 100px;
+                height: 100px;
+            }
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
+
+            <div class="top-left">
+                <img src="./img/banner.png">
+            </div>
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/Escritorio') }}">Escritorio</a>
@@ -85,9 +100,10 @@
                 </div>
 
                 <div class="links">
-                    <a href="http://www.mppt.gob.ve/mision-transporte/">Misión Transporte</a>
-                    <a href="http://www.fontur.gob.ve/www/noticia.php">Fontur</a>
-                    <a href="http://www.intt.gob.ve/intt/">INTT</a>
+                
+                    <a href="http://www.mppt.gob.ve/mision-transporte/" target="_blank"><img src="./img/mt.jpg" class="inst"></a>
+                    <a href="http://www.fontur.gob.ve/www/noticia.php" target="_blank"><img src="./img/fontur.jpg" class="inst"></a>
+                    <a href="http://www.intt.gob.ve/intt/" target="_blank"><img src="./img/intt.jpg" class="inst"></a>
                     
                 </div>
             </div>
