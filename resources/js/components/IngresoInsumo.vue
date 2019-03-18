@@ -290,7 +290,7 @@
                     tipo_comprobante: 'NE',
                     serie_comprobante:'',
                     num_comprobante:'',
-                    impuesto :0.12,
+                    impuesto :0.16,
                     total:0.0,
                     idinsumo:0,
                     codigo:'',

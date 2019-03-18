@@ -18,8 +18,8 @@ class CreatePersonasTable extends Migration
             $table->string('nombre',50);
             $table->string('apellido',50);
             $table->string('cedula',10)->unique();
-            $table->string('telefono',12);
-            $table->string('correo',50)->unique();
+            $table->string('telefono',12)->nullable();
+            $table->string('correo',50)->unique()->nullable();
             $table->string('tipo',20)->nullable();
             $table->timestamps();
         });

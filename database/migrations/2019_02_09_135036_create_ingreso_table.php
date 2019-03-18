@@ -26,6 +26,7 @@ class CreateIngresoTable extends Migration
             $table->decimal('impuesto',4,2);
             $table->decimal('total',11,2);
             $table->string('estado',20);
+            $table->string('observaciones',100)->nullable();
             $table->timestamps();
         });
     }
