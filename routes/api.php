@@ -66,6 +66,7 @@ Route::get('selectUnidad', 'Api\unidadesController@selectUnidad');
 //reporte
 Route::apiResources(['reportes'=>'API\Pdfcontroller']);
 Route::get('reporte_lineas/{tipo}', 'Api\Pdfcontroller@reporte_lineas');
+Route::get('reporte_unidades/{tipo}', 'Api\Pdfcontroller@reporte_unidades');
 
 //proveedores
 

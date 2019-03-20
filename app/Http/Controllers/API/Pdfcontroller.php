@@ -35,4 +35,11 @@ class Pdfcontroller extends Controller
         return $this->crearPdf($lineas,$vistaurl,$tipo);
     }
 
+    public function reporte_unidades($tipo){
+        $vistaurl="pdf.reporte_unidades";
+        $unidad=Unidades::all();
+
+        return $this->crearPdf($unidad,$vistaurl,$tipo);
+    }
+
 }

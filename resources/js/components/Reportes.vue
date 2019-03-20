@@ -20,9 +20,14 @@
                             </thead>
                             <tbody>
                                 <tr  class="text-center">
-                                    <td>Reporte de lineas de transporte</td>
+                                    <td>Lineas de transporte</td>
                                     <td><a href="api/reporte_lineas/1" target="_blank"><button class="btn btn-block btn-primary btn-xs">Ver</button></a></td>
                                     <td><a href="api/reporte_lineas/2" target="_blank"><button class="btn btn-block btn-success btn-xs">Descargar</button></a></td>
+                                </tr>
+                                <tr  class="text-center">
+                                    <td>Unidades de transporte</td>
+                                    <td><a href="api/reporte_unidades/1" target="_blank"><button class="btn btn-block btn-primary btn-xs">Ver</button></a></td>
+                                    <td><a href="api/reporte_unidades/2" target="_blank"><button class="btn btn-block btn-success btn-xs">Descargar</button></a></td>
                                 </tr>
                             </tbody>
                         </table>

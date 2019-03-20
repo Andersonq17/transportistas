@@ -78008,6 +78008,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -78050,7 +78055,7 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("tbody", [
                   _c("tr", { staticClass: "text-center" }, [
-                    _c("td", [_vm._v("Reporte de lineas de transporte")]),
+                    _c("td", [_vm._v("Lineas de transporte")]),
                     _vm._v(" "),
                     _c("td", [
                       _c(
@@ -78077,6 +78082,48 @@ var staticRenderFns = [
                         {
                           attrs: {
                             href: "api/reporte_lineas/2",
+                            target: "_blank"
+                          }
+                        },
+                        [
+                          _c(
+                            "button",
+                            { staticClass: "btn btn-block btn-success btn-xs" },
+                            [_vm._v("Descargar")]
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", { staticClass: "text-center" }, [
+                    _c("td", [_vm._v("Unidades de transporte")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "api/reporte_unidades/1",
+                            target: "_blank"
+                          }
+                        },
+                        [
+                          _c(
+                            "button",
+                            { staticClass: "btn btn-block btn-primary btn-xs" },
+                            [_vm._v("Ver")]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "api/reporte_unidades/2",
                             target: "_blank"
                           }
                         },
