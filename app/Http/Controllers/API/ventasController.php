@@ -25,7 +25,7 @@ class ventasController extends Controller
     
         return Venta::join('unidades','ventas.idunidad','=','unidades.id')
         ->join('users','ventas.idusuario','=','users.id')
-        ->select('ventas.id','ventas.idunidad','ventas.idusuario','ventas.tipo_comprobante','ventas.num_comprobante',
+        ->select('ventas.id','ventas.idunidad','ventas.idusuario','ventas.tipo_comprobante','ventas.num_comprobante','ventas.observaciones',
         'ventas.fecha_hora','ventas.impuesto','ventas.total','ventas.estado','unidades.placa as placa','users.name as nombre_usuario')
         ->orderby('id','desc')->paginate(5);
     }
@@ -45,6 +45,8 @@ class ventasController extends Controller
          $venta->fecha_hora=$myTime->toDateString();
          $venta->impuesto=$request->impuesto;
          $venta->total=$request->total;
+         $venta->estado=$request->estado;
+         $venta->observaciones=$request->observaciones;
          $venta->save();
 
          $detalles=$request->data;//lo que viene del arraydetalle de la vista

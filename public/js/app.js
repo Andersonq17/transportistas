@@ -76990,6 +76990,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -77169,7 +77173,7 @@ var render = function() {
                   on: { click: _vm.abrirModal }
                 },
                 [
-                  _vm._v("Registrar Unidad "),
+                  _vm._v("Registrar Nueva Unidad "),
                   _c("i", { staticClass: "fas fa-plus fa-fw" })
                 ]
               )
@@ -77531,6 +77535,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("tipo") },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -77552,6 +77557,10 @@ var render = function() {
                           }
                         },
                         [
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "tipo" }
+                          }),
+                          _vm._v(">\n                    "),
                           _c("option", { attrs: { disabled: "", value: "" } }, [
                             _vm._v("Seleccione tipo de Vehiculo")
                           ]),
@@ -77575,7 +77584,8 @@ var render = function() {
                           _c("option", { attrs: { value: "Van" } }, [
                             _vm._v("Van")
                           ])
-                        ]
+                        ],
+                        1
                       )
                     ]),
                     _vm._v(" "),
@@ -77687,6 +77697,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("id_linea")
+                          },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -77708,6 +77721,10 @@ var render = function() {
                           }
                         },
                         [
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "id_linea" }
+                          }),
+                          _vm._v(">\n                    "),
                           _c(
                             "option",
                             { attrs: { disabled: "", value: "0" } },
@@ -77745,6 +77762,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("id_persona")
+                          },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -77766,6 +77786,10 @@ var render = function() {
                           }
                         },
                         [
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "id_persona" }
+                          }),
+                          _vm._v(">\n                    "),
                           _c(
                             "option",
                             { attrs: { disabled: "", value: "0" } },
@@ -80069,6 +80093,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -80092,6 +80124,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             precio: 0,
             cantidad: 0,
             marca: '',
+            observaciones: '',
             total_impuesto: 0.0,
             total_parcial: 0.0
 
@@ -80235,14 +80268,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'num_comprobante': this.num_comprobante,
                 'impuesto': this.impuesto,
                 'total': this.total,
+                'observaciones': this.observaciones,
                 'data': this.arrayDetalle
             }).then(function () {
                 //validar si se envio todos los datos bien
                 _this6.$Progress.start();
                 _this6.$Progress.finish();
                 _this6.listado = 1, _this6.listarIngreso();
-                _this6.idproveedor = "", _this6.tipo_comprobante = "NE", _this6.serie_comprobante = "", _this6.num_comprobante = "", _this6.total = 0;
-                _this6.arrayDetalle = [];
+                _this6.idproveedor = "", _this6.tipo_comprobante = "NE", _this6.serie_comprobante = "", _this6.num_comprobante = "", _this6.total = 0, _this6.observaciones = "", _this6.arrayDetalle = [];
                 toast({
                     type: 'success',
                     title: 'Compra Ingresada'
@@ -80373,6 +80406,10 @@ var render = function() {
                                       ]),
                                       _vm._v(" "),
                                       _c("td", [_vm._v(_vm._s(ingreso.total))]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(ingreso.observaciones))
+                                      ]),
                                       _vm._v(" "),
                                       _c("td", [
                                         _c(
@@ -80586,6 +80623,34 @@ var render = function() {
                           }
                         })
                       ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Observaciones y comentarios")]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.observaciones,
+                            expression: "observaciones"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: _vm.observaciones },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.observaciones = $event.target.value
+                          }
+                        }
+                      })
                     ])
                   ]),
                   _vm._v(" "),
@@ -81156,6 +81221,8 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Total")]),
       _vm._v(" "),
+      _c("th", [_vm._v("Observaciones")]),
+      _vm._v(" "),
       _c("th", [_vm._v("Opciones")])
     ])
   },
@@ -81614,6 +81681,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -81635,6 +81720,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             precio: 0,
             cantidad: 0,
             marca: '',
+            estado: 'Entregado',
+            observaciones: "",
             total_impuesto: 0.0,
             total_parcial: 0.0
 
@@ -81748,8 +81835,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         mostrarDetalle: function mostrarDetalle() {
             this.listado = 0;
-            this.idunidad = "", this.tipo_comprobante = "Nota Entrega", this.num_comprobante = "", this.total = 0;
-            this.arrayDetalle = [];
+            this.idunidad = "", this.tipo_comprobante = "Nota Entrega", this.num_comprobante = "", this.total = 0, this.observaciones = "", this.arrayDetalle = [];
         },
         ocultarDetalle: function ocultarDetalle() {
             this.listado = 1;
@@ -81777,13 +81863,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'num_comprobante': this.num_comprobante,
                 'impuesto': this.impuesto,
                 'total': this.total,
+                'estado': this.estado,
+                'observaciones': this.observaciones,
                 'data': this.arrayDetalle
             }).then(function () {
                 _this6.$Progress.start();
                 _this6.$Progress.finish();
                 _this6.listado = 1, _this6.listarVentas();
-                _this6.idunidad = "", _this6.tipo_comprobante, _this6.num_comprobante = "", _this6.total = 0;
-                _this6.arrayDetalle = [];
+                _this6.idunidad = "", _this6.tipo_comprobante, _this6.num_comprobante = "", _this6.total = 0, _this6.observaciones = "", _this6.arrayDetalle = [];
                 toast({
                     type: 'success',
                     title: 'Venta Registrada'
@@ -81906,6 +81993,10 @@ var render = function() {
                                       ]),
                                       _vm._v(" "),
                                       _c("td", [_vm._v(_vm._s(venta.total))]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(venta.observaciones))
+                                      ]),
                                       _vm._v(" "),
                                       _c("td", [
                                         _c(
@@ -82045,7 +82136,7 @@ var render = function() {
                               _vm._v("Seleccione")
                             ]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "NE" } }, [
+                            _c("option", { attrs: { value: "Nota Entrega" } }, [
                               _vm._v("Nota de Entrega")
                             ]),
                             _vm._v(" "),
@@ -82083,6 +82174,83 @@ var render = function() {
                           }
                         })
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Observaciones")]),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.observaciones,
+                              expression: "observaciones"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "" },
+                          domProps: { value: _vm.observaciones },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.observaciones = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row border col-md-4" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Status de la operación")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.estado,
+                              expression: "estado"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.estado = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "0" } }, [
+                            _vm._v("Seleccione")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Entregado" } }, [
+                            _vm._v("Entregado")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Pendiente" } }, [
+                            _vm._v("Pendiente por entregar")
+                          ])
+                        ]
+                      )
                     ])
                   ]),
                   _vm._v(" "),
@@ -82650,6 +82818,8 @@ var staticRenderFns = [
       _c("th", [_vm._v("Impuesto")]),
       _vm._v(" "),
       _c("th", [_vm._v("Total")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Observaciones")]),
       _vm._v(" "),
       _c("th", [_vm._v("Opciones")])
     ])

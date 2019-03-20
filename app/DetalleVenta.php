@@ -23,4 +23,6 @@ class DetalleVenta extends Model
     public function insumos(){
         return $this->belongsTo('App\Insumo');
     }
+    
+    public $timestamps=false;
 }

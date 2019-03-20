@@ -7,7 +7,7 @@
                 <h3 class="card-title">Unidades de transporte</h3>
 
                 <div class="card-tools">
-                    <button class="btn btn-success" @click="abrirModal">Registrar Unidad <i class="fas fa-plus fa-fw"></i></button>
+                    <button class="btn btn-success" @click="abrirModal">Registrar Nueva Unidad <i class="fas fa-plus fa-fw"></i></button>
                   
                 </div>
               </div>
@@ -112,7 +112,9 @@
                     <has-error :form="form" field="placa"></has-error>
                 </div>
                 <div class="form-group">
-                 <select class="form-control" v-model="form.tipo">
+                 <select class="form-control" v-model="form.tipo"
+                 :class="{ 'is-invalid': form.errors.has('tipo') }">
+                    <has-error :form="form" field="tipo"></has-error>>
                     <option disabled value="">Seleccione tipo de Vehiculo</option>
                     <option value="Autobus">Autobus</option>
                     <option value="Minibus">Minibus</option>
@@ -136,14 +138,16 @@
                 </div>
                 
                  <div class="form-group">
-                 <select class="form-control" v-model="form.id_linea">
+                 <select class="form-control" v-model="form.id_linea" :class="{ 'is-invalid': form.errors.has('id_linea') }">
+                    <has-error :form="form" field="id_linea"></has-error>>
                     <option disabled value="0">Seleccione organización a la que pertenece</option>
                     <option v-for="linea in selectL" :key="linea.id" :value="linea.id" v-text="linea.nombre"></option>
                 </select>
                 </div>
 
                 <div class="form-group">
-                <select class="form-control" v-model="form.id_persona">
+                <select class="form-control" v-model="form.id_persona" :class="{ 'is-invalid': form.errors.has('id_persona') }">
+                    <has-error :form="form" field="id_persona"></has-error>>
                     <option disabled value="0">Seleccione Propietario del Vehiculo</option>
                     <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido"></option>
                 </select>

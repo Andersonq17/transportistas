@@ -44,6 +44,7 @@ class unidadesController extends Controller
             'placa'=>'required|string|unique:unidades',
             'id_linea'=>'required|integer',
             'id_persona' => 'required|integer|',
+            'tipo'=>'required'
             
         ]);
 

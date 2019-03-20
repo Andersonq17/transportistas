@@ -29,7 +29,7 @@ class personasController extends Controller
     }
 
     public function selectPersona(Request $request){
-        $personas= Persona::select('id','nombre','apellido','cedula')->where('tipo','=','Socio')->orderby('id','desc')->get();
+        $personas= Persona::select('id','nombre','apellido','cedula')->orderby('id','desc')->get();
             
         return $personas ; 
     }
@@ -46,7 +46,7 @@ class personasController extends Controller
             'nombre' => 'required|string|max:191',
             'apellido' => 'required|string|max:191',
             'cedula'=>'required|string|min:6|unique:personas',
-            'correo' => 'max:191|unique:personas',
+           // 'correo' => 'max:191|unique:personas,correo',
             
         ]);
 

@@ -33,7 +33,7 @@ class ingresoController extends Controller
     
         return Ingreso::join('proveedores','ingresos.idproveedor','=','proveedores.id')
         ->join('users','ingresos.idusuario','=','users.id')
-        ->select('ingresos.id','ingresos.idproveedor','ingresos.idusuario','ingresos.tipo_comprobante','ingresos.serie_comprobante','ingresos.num_comprobante',
+        ->select('ingresos.id','ingresos.idproveedor','ingresos.idusuario','ingresos.tipo_comprobante','ingresos.serie_comprobante','ingresos.num_comprobante', 'ingresos.observaciones',
         'ingresos.fecha_hora','ingresos.impuesto','ingresos.total','ingresos.estado','proveedores.nombre as nombre_proveedor','users.name as nombre_usuario')
         ->orderby('id','desc')->paginate(5);
     }
@@ -69,7 +69,8 @@ class ingresoController extends Controller
          $ingreso->fecha_hora=$myTime->toDateString();
          $ingreso->impuesto=$request->impuesto;
          $ingreso->total=$request->total;
-         $ingreso->estado='registrado';
+         $ingreso->estado='Registrado';
+         $ingreso->observaciones=$request->observaciones;
          $ingreso->save();
 
          $detalles=$request->data;//lo que viene del arraydetalle de la vista

@@ -36,6 +36,7 @@
                     <th>Fecha y Hora</th>
                     <th>Impuesto</th>
                     <th>Total</th>
+                    <th>Observaciones</th>
                     <th>Opciones</th>
                   </tr>
 
@@ -49,6 +50,7 @@
                     <td>{{ingreso.fecha_hora}}</td>
                     <td>{{ingreso.impuesto}}</td>
                     <td>{{ingreso.total}}</td>
+                    <td>{{ingreso.observaciones}}</td>
                     
                      <td>
 
@@ -116,8 +118,14 @@
                                 <input type="text" class="form-control" v-model="num_comprobante" placeholder="000-xxx">
                         </div>
                     </div>
+                    
                 </div>
-            
+                <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Observaciones y comentarios</label>
+                                <textarea type="text" class="form-control" v-model="observaciones" placeholder=""></textarea>
+                        </div>
+                    </div>
              
                 <div class="form-group row border">
                     <div class="col-md-6">
@@ -297,6 +305,7 @@
                     precio:0,
                     cantidad:0,
                     marca:'',
+                    observaciones:'',
                     total_impuesto:0.0,
                     total_parcial:0.0,
                     
@@ -447,6 +456,7 @@
                         'num_comprobante':this.num_comprobante,
                         'impuesto':this.impuesto,
                         'total':this.total,
+                        'observaciones': this.observaciones,
                         'data':this.arrayDetalle,
                }).then(()=>{ 
                    //validar si se envio todos los datos bien
@@ -458,7 +468,8 @@
                         this.tipo_comprobante="NE",
                         this.serie_comprobante="",
                         this.num_comprobante="",
-                        this.total=0
+                        this.total=0,
+                        this.observaciones ="",
                         this.arrayDetalle=[]
                         toast({
                             type: 'success',

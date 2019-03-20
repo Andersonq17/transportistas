@@ -34,6 +34,7 @@
                     <th>Fecha y Hora</th>
                     <th>Impuesto</th>
                     <th>Total</th>
+                    <th>Observaciones</th>
                     <th>Opciones</th>
                   </tr>
 
@@ -46,6 +47,7 @@
                     <td>{{venta.fecha_hora}}</td>
                     <td>{{venta.impuesto}}</td>
                     <td>{{venta.total}}</td>
+                    <td>{{venta.observaciones}}</td>
                     
                      <td>
 
@@ -94,7 +96,7 @@
                             <label>Tipo de Comprobante</label>
                             <select class="form-control" v-model="tipo_comprobante">
                                 <option value="0">Seleccione</option>
-                                <option value="NE">Nota de Entrega</option>
+                                <option value="Nota Entrega">Nota de Entrega</option>
                                 <option value="Otro">Otro</option>
                             </select>
                         </div>
@@ -106,8 +108,24 @@
                                 <input type="text" class="form-control" v-model="num_comprobante" placeholder="000-xxx">
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Observaciones</label>
+                                <textarea type="text" class="form-control" v-model="observaciones" placeholder=""> </textarea>
+                        </div>
+                    </div>
+                    
                 </div>
-            
+                 <div class="form-group row border col-md-4">
+                     <div class="form-group">
+                            <label>Status de la operación</label>
+                            <select class="form-control" v-model="estado">
+                                <option value="0">Seleccione</option>
+                                <option value="Entregado">Entregado</option>
+                                <option value="Pendiente">Pendiente por entregar</option>
+                            </select>
+                        </div>
+                 </div>
              
                 <div class="form-group row border">
                     <div class="col-md-6">
@@ -285,6 +303,8 @@
                     precio:0,
                     cantidad:0,
                     marca:'',
+                    estado:'Entregado',
+                    observaciones:"",
                     total_impuesto:0.0,
                     total_parcial:0.0,
                     
@@ -400,7 +420,8 @@
                         this.idunidad="",
                         this.tipo_comprobante="Nota Entrega",
                         this.num_comprobante="",
-                        this.total=0
+                        this.total=0,
+                        this.observaciones="",
                         this.arrayDetalle=[]
              },
              ocultarDetalle(){
@@ -433,6 +454,8 @@
                         'num_comprobante':this.num_comprobante,
                         'impuesto':this.impuesto,
                         'total':this.total,
+                        'estado': this.estado,
+                        'observaciones':this.observaciones,
                         'data':this.arrayDetalle,
                }).then(()=>{ 
                         this.$Progress.start();   
@@ -442,7 +465,8 @@
                         this.idunidad="",
                         this.tipo_comprobante,
                         this.num_comprobante="",
-                        this.total=0
+                        this.total=0,
+                        this.observaciones="",
                         this.arrayDetalle=[]
                         toast({
                             type: 'success',
