@@ -24,6 +24,7 @@ class CreateUnidadesTable extends Migration
             $table->boolean('status')->default('1');
             $table->integer('id_linea')->unsigned()->nullable();
             $table->integer('id_persona')->unsigned()->nullable();
+            $table->string('observaciones')->nullable();
 
             $table->foreign('id_linea')->references('id')->on('lineas')->onDelete('SET NULL');
             $table->foreign('id_persona')->references('id')->on('personas')->onDelete('SET NULL');

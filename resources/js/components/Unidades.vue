@@ -25,6 +25,7 @@
                     <th>Status</th>
                     <th>Organización</th>
                     <th>Propietario</th>
+                    <th>Observaciones</th>
                     <th>Acciones</th>
                   </tr>
 
@@ -47,6 +48,7 @@
                         </td>
                     <td>{{unidad.nombre_linea}}</td>
                     <td>{{unidad.propietario+' '+unidad.apellido |upText}}</td>
+                    <td>{{unidad.observaciones}}</td>
                      <td>
 
                         <a href="#" @click="editModal(unidad)">
@@ -152,12 +154,18 @@
                     <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido"></option>
                 </select>
                 </div>
+                <div class="form-group">
+                    <textarea v-model="form.observaciones" type="text" name="observaciones" placeholder="Observaciones"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('observaciones') }"> </textarea>
+                    <has-error :form="form" field="observaciones"></has-error>
+                </div>
                 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button v-show="!editar" type="submit" class="btn btn-primary">Guardar</button>
                     <button v-show="editar" type="submit" class="btn btn-success">Actualizar</button>
                 </div>
+                
 </form>
       </div>
       
@@ -186,7 +194,8 @@
                     numero_cupo:'',
                     status:0,
                     id_linea:0,
-                    id_persona:0
+                    id_persona:0,
+                    observaciones:''
     
                 })
             }

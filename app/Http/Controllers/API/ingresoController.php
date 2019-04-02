@@ -58,7 +58,7 @@ class ingresoController extends Controller
     
      try{
          DB::beginTransaction();
-         $myTime=Carbon::now('America/Caracas');
+         $myTime=Carbon::now('America/Caracas')->format('Y-m-d');
          $ingreso= new Ingreso();
 
          $ingreso->idproveedor=$request['idproveedor.id'];
@@ -66,7 +66,7 @@ class ingresoController extends Controller
          $ingreso->tipo_comprobante= $request->tipo_comprobante;
          $ingreso->serie_comprobante=$request->serie_comprobante;
          $ingreso->num_comprobante=$request->num_comprobante;
-         $ingreso->fecha_hora=$myTime->toDateString();
+         $ingreso->fecha_hora=$myTime;
          $ingreso->impuesto=$request->impuesto;
          $ingreso->total=$request->total;
          $ingreso->estado='Registrado';

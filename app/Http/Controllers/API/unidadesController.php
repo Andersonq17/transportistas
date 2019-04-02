@@ -24,7 +24,7 @@ class unidadesController extends Controller
         return Unidades::join('personas','personas.id','=','.id_persona')
                       ->join('lineas', 'lineas.id','=','id_linea')
         ->select('unidades.id','unidades.marca','unidades.modelo','unidades.anio','unidades.placa','unidades.tipo','unidades.numero_cupo',
-        'unidades.status','unidades.id_linea','unidades.id_persona',
+        'unidades.status','unidades.id_linea','unidades.id_persona','unidades.observaciones',
         'personas.id as id_persona','personas.nombre as propietario','personas.apellido as apellido', 'lineas.nombre as nombre_linea')
         ->paginate(10);
     }

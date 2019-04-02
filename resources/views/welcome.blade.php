@@ -69,8 +69,8 @@
             }
 
             .inst{
-                width: 100px;
-                height: 100px;
+                width: 200px;
+                height: 150px;
             }
         </style>
     </head>

@@ -35,14 +35,14 @@ class ventasController extends Controller
     
      try{
          DB::beginTransaction();
-         $myTime=Carbon::now('America/Caracas');
+         $myTime=Carbon::now('America/Caracas')->format('Y-m-d');
          $venta= new Venta();
 
          $venta->idunidad=$request['idunidad.id'];
          $venta->idusuario= \Auth::user()->id;
          $venta->tipo_comprobante= $request->tipo_comprobante;
          $venta->num_comprobante=$request->num_comprobante;
-         $venta->fecha_hora=$myTime->toDateString();
+         $venta->fecha_hora=$myTime;
          $venta->impuesto=$request->impuesto;
          $venta->total=$request->total;
          $venta->estado=$request->estado;

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Unidades extends Model
 {
     protected $fillable=[
-        'marca','modelo','anio','placa','tipo','numero_cupo','status','id_linea','id_persona'
+        'marca','modelo','anio','placa','tipo','numero_cupo','status','id_linea','id_persona','observaciones'
     ];
 
     public $timestamps = false;
