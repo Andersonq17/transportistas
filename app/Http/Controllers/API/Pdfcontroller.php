@@ -9,6 +9,8 @@ use App\Linea;
 use App\Persona;
 use App\Unidades;
 use App\Sindicato;
+use App\Venta;
+use App\DetalleVenta;
 
 class Pdfcontroller extends Controller
 {
@@ -28,6 +30,17 @@ class Pdfcontroller extends Controller
 
     }
 
+    public function crearPdf2($datos1, $datos2, $vistaurl,$id){
+        $data = $datos1.$datos2;
+        $date = date('d-m-Y');
+        $view= \View::make($vistaurl, compact('data','date'))->render();
+        $pdf= \App::make('dompdf.wrapper');
+        $pdf->loadHtml($view);
+
+        return $pdf->download('reporte.pdf');
+
+    }
+
     public function reporte_lineas($tipo){
         $vistaurl="pdf.reporte_lineas";
         $lineas=Linea::all();
@@ -37,9 +50,38 @@ class Pdfcontroller extends Controller
 
     public function reporte_unidades($tipo){
         $vistaurl="pdf.reporte_unidades";
-        $unidad=Unidades::all();
+        $unidad=Unidades::join('lineas', 'lineas.id','=','id_linea')
+        ->select('unidades.marca','unidades.modelo','unidades.anio','unidades.placa','unidades.tipo','unidades.numero_cupo',
+        'unidades.status','lineas.nombre as nombre_linea')->get();
 
         return $this->crearPdf($unidad,$vistaurl,$tipo);
     }
 
+    public function reporte_persona($tipo){
+        $vistaurl="pdf.reporte_choferes";
+        $persona=Persona::all();
+
+        return $this->crearPdf($persona,$vistaurl,$tipo);
+    }
+
+    public function reporte_venta($id){
+        $vistaurl="pdf.venta";
+        $venta= Venta::join('unidades','ventas.idunidad','=','unidades.id')
+                        ->select('ventas.id','ventas.tipo_comprobante','ventas.num_comprobante','ventas.created_at',
+                                'ventas.impuesto','ventas.total','ventas.estado','ventas.observaciones',
+                                'unidades.marca','unidades.modelo','unidades.placa')
+                                ->where('ventas.id','=',$id)->
+                                orderBy('ventas.id','desc')->take(1)->get();
+        
+        $detalles=DetalleVenta::join('insumos','detalle_venta.idinsumo','=','insumos.id')
+                                    ->select('detalle_venta.cantidad','detalle_venta.precio',
+                                            'insumos.marca','insumos.tipo','insumos.medidas_caucho',
+                                            'insumos.amperaje','insumos.tipo_aceite')
+                                            ->where('detalle_venta.idventa','=',$id)
+                                            ->orderBy('detalle_venta.id','desc')->get();
+
+        //$numventa= Venta::select('num_comprobante')->where('id','=',$id)->get();
+
+        return $this->crearPdf2($venta,$detalles,$vistaurl,$id);
+    }
 }

@@ -29,6 +29,11 @@
                                     <td><a href="api/reporte_unidades/1" target="_blank"><button class="btn btn-block btn-primary btn-xs">Ver</button></a></td>
                                     <td><a href="api/reporte_unidades/2" target="_blank"><button class="btn btn-block btn-success btn-xs">Descargar</button></a></td>
                                 </tr>
+                                <tr  class="text-center">
+                                    <td>Choferes</td>
+                                    <td><a href="api/reporte_persona/1" target="_blank"><button class="btn btn-block btn-primary btn-xs">Ver</button></a></td>
+                                    <td><a href="api/reporte_persona/2" target="_blank"><button class="btn btn-block btn-success btn-xs">Descargar</button></a></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

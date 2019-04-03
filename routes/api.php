@@ -63,10 +63,12 @@ Route::get('selectLinea', 'Api\lineasController@selectLinea');
 Route::get('selectUnidad', 'Api\unidadesController@selectUnidad');
 
 
-//reporte
+//reportes
 Route::apiResources(['reportes'=>'API\Pdfcontroller']);
 Route::get('reporte_lineas/{tipo}', 'Api\Pdfcontroller@reporte_lineas');
 Route::get('reporte_unidades/{tipo}', 'Api\Pdfcontroller@reporte_unidades');
+Route::get('reporte_persona/{tipo}', 'Api\Pdfcontroller@reporte_persona');
+Route::get('reporte_venta/{id}', 'Api\PdfController@reporte_venta');
 
 //proveedores
 

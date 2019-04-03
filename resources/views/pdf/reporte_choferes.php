@@ -1,5 +1,5 @@
 <html>
-<title>Reportes de Lineas de Transporte</title>
+<title>Reportes de Choferes</title>
 
 <style>
 
@@ -85,8 +85,8 @@
 
 </style>
 <body>
-<img src="./img/banner.png">
-        <h3 class="">Reporte Lineas de Transporte <span class="derecha">Fecha: <?= $date ?></span></h3>
+    <img src="./img/banner.png">
+        <h3 class="">Reporte Choferes <span class="derecha">Fecha: <?= $date ?></span> </h3>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12">
@@ -97,12 +97,11 @@
                         <tr class="text-center">
                         
                             <th>Nombre</th>
-                            <th>RIF</th>
-                            <th>Municipio</th>
-                            <th>Correo</th>
+                            <th>Apellido</th>
+                            <th>Cedula</th>
                             <th>Telefono</th>
-                            <th>Tipo de Ruta</th>
-                            <th>Unidades</th>
+                            <th>Correo</th>
+                            <th>Tipo</th>
 
                         </tr>
 
@@ -110,16 +109,15 @@
 
                     <tbody>
                     
-                        <?php foreach ($data as $linea){?>
+                        <?php foreach ($data as $persona){?>
 
                         <tr class="text-center">
-                            <td><?= $linea->nombre; ?></td>
-                            <td><?= $linea->rif; ?></td>
-                            <td><?= $linea->municipio; ?></td>
-                            <td><?= $linea->correo; ?></td>
-                            <td><?= $linea->telefono; ?></td>
-                            <td><?= $linea->tipo_ruta; ?></td>
-                            <td><?= $linea->unidades()->count(); ?></td>
+                            <td><?= $persona->nombre; ?></td>
+                            <td><?= $persona->apellido; ?></td>
+                            <td><?= $persona->cedula; ?></td>
+                            <td><?= $persona->telefono; ?></td>
+                            <td><?= $persona->correo; ?></td>
+                            <td><?= $persona->tipo; ?></td>
                         </tr>
                         <?php } ?>
                     </tbody>

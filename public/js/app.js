@@ -78070,6 +78070,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -78181,6 +78186,48 @@ var staticRenderFns = [
                         {
                           attrs: {
                             href: "api/reporte_unidades/2",
+                            target: "_blank"
+                          }
+                        },
+                        [
+                          _c(
+                            "button",
+                            { staticClass: "btn btn-block btn-success btn-xs" },
+                            [_vm._v("Descargar")]
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", { staticClass: "text-center" }, [
+                    _c("td", [_vm._v("Choferes")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "api/reporte_persona/1",
+                            target: "_blank"
+                          }
+                        },
+                        [
+                          _c(
+                            "button",
+                            { staticClass: "btn btn-block btn-primary btn-xs" },
+                            [_vm._v("Ver")]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "api/reporte_persona/2",
                             target: "_blank"
                           }
                         },
@@ -81803,6 +81850,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -81845,6 +81895,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         abrirModal: function abrirModal() {
             $('#nuevoIngreso').modal('show');
+        },
+        ventaPdf: function ventaPdf(id) {
+            window.open('api/reporte_venta/' + id + ',' + '_blank');
         },
         listarInsumo: function listarInsumo() {
             var _this2 = this;
@@ -82117,6 +82170,23 @@ var render = function() {
                                             _c("i", {
                                               staticClass: "fa fa-trash",
                                               staticStyle: { color: "red" }
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v("/\n                         "),
+                                        _c(
+                                          "a",
+                                          {
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function($event) {
+                                                _vm.ventaPdf(venta.id)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-file-alt"
                                             })
                                           ]
                                         )

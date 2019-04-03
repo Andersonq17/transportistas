@@ -53,6 +53,9 @@
 
                          <a href="#" @click="anular(venta.id)">
                             <i style="color:red;" class="fa fa-trash"></i>
+                        </a>/
+                         <a href="#" @click="ventaPdf(venta.id)">
+                            <i style="" class="fa fa-file-alt"></i>
                         </a>
 
                     </td>
@@ -324,6 +327,10 @@
             abrirModal(){
                  $('#nuevoIngreso').modal('show');
                 
+            },
+
+            ventaPdf(id){
+                window.open('api/reporte_venta/'+ id + ',' + '_blank');
             },
 
             listarInsumo(){

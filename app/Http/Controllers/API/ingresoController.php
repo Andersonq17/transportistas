@@ -11,9 +11,6 @@ use App\User;
 use Carbon\Carbon;
 
 
-
-
-
 class ingresoController extends Controller
 {
     public function __construct()
