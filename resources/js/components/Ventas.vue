@@ -308,6 +308,7 @@
                     marca:'',
                     estado:'Entregado',
                     observaciones:"",
+                    existencia:0,
                     total_impuesto:0.0,
                     total_parcial:0.0,
                     
@@ -345,13 +346,15 @@
                   if(this.arrayInsumo.length>0){
                         this.marca=this.arrayInsumo[0]['marca'];
                         this.idinsumo=this.arrayInsumo[0]['id'];
+                        this.existencia=this.arrayInsumo[0]['existencia']
                     }
                     else{
                         this.marca='No existe';
                         this.idinsumo=0;
                     }
             },
-             listarVentas(){
+             
+            listarVentas(){
                  if(this.$gate.isAdmin()){
                     axios.get("api/ventas").then(({ data })=>(this.ventas = data)); 
                     //enviar la peticion solo si es admin
@@ -388,23 +391,34 @@
                          })
                      }
                      else{
+                         if(this.arrayDetalle['cantidad']>this.arrayDetalle['existencia']){
+                             swal({
+                             type:'error',
+                             title:'Error...',
+                             text: 'No hay suficiente existencia',
+                         })
+                         }
+                         else{
                     this.arrayDetalle.push({
                         idinsumo: this.idinsumo,
                         marca:this.marca,
                         precio: this.precio,
                         cantidad:this.cantidad,
-                 });//despues del push volver todos los valores a su estado original
+                        existencia:this.existencia
+                 });
                             this.idinsumo='';
                             this.marca='';
                             this.precio=0;
                             this.cantidad=0;
                             this.codigo='';
+                            this.existencia=0;
+                         }
                      }
                      
             }  
-        },
+            },
 
-        agregarDetalleModal(data=[]){
+            agregarDetalleModal(data=[]){
              if(this.encuentra(data['id'])){
                          swal({
                              type:'error',
@@ -413,16 +427,26 @@
                          })
                      }
                      else{
-                    this.arrayDetalle.push({
+                        
+                        if(this.cantidad.cantidad>this.existencia){
+                            swal({
+                             type:'error',
+                             title:'Error...',
+                             text: 'No hay suficiente existencia',
+                         })
+                        }
+                    else{
+                        this.arrayDetalle.push({
                         idinsumo: data['id'],
                         marca: data['marca'],
                         precio: 1,
                         cantidad:1,
-                 });//despues del push volver todos los valores a su estado original
-                
+                        existencia:data['existencia']
+                 });
+                    }
                      }
-        },
-             mostrarDetalle(){
+            },
+            mostrarDetalle(){
                  this.listado=0;
                         this.idunidad="",
                         this.tipo_comprobante="Nota Entrega",
@@ -474,12 +498,12 @@
                         this.num_comprobante="",
                         this.total=0,
                         this.observaciones="",
-                        this.arrayDetalle=[]
+                        this.arrayDetalle=[],
                         toast({
                             type: 'success',
                             title: 'Venta Registrada'
                             })
-
+                     window.open('api/reporte_venta/'+ id + ',' + '_blank');
                  })
                  
                  .catch(()=>{ //mostrar error
@@ -490,8 +514,40 @@
                    
              },
              
-             anular(){
+             anular(id){
+                 swal({
+                    title: '¿Estas seguro de anular esta venta?',
+                    text: "¡Esta acción no se puede revertir! ",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si'
+                    }).then((result) => {
 
+                        //enviar la peticion al servidor
+                    if (result.value) { //evaluar si Si o No elimina
+                        axios.put('api/ventas/'+this.id).then(()=>{ //llamar al metodo borrar del controlador mediante el route list
+                           
+                                swal(
+                                'Anulada',
+                                'Venta Anulada',
+                                'success'
+                                )
+
+                                this.listarVentas();
+                    
+
+                        }).catch(()=>{
+                             swal(
+                                'Falló',
+                                'Algo salió mal',
+                                'warning'
+                                )
+                        })
+                        }
+                    
+                    })
              }
             
         },

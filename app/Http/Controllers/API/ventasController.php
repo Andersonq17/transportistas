@@ -62,7 +62,9 @@ class ventasController extends Controller
          }
            
          DB::commit();
-
+         return [
+             'id' => $venta->id
+         ];
      }catch(Exception $e){
          DB::rollback();
      }
@@ -70,7 +72,7 @@ class ventasController extends Controller
 
     }
 
-    public function pdf(Request $request,$id){
+    /*public function pdf(Request $request,$id){
         $venta= Venta::join('unidades','ventas.idunidad','=','unidades.id')
                         ->select('ventas.id','ventas.tipo_comprobante','ventas.num_comprobante','ventas.created_at',
                                 'ventas.impuesto','ventas.total','ventas.estado','ventas.observaciones',
@@ -89,12 +91,12 @@ class ventasController extends Controller
 
         $pdf= \PDF::loadView('pdf.venta',['venta'=>$venta,'detalles'=>$detalles]);
         return $pdf->download('venta-'.$numventa[0]->num_comprobante.'.pdf');
-    }
+    }*/
 
-    public function anular($id)
+    public function anular(Request $request)
     {
         $this->authorize('isAdmin');
-        $venta = Venta::findOrFail($id);
+        $venta = Venta::findOrFail($request->id);
         $venta->estado='Anulado';
         $venta->save();
 

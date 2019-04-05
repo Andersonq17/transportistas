@@ -24,7 +24,11 @@
         }
  
         #imagen{
-        width: 100px;
+        width: 400px;
+        }
+
+        td{
+            text-align:center;
         }
  
         #datos{
@@ -111,15 +115,15 @@
         }
     </style>
     <body>
-        
+        @foreach ($data as $v)
         <header>
             <div id="logo">
                 <img src="./img/banner.png" alt="banner" id="imagen">
             </div>
            
             <div id="fact">
-                <p><br>
-                </p>
+               {{$v->tipo_comprobante}}
+                <p>{{$v->num_comprobante}}</p>
             </div>
         </header>
         <br>
@@ -134,15 +138,16 @@
                     <tbody>
                         <tr>
                             <th><p id="cliente"><br>
-                            Modelo: <br>
-                            Placa: <br>
+                            Marca: {{$v->marca}} <br>
+                            Modelo: {{$v->modelo}} <br>
+                            Placa: {{$v->placa}} <br>
                             </th>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
-        
+        @endforeach
         <br>
         <section>
             <div>
@@ -155,59 +160,68 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
+                            <td>{{$v->name}}</td>
+                            <td>{{$v->created_at}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
+
         <br>
         <section>
             <div>
                 <table id="facarticulo">
                     <thead>
                         <tr id="fa">
-                            <th>CANT</th>
-                            <th>DESCRIPCION</th>
-                            <th>PRECIO UNIT</th>
-                            <th>PRECIO TOTAL</th>
+                            <th>Cant</th>
+                            <th>Marca</th>
+                            <th>Tipo</th>
+                            <th>Medidas</th>
+                            <th>Amperaje</th>
+                            <th>Tipo Aceite</th>
+                            <th>Precio Unit</th>
+                            <th>Precio Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                       
+                     @foreach ($data2 as $det)
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{$det->cantidad}}</td>
+                            <td>{{$det->marca}}</td>
+                            <td>{{$det->tipo}}</td>
+                            <td>{{$det->medida}}</td>
+                            <td>{{$det->amperaje}}</td>
+                            <td>{{$det->tipoA}}</td>
+                            <td>{{$det->precio}}</td>
+                            <td>{{$det->precio*$det->cantidad}}</td>
                         </tr>
-                        
+                        @endforeach
                     </tbody>
                     <tfoot>
-                        
+                        @foreach($data as $v)
                         <tr>
                             <th></th>
                             <th></th>
                             <th></th>
                             <th>SUBTOTAL</th>
-                            <td></td>
+                            <td>Bs.S {{round($v->total -($v->total*$v->impuesto),2)}}</td>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>Impuesto</th>
-                            <td></td>
+                            <th>Impuesto (16%)</th>
+                            <td>Bs.S {{round($v->total*$v->impuesto,2)}}</td>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
                             <th></th>
                             <th>TOTAL</th>
-                            <td></td>
+                            <td>Bs.S {{$v->total}}</td>
                         </tr>
-                        
+                        @endforeach
                     </tfoot>
                 </table>
             </div>

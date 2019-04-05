@@ -1,0 +1,7 @@
+DELIMITER //
+CREATE TRIGGER tr_ExistenciaDown AFTER INSERT ON detalle_venta
+FOR EACH ROW BEGIN
+UPDATE insumos SET existencia= existencia - NEW.cantidad
+WHERE insumos.id= NEW.idinsumo;
+END
+;

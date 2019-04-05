@@ -31,13 +31,13 @@ class insumosController extends Controller
         $filtro=$request->filtro;
 
         return Insumo::where('codigo','=',$filtro)
-                        ->select('id','marca','tipo','medidas_caucho','amperaje','tipo_aceite')
+                        ->select('id','marca','tipo','medidas_caucho','amperaje','tipo_aceite','existencia')
                         ->orderBy('id','asc')->take(1)->get();
     }
     public function listarInsumo()
     {
     
-        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite')
+        return Insumo::select('id','codigo','marca','tipo','medidas_caucho','amperaje','tipo_aceite','existencia')
         ->orderby('id','desc')->paginate(10);
     }
 

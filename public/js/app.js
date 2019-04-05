@@ -81876,6 +81876,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             marca: '',
             estado: 'Entregado',
             observaciones: "",
+            existencia: 0,
             total_impuesto: 0.0,
             total_parcial: 0.0
 
@@ -81919,6 +81920,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.arrayInsumo.length > 0) {
                 this.marca = this.arrayInsumo[0]['marca'];
                 this.idinsumo = this.arrayInsumo[0]['id'];
+                this.existencia = this.arrayInsumo[0]['existencia'];
             } else {
                 this.marca = 'No existe';
                 this.idinsumo = 0;
@@ -81958,17 +81960,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         text: 'Insumo ya está agregado'
                     });
                 } else {
-                    this.arrayDetalle.push({
-                        idinsumo: this.idinsumo,
-                        marca: this.marca,
-                        precio: this.precio,
-                        cantidad: this.cantidad
-                    }); //despues del push volver todos los valores a su estado original
-                    this.idinsumo = '';
-                    this.marca = '';
-                    this.precio = 0;
-                    this.cantidad = 0;
-                    this.codigo = '';
+                    if (this.arrayDetalle['cantidad'] > this.arrayDetalle['existencia']) {
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'No hay suficiente existencia'
+                        });
+                    } else {
+                        this.arrayDetalle.push({
+                            idinsumo: this.idinsumo,
+                            marca: this.marca,
+                            precio: this.precio,
+                            cantidad: this.cantidad,
+                            existencia: this.existencia
+                        });
+                        this.idinsumo = '';
+                        this.marca = '';
+                        this.precio = 0;
+                        this.cantidad = 0;
+                        this.codigo = '';
+                        this.existencia = 0;
+                    }
                 }
             }
         },
@@ -81982,12 +81994,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     text: 'Insumo ya está agregado'
                 });
             } else {
-                this.arrayDetalle.push({
-                    idinsumo: data['id'],
-                    marca: data['marca'],
-                    precio: 1,
-                    cantidad: 1
-                }); //despues del push volver todos los valores a su estado original
+
+                if (this.cantidad.cantidad > this.existencia) {
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'No hay suficiente existencia'
+                    });
+                } else {
+                    this.arrayDetalle.push({
+                        idinsumo: data['id'],
+                        marca: data['marca'],
+                        precio: 1,
+                        cantidad: 1,
+                        existencia: data['existencia']
+                    });
+                }
             }
         },
         mostrarDetalle: function mostrarDetalle() {
@@ -82027,25 +82049,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this6.$Progress.start();
                 _this6.$Progress.finish();
                 _this6.listado = 1, _this6.listarVentas();
-                _this6.idunidad = "", _this6.tipo_comprobante, _this6.num_comprobante = "", _this6.total = 0, _this6.observaciones = "", _this6.arrayDetalle = [];
-                toast({
+                _this6.idunidad = "", _this6.tipo_comprobante, _this6.num_comprobante = "", _this6.total = 0, _this6.observaciones = "", _this6.arrayDetalle = [], toast({
                     type: 'success',
                     title: 'Venta Registrada'
                 });
+                window.open('api/reporte_venta/' + id + ',' + '_blank');
             }).catch(function () {//mostrar error
 
 
             });
         },
-        anular: function anular() {}
+        anular: function anular(id) {
+            var _this7 = this;
+
+            swal({
+                title: '¿Estas seguro de anular esta venta?',
+                text: "¡Esta acción no se puede revertir! ",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then(function (result) {
+
+                //enviar la peticion al servidor
+                if (result.value) {
+                    //evaluar si Si o No elimina
+                    axios.put('api/ventas/' + _this7.id).then(function () {
+                        //llamar al metodo borrar del controlador mediante el route list
+
+                        swal('Anulada', 'Venta Anulada', 'success');
+
+                        _this7.listarVentas();
+                    }).catch(function () {
+                        swal('Falló', 'Algo salió mal', 'warning');
+                    });
+                }
+            });
+        }
     },
     created: function created() {
-        var _this7 = this;
+        var _this8 = this;
 
         Fire.$on('buscando', function () {
-            var query = _this7.$parent.buscar;
+            var query = _this8.$parent.buscar;
             axios.get('api/buscarVenta?q=' + query).then(function (data) {
-                _this7.ventas = data.data;
+                _this8.ventas = data.data;
             }).catch(function () {});
         });
         this.listarVentas();
