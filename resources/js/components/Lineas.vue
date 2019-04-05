@@ -255,7 +255,7 @@
                    
              },
 
-                selectPersona(){
+             selectPersona(){
                 axios.get('api/selectPersona').then((data)=>{
                     this.select=data.data;
                     })

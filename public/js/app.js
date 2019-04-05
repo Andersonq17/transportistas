@@ -72069,10 +72069,95 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+
+        return {
+
+            varIngreso: null,
+            charIngreso: null,
+            ingresos: [],
+            varTotalIngreso: [],
+            varMesIngreso: []
+        };
+    },
+
+    methods: {
+        getIngreso: function getIngreso() {
+            var _this = this;
+
+            axios.get("api/escritorio").then(function (_ref) {
+                var data = _ref.data;
+                return _this.ingresos = data;
+            });
+            this.loadIngresos();
+        },
+        loadIngresos: function loadIngresos() {
+            this.ingresos.map(function (x) {
+                this.varTotalIngreso.push(x.total);
+                this.varMesIngreso.push(x.mes);
+            });
+            this.varIngreso = document.getElementById('ingresos').getContext('2d');
+
+            this.charIngreso = new Chart(this.varIngreso, {
+
+                type: 'bar',
+
+                data: {
+                    labels: this.varMesIngreso,
+                    datasets: [{
+                        label: 'Ingresos',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: this.varTotalIngreso,
+                        borderWidth: 1
+                    }]
+                },
+
+                // Configuration options go here
+                options: {
+                    ticks: {
+                        beginAtZero: true
+                    }
+
+                }
+            });
+        }
+    },
+
     mounted: function mounted() {
-        console.log('Component mounted.');
+        this.getIngreso();
     }
 });
 
@@ -72091,16 +72176,48 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [_vm._v("Escritorio")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    Este es el escritorio\n                "
-              )
+    return _c("main", { staticClass: "main mt-6" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Ingresos")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "ingresos" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [_vm._v("Ingresos de insumos por mes")])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Entrega")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "entrega" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [_vm._v("Insumos entregados por mes")])
+                  ])
+                ])
+              ])
             ])
           ])
         ])

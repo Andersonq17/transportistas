@@ -19,6 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font: Source Sans Pro -->
   <!--<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">-->
 <link rel="stylesheet" href="./css/app.css" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
@@ -78,7 +79,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                <li class="nav-item">
-                <router-link to="/Escritorio" class="nav-link">
+                <router-link to="/escritorio" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt text-blue"></i>
                   <p>
                     Escritorio

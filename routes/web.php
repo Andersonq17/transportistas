@@ -21,5 +21,6 @@ Route::get('/home', 'HomeController@index')->name('master');
 
 Route::get('{path}', 'HomeController@index')->where('path', '([A-z\d=\/_.]+)?');
 
+
 //personas
 

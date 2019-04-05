@@ -103,3 +103,7 @@ Route::apiResources(['ventas'=>'API\ventasController']);
 Route::get('ventas', 'Api\ventasController@index');
 Route::post('ventas', 'Api\ventasController@store');
 Route::put('ventas', 'Api\ventasController@anular');
+
+//escritorio
+Route::apiResources(['escritorio'=>'API\escritorioController']);
+Route::get('escritorio','API\escritorioController@graph');
