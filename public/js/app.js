@@ -72109,7 +72109,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             charIngreso: null,
             ingresos: [],
             varTotalIngreso: [],
-            varMesIngreso: []
+            varMesIngreso: [],
+
+            //ventas
+
+
+            ventas: [],
+            varVentas: null,
+            charVentas: null,
+            varTotalVentas: [],
+            varMesVenta: []
         };
     },
 
@@ -72119,38 +72128,78 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get("api/escritorio").then(function (_ref) {
                 var data = _ref.data;
-                return _this.ingresos = data;
+                _this.ingresos = data;
+                var me = _this;
+                _this.ingresos.map(function (x) {
+                    me.varTotalIngreso.push(x.total);
+                    me.varMesIngreso.push(x.mes);
+                });
             });
-            this.loadIngresos();
-        },
-        loadIngresos: function loadIngresos() {
-            this.ingresos.map(function (x) {
-                this.varTotalIngreso.push(x.total);
-                this.varMesIngreso.push(x.mes);
-            });
+
             this.varIngreso = document.getElementById('ingresos').getContext('2d');
 
             this.charIngreso = new Chart(this.varIngreso, {
 
                 type: 'bar',
-
                 data: {
-                    labels: this.varMesIngreso,
+                    labels: [this.varMesIngreso],
                     datasets: [{
-                        label: 'Ingresos',
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        data: this.varTotalIngreso,
+                        label: 'Ingresos del mes',
+                        data: [this.varTotalIngreso],
+                        backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+                        borderColor: ['rgba(54, 162, 235, 1)'],
                         borderWidth: 1
                     }]
                 },
-
-                // Configuration options go here
                 options: {
-                    ticks: {
-                        beginAtZero: true
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                suggestedMax: 100000000
+                            }
+                        }]
                     }
+                }
+            });
+        },
+        getVentas: function getVentas() {
+            var _this2 = this;
 
+            axios.get("api/escritorio/venta").then(function (_ref2) {
+                var data = _ref2.data;
+                _this2.ventas = data;
+                var me = _this2;
+                _this2.ventas.map(function (x) {
+                    me.varTotalVentas.push(x.total);
+                    me.varMesVenta.push(x.mes);
+                });
+            });
+
+            this.varVentas = document.getElementById('entrega').getContext('2d');
+
+            this.charVentas = new Chart(this.varVentas, {
+
+                type: 'bar',
+                data: {
+                    labels: [this.varMesVenta],
+                    datasets: [{
+                        label: 'Ingresos del mes',
+                        data: [this.varTotalVentas],
+                        backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+                        borderColor: ['rgba(54, 162, 235, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                suggestedMax: 100000000
+                            }
+                        }]
+                    }
                 }
             });
         }
@@ -72158,6 +72207,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     mounted: function mounted() {
         this.getIngreso();
+        this.getVentas();
+        //this.loadIngresos();
     }
 });
 

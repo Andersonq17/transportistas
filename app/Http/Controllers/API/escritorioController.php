@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Ingreso;
+
 
 class escritorioController extends Controller
 {
@@ -20,6 +20,19 @@ class escritorioController extends Controller
                      ->whereYear('i.fecha_hora',$anio)
                      ->groupBy(DB::raw('MONTH(i.fecha_hora)'),DB::raw('YEAR(i.fecha_hora)'))->get();
 
-                     return ['ingresos'=>$ingresos, 'anio'=>$anio];
+                     return $ingresos;
+    }
+
+    public function show(Request $request)
+    {
+        $anio= date('Y');
+        $ventas=DB::table('ventas as v')
+            ->select(DB::raw('MONTH(v.fecha_hora) as mes'),
+                     DB::raw('YEAR(v.fecha_hora) as anio'),
+                     DB::raw('SUM(v.total) as total'))
+                     ->whereYear('v.fecha_hora',$anio)
+                     ->groupBy(DB::raw('MONTH(v.fecha_hora)'),DB::raw('YEAR(v.fecha_hora)'))->get();
+
+                     return $ventas;
     }
 }

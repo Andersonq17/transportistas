@@ -107,3 +107,4 @@ Route::put('ventas', 'Api\ventasController@anular');
 //escritorio
 Route::apiResources(['escritorio'=>'API\escritorioController']);
 Route::get('escritorio','API\escritorioController@graph');
+Route::get('escritorio/venta','API\escritorioController@show');
