@@ -77,19 +77,16 @@
                     me.varTotalIngreso.push(x.total);
                     me.varMesIngreso.push(x.mes);
                 });
-               
-                 });
-               
                 this.varIngreso=document.getElementById('ingresos').getContext('2d');
 
                     this.charIngreso = new Chart(this.varIngreso, {
                         
                         type: 'bar',
                         data: {
-                            labels: [this.varMesIngreso],
+                            labels: this.varMesIngreso,
                             datasets: [{
                                 label: 'Ingresos del mes',
-                                data: [this.varTotalIngreso],
+                                data: this.varTotalIngreso,
                                 backgroundColor: [
                                     
                                     'rgba(54, 162, 235, 0.2)',
@@ -108,13 +105,15 @@
                                 yAxes: [{
                                     ticks: {
                                         beginAtZero: true,
-                                        suggestedMax:100000000
+                                       
                                     }
                                 }]
                             }
                         }
                     });
                     
+               
+                 });
 
                     
                 },
@@ -127,19 +126,16 @@
                     me.varTotalVentas.push(x.total);
                     me.varMesVenta.push(x.mes);
                 });
-               
-                 });
-               
-                this.varVentas=document.getElementById('entrega').getContext('2d');
+                 this.varVentas=document.getElementById('entrega').getContext('2d');
 
                     this.charVentas = new Chart(this.varVentas, {
                         
                         type: 'bar',
                         data: {
-                            labels: [this.varMesVenta],
+                            labels: this.varMesVenta,
                             datasets: [{
-                                label: 'Ingresos del mes',
-                                data: [this.varTotalVentas],
+                                label: 'Entregas del mes',
+                                data: this.varTotalVentas,
                                 backgroundColor: [
                                     
                                     'rgba(54, 162, 235, 0.2)',
@@ -158,18 +154,17 @@
                                 yAxes: [{
                                     ticks: {
                                         beginAtZero: true,
-                                        suggestedMax:100000000
+                                       
                                     }
                                 }]
                             }
                         }
                     });
+                 });
+               
+               
            } 
             },
-
-            
-            
-
             
         
         mounted(){

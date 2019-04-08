@@ -320,9 +320,8 @@
         methods:{
                 getResults(page = 1) {
 			        axios.get('api/ventas?page=' + page)
-				.then(response => {
-					this.ventas = response.data;
-				});
+				.then((data) =>(this.ventas = data))
+				
             },
 
             abrirModal(){
@@ -555,9 +554,8 @@
             Fire.$on('buscando',() =>{
                 let query = this.$parent.buscar;
                 axios.get('api/buscarVenta?q='+ query)
-                .then((data)=>{
-                    this.ventas=data.data;
-                })
+                .then((data)=>(this.ventas=data))
+
                 .catch(()=>{
 
                 })

@@ -72,26 +72,19 @@ class ventasController extends Controller
 
     }
 
-    /*public function pdf(Request $request,$id){
-        $venta= Venta::join('unidades','ventas.idunidad','=','unidades.id')
-                        ->select('ventas.id','ventas.tipo_comprobante','ventas.num_comprobante','ventas.created_at',
-                                'ventas.impuesto','ventas.total','ventas.estado','ventas.observaciones',
-                                'unidades.marca','unidades.modelo','unidades.placa')
-                                ->where('ventas.id','=',$id)->
-                                orderBy('ventas.id','desc')->take(1)->get();
-        
-        $detalles=DetalleVenta::join('insumos','detalle_venta.idinsumo','=','insumos.id')
-                                    ->select('detalle_venta.cantidad','detalle.venta.precio',
-                                            'insumos.marca','insumos.tipo','insumos.medidas_caucho',
-                                            'insumos.amperaje','insumos.tipo_aceite')
-                                            ->where('detalle_venta.idventa','=',$id)
-                                            ->orderBy('detalle_venta.id','desc')->get();
+    public function buscarVenta() 
+    {
+       
+        if($buscar = \Request::get('q')){
+            $ventas= Venta:: join('unidades','idunidad','=','unidades.id')
+            ->where(function($query) use ($buscar){
+                $query->where('unidades.placa','LIKE',"%$buscar%");
+            })->get();
+            
+        }
 
-        $numventa= Venta::select('num_comprobante')->where('id','=',$id)->get();
-
-        $pdf= \PDF::loadView('pdf.venta',['venta'=>$venta,'detalles'=>$detalles]);
-        return $pdf->download('venta-'.$numventa[0]->num_comprobante.'.pdf');
-    }*/
+        return $ventas; //retorna toda la consulta
+    }
 
     public function anular(Request $request)
     {

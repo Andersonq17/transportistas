@@ -72134,33 +72134,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     me.varTotalIngreso.push(x.total);
                     me.varMesIngreso.push(x.mes);
                 });
-            });
+                _this.varIngreso = document.getElementById('ingresos').getContext('2d');
 
-            this.varIngreso = document.getElementById('ingresos').getContext('2d');
+                _this.charIngreso = new Chart(_this.varIngreso, {
 
-            this.charIngreso = new Chart(this.varIngreso, {
-
-                type: 'bar',
-                data: {
-                    labels: [this.varMesIngreso],
-                    datasets: [{
-                        label: 'Ingresos del mes',
-                        data: [this.varTotalIngreso],
-                        backgroundColor: ['rgba(54, 162, 235, 0.2)'],
-                        borderColor: ['rgba(54, 162, 235, 1)'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                suggestedMax: 100000000
-                            }
+                    type: 'bar',
+                    data: {
+                        labels: _this.varMesIngreso,
+                        datasets: [{
+                            label: 'Ingresos del mes',
+                            data: _this.varTotalIngreso,
+                            backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+                            borderColor: ['rgba(54, 162, 235, 1)'],
+                            borderWidth: 1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+
+                                }
+                            }]
+                        }
                     }
-                }
+                });
             });
         },
         getVentas: function getVentas() {
@@ -72174,33 +72173,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     me.varTotalVentas.push(x.total);
                     me.varMesVenta.push(x.mes);
                 });
-            });
+                _this2.varVentas = document.getElementById('entrega').getContext('2d');
 
-            this.varVentas = document.getElementById('entrega').getContext('2d');
+                _this2.charVentas = new Chart(_this2.varVentas, {
 
-            this.charVentas = new Chart(this.varVentas, {
-
-                type: 'bar',
-                data: {
-                    labels: [this.varMesVenta],
-                    datasets: [{
-                        label: 'Ingresos del mes',
-                        data: [this.varTotalVentas],
-                        backgroundColor: ['rgba(54, 162, 235, 0.2)'],
-                        borderColor: ['rgba(54, 162, 235, 1)'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                suggestedMax: 100000000
-                            }
+                    type: 'bar',
+                    data: {
+                        labels: _this2.varMesVenta,
+                        datasets: [{
+                            label: 'Entregas del mes',
+                            data: _this2.varTotalVentas,
+                            backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+                            borderColor: ['rgba(54, 162, 235, 1)'],
+                            borderWidth: 1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+
+                                }
+                            }]
+                        }
                     }
-                }
+                });
             });
         }
     },
@@ -82058,8 +82056,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
-            axios.get('api/ventas?page=' + page).then(function (response) {
-                _this.ventas = response.data;
+            axios.get('api/ventas?page=' + page).then(function (data) {
+                return _this.ventas = data;
             });
         },
         abrirModal: function abrirModal() {
@@ -82262,7 +82260,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Fire.$on('buscando', function () {
             var query = _this8.$parent.buscar;
             axios.get('api/buscarVenta?q=' + query).then(function (data) {
-                _this8.ventas = data.data;
+                return _this8.ventas = data;
             }).catch(function () {});
         });
         this.listarVentas();
