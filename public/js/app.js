@@ -82057,7 +82057,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
             axios.get('api/ventas?page=' + page).then(function (data) {
-                return _this.ventas = data;
+                _this.ventas = data.data;
             });
         },
         abrirModal: function abrirModal() {
@@ -82241,7 +82241,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //enviar la peticion al servidor
                 if (result.value) {
                     //evaluar si Si o No elimina
-                    axios.put('api/ventas/' + _this7.id).then(function () {
+                    axios.put('api/ventas/' + id).then(function () {
                         //llamar al metodo borrar del controlador mediante el route list
 
                         swal('Anulada', 'Venta Anulada', 'success');

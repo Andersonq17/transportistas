@@ -27,7 +27,7 @@ class ventasController extends Controller
         ->join('users','ventas.idusuario','=','users.id')
         ->select('ventas.id','ventas.idunidad','ventas.idusuario','ventas.tipo_comprobante','ventas.num_comprobante','ventas.observaciones',
         'ventas.fecha_hora','ventas.impuesto','ventas.total','ventas.estado','unidades.placa as placa','users.name as nombre_usuario')
-        ->orderby('id','desc')->paginate(5);
+        ->orderby('id','desc')->paginate(10);
     }
 
     public function store(Request $request)
@@ -86,10 +86,10 @@ class ventasController extends Controller
         return $ventas; //retorna toda la consulta
     }
 
-    public function anular(Request $request)
+    public function update($id)
     {
         $this->authorize('isAdmin');
-        $venta = Venta::findOrFail($request->id);
+        $venta = Venta::findOrFail($id);
         $venta->estado='Anulado';
         $venta->save();
 

@@ -102,7 +102,7 @@ Route::put('ingreso', 'Api\ingresoController@anular');
 Route::apiResources(['ventas'=>'API\ventasController']);
 Route::get('ventas', 'Api\ventasController@index');
 Route::post('ventas', 'Api\ventasController@store');
-Route::put('ventas', 'Api\ventasController@anular');
+Route::put('ventas', 'Api\ventasController@update');
 Route::get('buscarVenta','Api\ventasController@buscarVenta');
 
 //escritorio

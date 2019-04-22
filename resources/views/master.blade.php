@@ -51,8 +51,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar bg-dark elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="./img/bus.png" alt="bus_logo" class="brand-image  elevation-3"
+    <a href="/escritorio" class="brand-link">
+      <img src="./img/bus2.svg" alt="bus_logo" class="brand-image  elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Transporte Público</span>
     </a>
@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="./img/admin.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">
+          <a href="/Perfil" class="d-block">
             {{Auth::user()->name}}
             <p>{{Auth::user()->type}}</p>
             
@@ -79,7 +79,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                <li class="nav-item">
-                <router-link to="/escritorio" class="nav-link">
+                <router-link to= "/escritorio" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt text-blue"></i>
                   <p>
                     Escritorio
@@ -138,7 +138,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
               <router-link to="/reportes" class="nav-link">
                
-               <i class="fas fa-paste"></i>
+               <i class="fas fa-file-alt"></i>
                  <p>Reportes</p>
                
                </router-link >
@@ -147,7 +147,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item has-treeview ">
             <a href="#" class="nav-link ">
-            <i class="fas fa-shuttle-van"></i>
+            <i class="fas fa-warehouse"></i>
               <i class="nav-icon"></i>
               <p>
                 Insumos
@@ -158,7 +158,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item">
               <router-link to="/proveedores" class="nav-link">
                
-               <i class="fas fa-paste"></i>
+               <i class="fas fa-user-friends"></i>
                  <p>Proveedores</p>
                
                </router-link >
@@ -166,7 +166,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
               <router-link to="/insumos" class="nav-link">
                
-               <i class="fas fa-paste"></i>
+               <i class="fas fa-store"></i>
                  <p>Registro de Insumos</p>
                
                </router-link >
@@ -174,7 +174,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
               <router-link to="/ingreso" class="nav-link">
                
-               <i class="fas fa-paste"></i>
+               <i class="fas fa-truck"></i>
                  <p>Ingreso de Insumos</p>
                
                </router-link >
@@ -182,7 +182,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
               <router-link to="/ventas" class="nav-link">
                
-               <i class="fas fa-paste"></i>
+               <i class="fas fa-clipboard-check"></i>
                  <p>Venta de Insumos</p>
                
                </router-link >
@@ -258,7 +258,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       Registro de Transportistas
     </div>
     <!-- Default to the left -->
-    <strong>Derechos de autor &copy; 2018 <a href="https://adminlte.io">Anderson Quintero</a>.</strong> Todos los derechos reservados.
+    <strong>Derechos de autor &copy; 2018 <a href="https://github.com/Andersonq17" target="_blank">Anderson Quintero</a>.</strong> Todos los derechos reservados.
   </footer>
 </div>
 <!-- ./wrapper -->

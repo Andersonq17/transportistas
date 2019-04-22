@@ -320,7 +320,7 @@
         methods:{
                 getResults(page = 1) {
 			        axios.get('api/ventas?page=' + page)
-				.then((data) =>(this.ventas = data))
+				.then((data) =>{this.ventas = data.data})
 				
             },
 
@@ -526,7 +526,7 @@
 
                         //enviar la peticion al servidor
                     if (result.value) { //evaluar si Si o No elimina
-                        axios.put('api/ventas/'+this.id).then(()=>{ //llamar al metodo borrar del controlador mediante el route list
+                        axios.put('api/ventas/'+ id).then(()=>{ //llamar al metodo borrar del controlador mediante el route list
                            
                                 swal(
                                 'Anulada',
