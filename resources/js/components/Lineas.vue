@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
     <div class="container">
        <div class="row mt-5">
           <div class="col-12">
@@ -130,10 +130,13 @@
                 </div>
                 
                   <div class="form-group">
-                <select class="form-control" v-model="form.id_persona">
-                    <option disabled value="">Seleccione Presidente de Linea</option>
-                    <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido+ ' ' +persona.cedula"></option>
-                </select>
+                <v-select 
+                            :on-search="selectPersona"
+                            label="nombre"
+                            :options="select"
+                            placeholder="Buscar Presidente de linea"
+                            v-model="form.id_persona">
+                            </v-select>
                 
                 </div>
                 <div class="form-group">
@@ -178,7 +181,7 @@
             return{
                 editar: false,
                 lineas:{},
-                select:{},
+                select:[],
                 selectS:{}, //objeto js de axios
                 form : new Form({
                     id :'',

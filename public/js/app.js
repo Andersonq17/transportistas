@@ -75958,13 +75958,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             editar: false,
             lineas: {},
-            select: {},
+            select: [],
             selectS: {}, //objeto js de axios
             form: new Form({
                 id: '',
@@ -76623,63 +76626,28 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.id_persona,
-                              expression: "form.id_persona"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.form,
-                                "id_persona",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            "on-search": _vm.selectPersona,
+                            label: "nombre",
+                            options: _vm.select,
+                            placeholder: "Buscar Presidente de linea"
+                          },
+                          model: {
+                            value: _vm.form.id_persona,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "id_persona", $$v)
+                            },
+                            expression: "form.id_persona"
                           }
-                        },
-                        [
-                          _c("option", { attrs: { disabled: "", value: "" } }, [
-                            _vm._v("Seleccione Presidente de Linea")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.select, function(persona) {
-                            return _c("option", {
-                              key: persona.id,
-                              domProps: {
-                                value: persona.id,
-                                textContent: _vm._s(
-                                  persona.nombre +
-                                    " " +
-                                    persona.apellido +
-                                    " " +
-                                    persona.cedula
-                                )
-                              }
-                            })
-                          })
-                        ],
-                        2
-                      )
-                    ]),
+                        })
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c(
@@ -80135,7 +80103,6 @@ exports.push([module.i, "\n@media(min-width: 600px){\n.btnagregar{\n        marg
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //

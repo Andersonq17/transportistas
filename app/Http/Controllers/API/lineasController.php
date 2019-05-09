@@ -43,11 +43,11 @@ class lineasController extends Controller
             'nombre' => 'required|string|max:191',
             'rif' => 'required|string|max:15|unique:lineas',
             'correo'=>'required|string|unique:lineas',
-            'id_persona' => 'required|integer|',
+            'id_persona' => 'required',
             
         ]);
 
-        return Linea::create([
+        /*return Linea::create([
             'nombre' =>$request['nombre'],
             'rif' =>$request['rif'],
             'correo' =>$request['correo'],
@@ -59,9 +59,20 @@ class lineasController extends Controller
             'id_persona' =>$request['id_persona'],
             'id_sindicato' =>$request['id_sindicato'],
             'cps' =>$request['cps'],
-        ]);
-
-        
+        ]);*/
+            $linea= new Linea();
+            
+            $linea->nombre=$request->nombre;
+            $linea->rif= $request->rif;
+            $linea->correo= $request->correo;
+            $linea->direccion= $request->direccion;
+            $linea->estado=$request->estado;
+            $linea->municipio=$request->municipio;
+            $linea->telefono= $request->telefono;
+            $linea->tipo_ruta=$request->tipo_ruta;
+            $linea->id_persona= $request['id_persona.id'];
+            $linea->id_sindicato= $request->id_sindicato;
+            $linea->save();
     }
     
     /**

@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
     <main class="main mt-6">
 
         <div class="container-fluid">
