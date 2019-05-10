@@ -43,12 +43,25 @@ class unidadesController extends Controller
             'modelo' => 'required|string|max:191',
             'placa'=>'required|string|unique:unidades',
             'id_linea'=>'required|integer',
-            'id_persona' => 'required|integer|',
+            'id_persona' => 'required',
             'tipo'=>'required'
             
         ]);
 
-        return Unidades::create([
+        $unidad= new Unidades();
+            
+            $unidad->marca=$request->marca;
+            $unidad->modelo= $request->modelo;
+            $unidad->anio= $request->anio;
+            $unidad->placa= $request->placa;
+            $unidad->tipo=$request->tipo;
+            $unidad->numero_cupo=$request->numero_cupo;
+            $unidad->status= $request->status;
+            $unidad->id_linea=$request->id_linea;
+            $unidad->id_persona= $request['id_persona.id'];
+            $unidad->save();
+
+        /*return Unidades::create([
             'marca' =>$request['marca'],
             'modelo' =>$request['modelo'],
             'anio' =>$request['anio'],
@@ -58,7 +71,7 @@ class unidadesController extends Controller
             'status' =>$request['status'],
             'id_linea' =>$request['id_linea'],
             'id_persona' =>$request['id_persona'],
-        ]);
+        ]);*/
 
         
     }

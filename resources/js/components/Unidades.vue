@@ -148,11 +148,15 @@
                 </div>
 
                 <div class="form-group">
-                <select class="form-control" v-model="form.id_persona" :class="{ 'is-invalid': form.errors.has('id_persona') }">
-                    <has-error :form="form" field="id_persona"></has-error>>
-                    <option disabled value="0">Seleccione Propietario del Vehiculo</option>
-                    <option v-for="persona in select" :key="persona.id" :value="persona.id" v-text="persona.nombre+ ' ' +persona.apellido"></option>
-                </select>
+                 <v-select :options="select" label="nombre" placeholder="Buscar Propietario de la unidad"
+                       v-model="form.id_persona">
+                            <template slot="option" slot-scope="option">
+                            <span :class="option.icon"></span>
+                            {{option.nombre}}
+                            {{option.apellido}}
+                            {{option.cedula}}
+                        </template>
+                </v-select>
                 </div>
                 <div class="form-group">
                     <textarea v-model="form.observaciones" type="text" name="observaciones" placeholder="Observaciones"

@@ -130,13 +130,15 @@
                 </div>
                 
                   <div class="form-group">
-                <v-select 
-                            :on-search="selectPersona"
-                            label="nombre"
-                            :options="select"
-                            placeholder="Buscar Presidente de linea"
-                            v-model="form.id_persona">
-                            </v-select>
+                       <v-select :options="select" label="nombre" placeholder="Buscar Presidente de Linea"
+                       v-model="form.id_persona">
+                            <template slot="option" slot-scope="option">
+                            <span :class="option.icon"></span>
+                            {{option.nombre}}
+                            {{option.apellido}}
+                            {{option.cedula}}
+                        </template>
+                </v-select>
                 
                 </div>
                 <div class="form-group">

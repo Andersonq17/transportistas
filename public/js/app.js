@@ -75961,6 +75961,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -76632,11 +76634,29 @@ var render = function() {
                       [
                         _c("v-select", {
                           attrs: {
-                            "on-search": _vm.selectPersona,
-                            label: "nombre",
                             options: _vm.select,
-                            placeholder: "Buscar Presidente de linea"
+                            label: "nombre",
+                            placeholder: "Buscar Presidente de Linea"
                           },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "option",
+                              fn: function(option) {
+                                return [
+                                  _c("span", { class: option.icon }),
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(option.nombre) +
+                                      "\n                            " +
+                                      _vm._s(option.apellido) +
+                                      "\n                            " +
+                                      _vm._s(option.cedula) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
                           model: {
                             value: _vm.form.id_persona,
                             callback: function($$v) {
@@ -76959,6 +76979,10 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -77894,68 +77918,46 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.id_persona,
-                              expression: "form.id_persona"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.form.errors.has("id_persona")
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            options: _vm.select,
+                            label: "nombre",
+                            placeholder: "Buscar Propietario de la unidad"
                           },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.form,
-                                "id_persona",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("has-error", {
-                            attrs: { form: _vm.form, field: "id_persona" }
-                          }),
-                          _vm._v(">\n                    "),
-                          _c(
-                            "option",
-                            { attrs: { disabled: "", value: "0" } },
-                            [_vm._v("Seleccione Propietario del Vehiculo")]
-                          ),
-                          _vm._v(" "),
-                          _vm._l(_vm.select, function(persona) {
-                            return _c("option", {
-                              key: persona.id,
-                              domProps: {
-                                value: persona.id,
-                                textContent: _vm._s(
-                                  persona.nombre + " " + persona.apellido
-                                )
+                          scopedSlots: _vm._u([
+                            {
+                              key: "option",
+                              fn: function(option) {
+                                return [
+                                  _c("span", { class: option.icon }),
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(option.nombre) +
+                                      "\n                            " +
+                                      _vm._s(option.apellido) +
+                                      "\n                            " +
+                                      _vm._s(option.cedula) +
+                                      "\n                        "
+                                  )
+                                ]
                               }
-                            })
-                          })
-                        ],
-                        2
-                      )
-                    ]),
+                            }
+                          ]),
+                          model: {
+                            value: _vm.form.id_persona,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "id_persona", $$v)
+                            },
+                            expression: "form.id_persona"
+                          }
+                        })
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",
